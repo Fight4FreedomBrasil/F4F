@@ -1,0 +1,460 @@
+/* --- 1. ESTILOS GERAIS E TIPOGRAFIA --- */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
+:root {
+    --bg-color: #121212;
+    --surface-color: #1e1e1e;
+    --primary-color: #007bff;
+    --text-color: #e0e0e0;
+    --text-muted-color: #888;
+    --tier-s-color: #ffd700;
+    --tier-a-color: #c0c0c0;
+    --tier-b-color: #cd7f32;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* --- 2. CABEÇALHO E NAVEGAÇÃO (COMPARTILHADO) --- */
+.main-header {
+    background-color: var(--surface-color);
+    border-bottom: 1px solid #2a2a2a;
+    padding-bottom: 30px;
+    margin-bottom: 2rem;
+}
+
+.top-nav {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.nav-button {
+    background-color: #333;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: 700;
+    transition: background-color 0.2s, transform 0.2s;
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-button:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.nav-button.active {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+.nav-button i {
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+
+.hero-section {
+    text-align: center;
+    padding: 20px;
+}
+
+.main-title {
+    font-size: 2.8rem;
+    font-weight: 900;
+    margin: 10px 0;
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 15px;
+    color: var(--text-muted-color);
+}
+
+.last-updated {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* --- 3. PÁGINA INICIAL (INDEX.HTML) --- */
+
+/* Busca e Filtros */
+.search-and-filter-section {
+    margin-bottom: 30px;
+}
+
+.weapon-search-bar {
+    width: 100%;
+    padding: 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #444;
+    background-color: #2a2a2a;
+    color: var(--text-color);
+    box-sizing: border-box;
+}
+
+.filter-tags-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.filter-tag {
+    background-color: #333;
+    color: var(--text-color);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 0.9rem;
+}
+
+.filter-tag:hover {
+    background-color: #555;
+}
+
+.filter-tag.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Tiers de Armas e Acordeão */
+.tier-section {
+    margin-bottom: 40px;
+}
+
+.tier-title {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 5px solid;
+    text-transform: uppercase;
+}
+
+.tier-S .tier-title { border-color: var(--tier-s-color); }
+.tier-A .tier-title { border-color: var(--tier-a-color); }
+.tier-B .tier-title { border-color: var(--tier-b-color); }
+
+.weapon-ranking-item {
+    background-color: #2a2a2a;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+.accordion-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.accordion-header:hover {
+    background-color: #383838;
+}
+
+.accordion-header.active .toggle-icon {
+    transform: rotate(180deg); /* Gira o ícone para cima quando ativo */
+}
+
+.toggle-icon {
+    margin-right: 15px;
+    font-size: 1rem; /* Tamanho do ícone */
+    color: #aaa;
+    transition: transform 0.4s ease; /* Animação suave da rotação */
+}
+
+.weapon-info h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.weapon-info .labels {
+    display: flex;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.weapon-info .label {
+    background-color: #555;
+    padding: 4px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.label.tier-S { background-color: var(--tier-s-color); color: #121212; }
+.label.tier-A { background-color: var(--tier-a-color); color: #121212; }
+.label.tier-B { background-color: var(--tier-b-color); color: #121212; }
+
+.weapon-image {
+    margin-left: auto;
+    width: 120px;
+    max-height: 50px;
+    object-fit: contain;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+    background-color: #222;
+}
+
+.attachments-list {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.attachment {
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    padding: 10px;
+    border-left: 3px solid #555;
+}
+
+.attachment-slot {
+    display: block;
+    color: #aaa;
+    font-size: 0.8rem;
+    margin-bottom: 2px;
+}
+
+.attachment-name {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+
+/* --- 4. PÁGINA DO PELOTÃO (PELOTAO.HTML) --- */
+
+.loading-text {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--text-muted-color);
+    padding: 3rem 0;
+}
+
+.rank-section {
+    margin-bottom: 3rem;
+}
+
+.rank-title {
+    font-size: 2rem;
+    color: #00aeff;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #333;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.rank-icon {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.rank-icon:hover {
+    transform: scale(1.1);
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
+    gap: 1.5rem;
+}
+
+.member-card {
+    background-color: var(--surface-color);
+    border: 1px solid #2a2a2a;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.member-details {
+    flex: 1; 
+    min-width: 200px;
+}
+
+.member-details h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.5rem;
+    color: var(--text-color);
+}
+
+.member-details p {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--text-muted-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.console-icon {
+    font-size: 1.1rem;
+    color: #ccc;
+}
+
+.member-stats {
+    flex: 3;
+    min-width: 400px;
+}
+
+.stats-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.member-stats .stats-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.75rem;
+}
+
+#player-stats-container.stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    padding: 1rem 0;
+    margin-bottom: 2rem;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+}
+
+.stat-card {
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    transition: transform 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-muted-color);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+/* --- 5. SEÇÃO "JUNTE-SE AO PELOTÃO" (DESIGN MODERNO) --- */
+
+.join-section {
+    text-align: center;
+    margin: 3rem auto; /* Mais espaço vertical */
+    padding: 2.5rem;   /* Mais espaço interno */
+    border-radius: 12px; /* Bordas mais suaves */
+    
+    /* Fundo com gradiente sutil para dar profundidade */
+    background: radial-gradient(circle, rgba(42, 42, 42, 0.5) 0%, var(--surface-color) 75%);
+    
+    border: 1px solid #2a2a2a;
+    
+    /* Sombra para efeito de profundidade e brilho azulado */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 15px rgba(0, 123, 255, 0.1);
+    
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.join-section:hover {
+    transform: translateY(-5px); /* Efeito de "levantar" ao passar o mouse */
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(0, 123, 255, 0.2);
+}
+
+.join-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-color); /* Título principal em branco */
+    margin-top: 0;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Dando cor à palavra "equipe?" */
+.join-title span {
+    color: var(--primary-color);
+}
+
+.join-button {
+    display: inline-flex;
+    align-items: center;
+    
+    /* Fundo do botão com gradiente */
+    background: linear-gradient(45deg, var(--primary-color), #0056b3);
+
+    color: white;
+    padding: 15px 30px; /* Botão maior e mais confortável */
+    border-radius: 50px; /* Estilo "pílula", mais moderno */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    
+    /* Sombra sutil no botão */
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+    
+    transition: all 0.3s ease;
+}
+
+.join-button:hover {
+    transform: translateY(-3px) scale(1.05); /* Aumenta e levanta no hover */
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+}
+
+.join-button i {
+    margin-right: 10px;
+}
+
+.join-text {
+    color: var(--text-muted-color);
+    font-size: 0.9rem;
+    margin-top: 1.5rem; /* Mais espaço acima do texto */
+    margin-bottom: 0;
+    font-style: italic;
+    opacity: 0.8;
+}

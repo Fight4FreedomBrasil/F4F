@@ -1,0 +1,1338 @@
+<html xmlns:surf="" id="base-bf4-html" class="lang-en js flexbox canvas canvastext postmessage no-websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers no-applicationcache cssfilters csspositionsticky wf-purista-n4-active wf-active" lang="en" style=""><head><style type="text/css">@font-face {font-family: "Source Sans Pro";src: url(https://consent.trustarc.com/get?name=SourceSansPro-Regular.ttf) format("truetype"),url(https://consent.trustarc.com/get?name=SourceSansPro-Regular.woff) format("woff"),url(https://consent.trustarc.com/get?name=SourceSansPro-Regular.otf) format("opentype"),url(https://consent.trustarc.com/get?name=SourceSansPro-Regular.eot) format("embedded-opentype");}.truste_cursor_pointer {cursor: pointer;}.truste_border_none {border: none;}.truste_accessible_link {font-family: "Source Sans Pro", sans-serif;color: #1D4ED8;font-size: 14px;font-weight: 600;text-decoration: underline;}.truste_accessible_link:hover {color: #1D4ED8;text-decoration: none !important;}.truste_accessible_link:focus-visible {outline: none;border-radius: 4px;box-shadow: 0 0 0 1px #FFFFFF, 0 0 0 4px #3699F1;}</style><style type="text/css">div#teconsent > a:before, a#teconsent > a:before {content:''; display:inline-block; margin-right:5px; position:relative; top:2px; width:28.06px; height:13.92px; background-size:28.06px 13.92px; background-image:url(https://consent.trustarc.com/get?name=privacy_choices_icon.png); background-repeat:no-repeat;}</style>
+ 
+ <meta http-equiv="X-UA-Compatible" content="ie=edge;chrome=1">
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ <meta http-equiv="Content-Language" content="None">
+ 
+ <meta property="og:image" content="https://d34ymitoc1pg7m.cloudfront.net/bf4/facebook/default-og-image-1c0473d8.png">
+ <meta name="description" content="Battlelog is a free social platform that ties into Battlefield 4 and Battlefield 3 and lets you socialize, track stats, plan your next game, and more from your web browser!">
+ 
+
+
+ <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+ <title>
+Progression - chrisley_chrys - Battlelog
+ / Battlefield 4
+ </title>
+ 
+
+<link rel="apple-touch-icon-precomposed" href="//d34ymitoc1pg7m.cloudfront.net/common/icons/apple-touch-icon-precomposed-c635f3ba.png">
+<meta name="mobile-web-app-capable" content="yes">
+<script type="text/javascript">
+ (function(m) { if (m) document.location.href = m[1] + decodeURIComponent(m[2]); })(document.location.href.match(new RegExp("(http.*?\/\/.*?)/.*?#!(.*)", "im")));
+</script>
+<script type="text/javascript">var _sf_startpt=(new Date()).getTime();</script>
+<!--[if lt IE 9]>
+<script src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/base/js/ie/IE7.js"></script>
+<![endif]-->
+ <link rel="stylesheet" type="text/css" href="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/generated-sass/battlelog.css">
+ <link rel="stylesheet" type="text/css" href="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/generated-sass/bf4-static.css">
+ <link rel="stylesheet" type="text/css" href="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/generated-sass/bf4.css">
+
+
+<link rel="stylesheet" type="text/css" href="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/base/css/ui-lightness/jquery-ui-1.8.custom.css">
+
+<script type="text/javascript" src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/generated/en_US/bundle_base_topbundles_2471827896.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/cdnprefix/local/public/base/fonts/purista/purista.css"><script id="base-head-webfontload">
+ var fb = ( ($.browser.mozilla && document.documentElement.style.MozTransform === '') || $.browser.opera );
+ if (fb) {
+ $(document.body).addClass("wf-_fout");
+ }
+ WebFont.load({
+ custom: {
+ families: ["Purista"],
+ urls : ["/cdnprefix/local/public/base/fonts/purista/purista.css"]
+ }
+ });
+
+
+</script>
+
+ <script>bazadebezolkohpepadr="2031101880"</script><script type="text/javascript" src="https://battlelog.battlefield.com/akam/13/79102768" defer=""></script></head>
+
+
+
+
+
+
+
+
+
+
+ <body class=" no-comcenter is-loggedout ">
+ 
+
+
+<surf:container id="comcenter_container">
+ 
+
+
+</surf:container>
+
+
+ <div id="base-background">
+
+ <div class="video-container show">
+ <video id="background-video" autoplay="" loop="" name="media" preload="auto">
+ <source media="screen" src="https://eaassets-a.akamaihd.net/battlelog/background-videos/bg-video.webm" type="video/webm">
+ <source media="screen" src="https://eaassets-a.akamaihd.net/battlelog/background-videos/bg-video.ogg" type="video/ogg">
+ <source media="screen" src="https://eaassets-a.akamaihd.net/battlelog/background-videos/bg-video.mp4" type="video/mp4">
+ </video>
+ </div>
+ 
+
+ </div>
+ 
+
+ 
+
+
+
+
+
+
+
+
+
+<header id="base-header">
+
+
+ <section id="community-bar">
+ <div class="inner-wrapper">
+ <div class="grid-container premium-bg">
+ <div class="battlelog-logo">
+ <a href="/bf4/" class="logo"></a>
+ </div>
+ <div class="game-logo">
+ <div class="ajax-loading-wrapper">
+ <div class="loader small" id="base-ajax-loading"></div>
+ </div>
+ <a class="logo   game-bf4" href="/bf4/"></a>
+ <div class="outerarrow" data-bind-toggle="section-select">
+ <div class="arrow"></div>
+ </div>
+ </div>
+ 
+
+
+<section id="base-header-user-tools" class="user-tools">
+ <ul class="tools login-tools">
+ <li class="header-login-button tools-item">
+ <a class="login-btn" href="https://accounts.ea.com/connect/auth?locale=en_US&amp;state=bf4&amp;redirect_uri=https%3A%2F%2Fbattlelog.battlefield.com%2Fsso%2F%3Ftokentype%3Dcode&amp;response_type=code&amp;client_id=battlelog&amp;display=web%2Flogin">
+ <span>Log in</span>
+ </a>
+ </li>
+
+ <li class="tools-item">
+ <a class="header-signup-link" href="https://accounts.ea.com/connect/auth?state=bf4&amp;redirect_uri=https%3A%2F%2Fbattlelog.battlefield.com%2Fsso%2F%3Ftokentype%3Dcode&amp;response_type=code&amp;client_id=battlelog&amp;locale=en_US&amp;display=web%2Fcreate">Sign up</a>
+ </li>
+ </ul>
+</section>
+
+ </div>
+ </div>
+ <nav class="dropdown-bar tight" data-dropdown="section-select">
+ <div class="grid-container">
+ 
+
+<div class="row base-game-selector">
+
+ <a href="https://battlefield.com/companion/" class="base-no-ajax game-box span4 game-bf1" data-section="bf1"></a>
+ <a href="/bf4/" class="base-no-ajax game-box span4 game-bf4 active" data-section="bf4">
+ </a>
+ <a href="/bfh/" class="base-no-ajax game-box span4 game-bfh" data-section="bfh">
+ </a>
+ <a href="/bf3/" class="base-no-ajax game-box span4 game-bf3" data-section="bf3">
+ </a>
+ <a href="/mohw/" class="base-no-ajax game-box span4 game-mohw" data-section="mohw">
+ </a>
+</div>
+ </div>
+ </nav>
+ </section>
+ 
+
+ <section class="game-bar">
+ <div class="inner-wrapper">
+ <div class="grid-container">
+ 
+
+
+
+ 
+
+
+<nav id="base-header-secondary-nav" class="secondary-nav">
+ <ul>
+ <li data-page="odcstore">
+ <a class="wfont " href="/bf4/store/">
+ Buy Battlefield 4
+ </a>
+ </li>
+
+
+ <li data-page="forum" style="position: relative;">
+ <a href="https://answers.ea.com/t5/Battlefield/ct-p/battlefield/en-us" target="_blank" class="forum-link">Forums<span class="external"></span></a>
+ </li>
+
+
+
+ <li data-page="premium">
+ <a href="/bf4/premium/" class="premium">Premium</a>
+ </li>
+
+
+ </ul>
+</nav>
+
+ <div class="clear"></div>
+ </div>
+ </div>
+ <div class="grid-container">
+ <div class="dropdown-bar">
+ 
+
+
+
+
+<div class="dropdown-content" data-for="multiplayer">
+ <div class="row">
+ <nav class="span4 dropdown-menu">
+
+ <a href="/bf4/servers/">
+ <i class="icon-white icon-servers"></i>
+ <span>Server Browser</span>
+ </a>
+
+ <a href="/bf4/servers/favourites/pc/">
+ <i class="icon-white icon-star"></i>
+ <span>Favorites</span>
+ </a>
+ <a href="/bf4/servers/history/pc/">
+ <i class="icon-white icon-clock"></i>
+ <span>History</span>
+ </a>
+ 
+ <a href="/bf4/missions/0/0/">
+ <i class="icon-white icon-mission"></i>
+ <span>Missions</span>
+ </a>
+ <a href="/bf4/communitymissions/">
+ <i class="icon-white icon-mission"></i>
+ Community Missions
+ </a>
+
+ </nav>
+
+ </div>
+</div>
+<div class="dropdown-content" data-for="platoon">
+ <div class="row">
+ <nav class="span4 dropdown-menu">
+ <a href="/bf4/platoon/">Find or Create Platoon</a>
+ </nav>
+ </div>
+</div>
+ </div>
+ <ul id="receipt-container"></ul>
+ </div>
+ </section>
+ 
+
+ <section class="sticky-bar">
+ <div class="grid-container" id="sticky-container"></div>
+ </section>
+
+</header>
+
+
+ <div id="viewport">
+ 
+
+
+
+
+ <div id="base-page">
+ <div id="base-container" class="grid-container">
+
+ <div id="content" class="content">
+
+ <section id="game-stats" class="grid-container">
+ 
+
+
+
+
+
+
+ <div id="game-stats-head">
+ <div class="pull-left">
+ <div class="avatar-container">
+ 
+
+
+
+
+
+
+ 
+
+
+ <a class="avatar large offline" href="/bf4/user/Chrisley_Chrys/" rel="2955050137506271746" style="background-image: url(https://secure.gravatar.com/avatar/c665896b0efa6f05c4d17bcd175e2136?s=60&amp;d=https%3A%2F%2Feaassets-a.akamaihd.net%2Fbattlelog%2Fdefaultavatars%2Fdefault-avatar-60.png);">
+ </a>
+
+
+ </div>
+ <h1 class="primary soldier-info-name">
+ <span class="premium">chrisley_chrys</span>
+ </h1>
+ <div class="user">
+ <ul class="tag-icon-list">
+ 
+
+ 
+
+
+
+
+
+
+
+ <li>
+ <a href="/bf4"><img src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/common/tags/game/2048.png" data-tooltip="Battlefield 4"></a>
+ </li>
+
+ <li>
+ <a href="/bf4/premium/" data-track="entrypoint.expansion.bf4premium">
+ 
+<img class="common-gameexpansion common-gameexpansion-262144" src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/common/tags/expansion/262144.gif" data-tooltip="Premium">
+ </a>
+ </li>
+ 
+
+
+
+
+ </ul>
+ <i class="icon-platform ps4 "></i>
+ <a class="profile-link" data-track="soldier.profile" href="/bf4/user/Chrisley_Chrys/">
+ <span>Chrisley_Chrys's profile</span>
+ </a>
+ <span class="club-link">Platoon: <a href="/bf4/platoons/view/835108321205883104/">ELITE TEAM BRASIL</a></span>
+ </div>
+ </div>
+ <div class="pull-right">
+<surf:container id="stats-header-challenges">
+
+</surf:container>
+
+
+ </div>
+ </div>
+
+<div style="clear:both;"></div>
+<nav class="submenu margin-top ">
+ <ul>
+ <li class="profile-stats-tab overview active">
+ <a href="/bf4/soldier/chrisley_chrys/stats/347666902/ps4/">Overview</a>
+ </li>
+ <li class="profile-stats-tab stats">
+ <a data-bind-toggle="profile-submenu" data-target="stats">Stats</a>
+ </li>
+ <li class="profile-stats-tab unlocks">
+ <a data-bind-toggle="profile-submenu" data-target="unlocks">Unlocks</a>
+ </li>
+ <li class="profile-stats-tab loadout">
+ <a href="/bf4/loadout/chrisley_chrys/347666902/ps4/#overview">Loadout</a>
+ </li>
+ 
+ <li class="profile-stats-tab assignments">
+ <a href="/bf4/soldier/chrisley_chrys/assignments/347666902/ps4/">Assignments</a>
+ </li>
+ <li class="profile-stats-tab awards">
+ <a href="/bf4/soldier/chrisley_chrys/awards/347666902/ps4/">Awards</a>
+ </li>
+ 
+ </ul>
+ 
+ <ul class="stats" style="display: none;">
+ <li class="profile-stats-tab weapons">
+ <a href="/bf4/soldier/chrisley_chrys/weapons/347666902/ps4/">
+ Weapons
+ </a>
+ </li>
+ <li class="profile-stats-tab vehicles">
+ <a href="/bf4/soldier/chrisley_chrys/vehicles/347666902/ps4/">
+ Vehicles
+ </a>
+ </li>
+ <li class="profile-stats-tab battlereports">
+ <a href="/bf4/soldier/chrisley_chrys/battlereports/347666902/ps4/">
+ Reports
+ </a>
+ </li>
+ 
+ <li class="profile-stats-tab detailedstats">
+ <a href="/bf4/soldier/chrisley_chrys/detailedstats/347666902/ps4/">
+ Details
+ </a>
+ </li>
+ </ul>
+ <ul class="unlocks" style="display: none;">
+ <li class="profile-stats-tab weaponunlocks">
+ <a href="/bf4/soldier/chrisley_chrys/weaponunlocks/347666902/ps4/">
+ Weapons
+ </a>
+ </li>
+ <li class="profile-stats-tab vehicleunlocks">
+ <a href="/bf4/soldier/chrisley_chrys/vehicleunlocks/347666902/ps4/">
+ Vehicles
+ </a>
+ </li>
+ <li class="profile-stats-tab kits">
+ <a href="/bf4/soldier/chrisley_chrys/kits/347666902/ps4/">
+ Kits
+ </a>
+ </li>
+ <li class="profile-stats-tab dogtags">
+ <a href="/bf4/soldier/chrisley_chrys/dogtags/347666902/ps4/">
+ Dog Tags
+ </a>
+ </li>
+ </ul>
+ 
+</nav>
+
+ <div class="game-stats-content">
+
+ 
+ <div id="profile-stats-fetch-url"><section id="overview-info">
+<div class="row-tight">
+<div class="span2">
+ <div class="overview-info-box box">
+ <header>
+ <h1>Rank</h1>
+ </header>
+ <div class="box-content no-padding">
+ <a href="/bf4/soldier/chrisley_chrys/detailedstats/347666902/32/">
+ <div id="overview-rank">
+
+ 
+
+
+
+
+ <div class="bf4-rank rank medium r140 " data-rank="140"></div>
+
+
+
+ <div class="rank-progress">
+ 
+
+
+
+
+
+
+<div class="progress-bar thick">
+ <div class="warning progress-bar-inner" style="width:100%"></div>
+</div>
+ <div class="progress-bar-info">
+ <p>General</p>
+ <p>
+ <strong id="replay-rank-score">32,160,000</strong> /
+ <span id="replay-rank-max-score">32,160,000</span>
+ </p>
+ </div>
+
+ </div>
+ </div>
+ </a>
+ </div>
+ </div>
+ <div class="overview-info-box small box ">
+ <header>
+ <h1>Service Stars</h1>
+ </header>
+ <div class="box-content no-padding">
+ <a href="/bf4/soldier/chrisley_chrys/detailedstats/347666902/32/">
+ <ul class="overview-service-stars">
+
+ <li data-percent="88" class="servicestars-1">
+ <div class="kit-icon small kit-1"></div>
+ 
+
+
+<div class="progress-bar thickest animate" data-animate-delay="120">
+ <div class="warning progress-bar-inner" data-percent="88" style="width: 88%;"></div>
+</div>
+ <div class="star-count">
+ <span>
+ 78
+ </span>
+ </div>
+ </li>
+ 
+ <li data-percent="35" class="servicestars-2">
+ <div class="kit-icon small kit-2"></div>
+ 
+
+
+<div class="progress-bar thickest animate" data-animate-delay="240">
+ <div class="warning progress-bar-inner" data-percent="35" style="width: 35%;"></div>
+</div>
+ <div class="star-count">
+ <span>
+ 86
+ </span>
+ </div>
+ </li>
+ 
+ <li data-percent="5" class="servicestars-32">
+ <div class="kit-icon small kit-32"></div>
+ 
+
+
+<div class="progress-bar thickest animate" data-animate-delay="360">
+ <div class="warning progress-bar-inner" data-percent="5" style="width: 5%;"></div>
+</div>
+ <div class="star-count">
+ <span>
+ 34
+ </span>
+ </div>
+ </li>
+ 
+ <li data-percent="30" class="servicestars-8">
+ <div class="kit-icon small kit-8"></div>
+ 
+
+
+<div class="progress-bar thickest animate" data-animate-delay="480">
+ <div class="warning progress-bar-inner" data-percent="30" style="width: 30%;"></div>
+</div>
+ <div class="star-count">
+ <span>
+ 93
+ </span>
+ </div>
+ </li>
+ 
+ <li data-percent="75" class="servicestars-2048">
+ <div class="kit-icon small kit-2048"></div>
+ 
+
+
+<div class="progress-bar thickest animate" data-animate-delay="600">
+ <div class="warning progress-bar-inner" data-percent="75" style="width: 75%;"></div>
+</div>
+ <div class="star-count">
+ <span>
+ 7
+ </span>
+ </div>
+ </li>
+ 
+ </ul>
+ </a>
+ </div>
+ </div>
+</div>
+<div class="span2">
+ <div class="overview-skillcontainer">
+ <div id="overview-skill" class="overview-info-box box">
+ <header>
+ <h1>Skill</h1>
+ </header>
+ <div class="box-content no-padding">
+ <a href="/bf4/soldier/chrisley_chrys/detailedstats/347666902/32/">
+ <p id="overview-skill-value" data-value="297" class="">297</p>
+ <div class="overview-skill-bar">
+ <div data-percent="28.215" style="width: 8px; left: 28.215%;"></div>
+ </div>
+ </a>
+ </div>
+ </div>
+ <a href="/bf4/soldier/chrisley_chrys/detailedstats/347666902/32/">
+ <ul id="overview-info-list" class="clearfix">
+ <li>
+ <span>K/D</span>
+ <strong class="focus" id="stat-kd">1.29</strong>
+ </li>
+ <li>
+ <span>SPM</span>
+ <strong class="focus" id="stat-spm">779</strong>
+ </li>
+ <li class="last">
+
+
+
+ <span>KPM</span>
+ <strong class="focus" id="stat-kpm">0.82</strong>
+ </li>
+ <li>
+ <span>Kills</span>
+ <strong id="stat-kills">73134</strong>
+ </li>
+ <li>
+ <span>Score</span>
+ <strong id="stat-score">69,300,701</strong>
+ </li>
+ <li class="last">
+ <span>Time</span>
+ <strong id="stat-time-played">1480h 50m</strong>
+ </li>
+ </ul>
+ </a>
+ </div>
+ <div id="overview-teamplay" class="overview-info-box small box">
+ <header>
+ <h1>Team Play</h1>
+ </header>
+ <div class="box-content no-padding alpha">
+ <a href="/bf4/soldier/chrisley_chrys/detailedstats/347666902/32/">
+
+ <div id="player-win-stats">
+ <div id="player-stats-winrate" data-losses="1585" data-wins="1858" data-percentage="54"><svg width="100" height="100"><g transform="translate(50,50)"><defs><radialGradient gradientUnits="userSpaceOnUse" cx="0" cy="0" r="50" fx="0" fy="0" id="master-playerstatswinrate"></radialGradient><radialGradient id="grad-playerstatswinrate-0" class="gradient" xlink:href="#master-playerstatswinrate"><stop offset="0%" stop-color="#000"></stop><stop offset="70%" stop-color="#129de8"></stop><stop offset="100%" stop-color="#000"></stop></radialGradient><radialGradient id="grad-playerstatswinrate-1" class="gradient" xlink:href="#master-playerstatswinrate"><stop offset="0%" stop-color="#000"></stop><stop offset="70%" stop-color="#c33411"></stop><stop offset="100%" stop-color="#000"></stop></radialGradient></defs><path fill="url(#grad-playerstatswinrate-0)" stroke="#000000" stroke-width="1" d="M1.83697019872103e-15,-30A30,30 0 1,1 -7.395984648155437,29.074033278584672L-4.437590788893263,17.444419967150804A18,18 0 1,0 1.102182119232618e-15,-18Z"></path><path fill="url(#grad-playerstatswinrate-1)" stroke="#000000" stroke-width="1" d="M-7.395984648155437,29.074033278584672A30,30 0 0,1 -5.510910596163089e-15,-30L-3.3065463576978533e-15,-18A18,18 0 0,0 -4.437590788893263,17.444419967150804Z"></path></g></svg></div>
+ <div id="player-win-percentage">
+ <header>Wins</header>
+ <strong id="stat-win-percentage" class="focus">54%</strong>
+ </div>
+ </div>
+ </a>
+ </div>
+ <div class="box-content no-padding">
+ <a href="/bf4/soldier/chrisley_chrys/detailedstats/347666902/32/">
+ <ul id="player-squad-score" class="clearfix">
+ <li>
+ <span>Squad Score</span>
+ <strong id="stat-squad-score">5,793,700</strong>
+ </li>
+ </ul>
+ </a>
+ </div>
+ </div>
+ 
+</div>
+<div class="span2">
+ <div id="overview-soldier" class="overview-info-box box">
+ <div class="box-content no-padding">
+ <div class="soldier-emblem click-area">
+
+
+ <a class="emblem-preview-link" href="/bf4/platoons/view/835108321205883104/"></a>
+ </div>
+
+
+
+
+
+
+
+
+<div class="ui-emblem soldier-emblem">
+ 
+
+
+
+<img src="//eaassets-a.akamaihd.net/battlelog/prod/emblem/604/590/256/2955055691559111948.png?v=1483539808" class="emblem-image " width="200" height="200">
+
+</div>
+
+ <div class="soldier-portrait">
+ 
+
+
+
+
+
+
+<img class="profile-soldier-image " width="327" height="430" src="//d34ymitoc1pg7m.cloudfront.net/bf4/soldier/xlarge/default-a105f57e.png">
+
+ </div>
+ <div style="float: right; margin-top: -48px; margin-right: 8px;">
+ 
+
+ </div>
+ </div>
+ </div>
+ <div id="overview-dogtags" class="overview-info-box small box">
+ <header>
+ <h1>Dog Tags</h1>
+ </header>
+ <div class="box-content no-padding">
+
+
+ <a href="/bf4/soldier/chrisley_chrys/dogtags/347666902/32/" class="">
+ 
+
+<div class="dogtags dogtags-chain horizontal ">
+ 
+
+
+
+
+
+
+ <img class="basic rotated xlarge" src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/profile/warsaw/gamedata/dogtags/xlarge/basic0.png">
+ <img class="advanced xlarge" src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/profile/warsaw/gamedata/dogtags/xlarge/advanced0.png">
+
+ <div class="dog-tag-name-overlay">
+ 
+ <p>chrisley_chrys</p>
+ </div>
+
+
+
+</div>
+
+ </a>
+ </div>
+ </div>
+</div>
+</div>
+</section>
+
+ <div class="row-tight">
+ <div class="span2">
+
+ 
+ 
+ 
+ 
+
+<div class="box overview-top-box">
+ <header>
+ <h1>Top Weapons</h1>
+ </header>
+ <div class="box-content no-padding">
+ <div class="item-highlighted">
+ 
+<div class="top-item is-linked">
+ <a href="/bf4/soldier/chrisley_chrys/weapons/347666902/32/#sar-21">
+ 
+
+
+
+ <div class="weapon_unlock medium SAR21_fancy item-image "></div>
+
+ <div class="info">
+ <p class="title">SAR-21</p>
+ <p class="score" data-tooltip="" data-tooltip-ellipsis-only="true" data-tooltip-position="right">3,157 Kills</p>
+ </div>
+ </a>
+</div>
+
+ </div>
+ <div class="items-highlighted">
+ 
+<div class="top-item is-linked">
+ <a href="/bf4/soldier/chrisley_chrys/weapons/347666902/32/#m40a5">
+ 
+
+
+
+ <div class="weapon_unlock xsmall m40a5_fancy item-image "></div>
+
+ <div class="info">
+ <p class="title">M40A5</p>
+ <p class="score" data-tooltip="" data-tooltip-ellipsis-only="true" data-tooltip-position="right">2,096 Kills</p>
+ </div>
+ </a>
+</div>
+ 
+<div class="top-item is-linked">
+ <a href="/bf4/soldier/chrisley_chrys/weapons/347666902/32/#srr-61">
+ 
+
+
+
+ <div class="weapon_unlock xsmall M200_SRR61_fancy item-image "></div>
+
+ <div class="info">
+ <p class="title">SRR-61</p>
+ <p class="score" data-tooltip="" data-tooltip-ellipsis-only="true" data-tooltip-position="right">1,745 Kills</p>
+ </div>
+ </a>
+</div>
+
+ </div>
+ </div>
+</div>
+ </div>
+ <div class="span2">
+
+ 
+ 
+ 
+ 
+
+<div class="box overview-top-box">
+ <header>
+ <h1>Top Vehicles</h1>
+ </header>
+ <div class="box-content no-padding">
+ <div class="item-highlighted">
+ 
+<div class="top-item is-linked">
+ <a href="/bf4/soldier/chrisley_chrys/vehicles/347666902/32/#vehicle-main-battle-tanks">
+ 
+
+
+
+ <div class="vehicle_unlock medium Type99MBT_fancy item-image "></div>
+
+ <div class="info">
+ <p class="title">TYPE 99 MBT</p>
+ <p class="score" data-tooltip="" data-tooltip-ellipsis-only="true" data-tooltip-position="right">1,343 Kills</p>
+ </div>
+ </a>
+</div>
+
+ </div>
+ <div class="items-highlighted">
+ 
+<div class="top-item is-linked">
+ <a href="/bf4/soldier/chrisley_chrys/vehicles/347666902/32/#vehicle-main-battle-tanks">
+ 
+
+
+
+ <div class="vehicle_unlock xsmall T90_fancy item-image "></div>
+
+ <div class="info">
+ <p class="title">T-90A</p>
+ <p class="score" data-tooltip="" data-tooltip-ellipsis-only="true" data-tooltip-position="right">1,221 Kills</p>
+ </div>
+ </a>
+</div>
+ 
+<div class="top-item is-linked">
+ <a href="/bf4/soldier/chrisley_chrys/vehicles/347666902/32/#vehicle-air-helicopter-attack">
+ 
+
+
+
+ <div class="vehicle_unlock xsmall Z10W_fancy item-image "></div>
+
+ <div class="info">
+ <p class="title">Z-10W</p>
+ <p class="score" data-tooltip="" data-tooltip-ellipsis-only="true" data-tooltip-position="right">651 Kills</p>
+ </div>
+ </a>
+</div>
+
+ </div>
+ </div>
+</div>
+ </div>
+ <div class="span2">
+ <div class="box empty-overview-top-box">
+ <header>
+ <h1>Top Leaderboards</h1>
+ </header>
+ <div id="no-top-leaderboards" class="box-content no-padding">
+ <p class="no-data">No top leaderboards</p>
+ </div>
+
+ </div>
+ </div>
+ </div>
+ <div class="row-tight">
+ <div class="span2">
+ <div class="box overview-small-list-box">
+ <header>
+ <h1>Battle Reports</h1>
+ </header>
+ <div id="overview-battlereport-favorites" class="box-content alpha">
+ <p class="no-data">This is currently hidden by the user.</p>
+ </div>
+ <div class="box-content">
+ <p class="no-data"></p>
+ </div>
+ </div>
+ </div>
+ <div class="span2">
+ <div class="box overview-small-list-box">
+ <header>
+ <h1>Missions</h1>
+ </header>
+ <div class="box-content alpha overview-most-played-mission">
+
+ <div class="overview-missions-empty">-</div>
+ </div>
+ <div class="box-content overview-missions-top-opponent">
+ <div class="overview-missions-empty">-</div>
+ </div>
+ </div>
+ </div>
+ <div class="span2">
+ <div class="box overview-small-solo-box">
+ <header>
+ <h1>Top Game Modes</h1>
+ </header>
+ <div id="overview-top-modes" class="box-content no-padding">
+ <a href="/bf4/soldier/chrisley_chrys/detailedstats/347666902/32/">
+
+
+ <ul class="overview-service-stars gamemodes">
+
+ <li data-percent="19.523809523809632">
+ <div class="pull-left gamemode">
+ Conquest
+ </div>
+ 
+
+
+<div class="progress-bar thickest animate" data-animate-delay="120">
+ <div class="warning progress-bar-inner" data-percent="19.523809523809632" style="width: 19.5238%;"></div>
+</div>
+ <div class="star-count">
+ <span>
+ 854
+ </span>
+ </div>
+ </li>
+ 
+
+ <li data-percent="2.6466666666664196">
+ <div class="pull-left gamemode">
+ Rush
+ </div>
+ 
+
+
+<div class="progress-bar thickest animate" data-animate-delay="240">
+ <div class="warning progress-bar-inner" data-percent="2.6466666666664196" style="width: 2.64667%;"></div>
+</div>
+ <div class="star-count">
+ <span>
+ 35
+ </span>
+ </div>
+ </li>
+ 
+
+ <li data-percent="41.66666666666661">
+ <div class="pull-left gamemode">
+ Deathmatch
+ </div>
+ 
+
+
+<div class="progress-bar thickest animate" data-animate-delay="360">
+ <div class="warning progress-bar-inner" data-percent="41.66666666666661" style="width: 41.6667%;"></div>
+</div>
+ <div class="star-count">
+ <span>
+ 8
+ </span>
+ </div>
+ </li>
+ 
+
+ <li data-percent="64.54545454545455">
+ <div class="pull-left gamemode">
+ Obliteration
+ </div>
+ 
+
+
+<div class="progress-bar thickest animate" data-animate-delay="480">
+ <div class="warning progress-bar-inner" data-percent="64.54545454545455" style="width: 64.5455%;"></div>
+</div>
+ <div class="star-count">
+ <span>
+ 3
+ </span>
+ </div>
+ </li>
+ 
+
+ </ul>
+ </a>
+ </div>
+ </div>
+ </div>
+ </div>
+<section id="overview-completion">
+ <div class="box">
+ <header>
+ <h1>Completion Level</h1>
+ </header>
+ <div class="box-content no-padding">
+
+
+ <ul>
+ <li class="clearfix">
+ <a href="/bf4/campaign/347666902/32/">
+ <div class="completion-content">
+ <h6>Campaign</h6>
+ <p>
+ 1 / 7
+ </p>
+ 
+
+
+<div class="progress-bar thicker">
+ <div class="warning progress-bar-inner" style="width:14%"></div>
+</div>
+
+ </div>
+ </a>
+ </li>
+  <li class="clearfix">
+ <a href="/bf4/soldier/chrisley_chrys/assignments/347666902/32/">
+ <div class="completion-content">
+ <h6>Assignments</h6>
+ <p>
+ 95 / 108
+ </p>
+ 
+
+
+<div class="progress-bar thicker">
+ <div class="warning progress-bar-inner" style="width:87%"></div>
+</div>
+
+ </div>
+ </a>
+ </li>
+  <li class="clearfix">
+ <a href="/bf4/soldier/chrisley_chrys/awards/347666902/32/">
+ <div class="completion-content">
+ <h6>Medals</h6>
+ <p>
+ 33 / 54
+ </p>
+ 
+
+
+<div class="progress-bar thicker">
+ <div class="warning progress-bar-inner" style="width:61%"></div>
+</div>
+
+ </div>
+ </a>
+ </li>
+  <li class="clearfix">
+ <a href="/bf4/soldier/chrisley_chrys/awards/347666902/32/">
+ <div class="completion-content">
+ <h6>Ribbons</h6>
+ <p>
+ 53 / 54
+ </p>
+ 
+
+
+<div class="progress-bar thicker">
+ <div class="warning progress-bar-inner" style="width:98%"></div>
+</div>
+
+ </div>
+ </a>
+ </li>
+  <li class="clearfix">
+ <a href="/bf4/soldier/chrisley_chrys/weaponunlocks/347666902/32/">
+ <div class="completion-content">
+ <h6>Weapons</h6>
+ <p>
+ 149 / 154
+ </p>
+ 
+
+
+<div class="progress-bar thicker">
+ <div class="warning progress-bar-inner" style="width:96%"></div>
+</div>
+
+ </div>
+ </a>
+ </li>
+  <li class="clearfix">
+ <a href="/bf4/soldier/chrisley_chrys/vehicleunlocks/347666902/32/">
+ <div class="completion-content">
+ <h6>Vehicle Unlocks</h6>
+ <p class="completed">
+ 223 / 223
+ </p>
+ 
+
+
+<div class="progress-bar thicker">
+ <div class="warning progress-bar-inner" style="width:100%"></div>
+</div>
+
+ </div>
+ </a>
+ </li>
+  <li class="clearfix">
+ <a href="/bf4/soldier/chrisley_chrys/kits/347666902/32/">
+ <div class="completion-content">
+ <h6>Kits</h6>
+ <p class="completed">
+ 51 / 51
+ </p>
+ 
+
+
+<div class="progress-bar thicker">
+ <div class="warning progress-bar-inner" style="width:100%"></div>
+</div>
+
+ </div>
+ </a>
+ </li>
+  <li class="clearfix">
+ <a href="/bf4/soldier/chrisley_chrys/dogtags/347666902/32/">
+ <div class="completion-content">
+ <h6>Dog Tags</h6>
+ <p>
+ 537 / 720
+ </p>
+ 
+
+
+<div class="progress-bar thicker">
+ <div class="warning progress-bar-inner" style="width:74%"></div>
+</div>
+
+ </div>
+ </a>
+ </li>
+ 
+ </ul>
+ </div>
+ </div>
+</section></div>
+ </div>
+ </section>
+ </div>
+ 
+
+ 
+<footer id="footer-wrapper" class="grid-container">
+ <div>
+ <div id="footer-logos" class="clearfix no-padding">
+ <div id="footer-highlighted">
+ <div id="footer-diceea" class="footer-box">
+ <div class="footer-box-header">A production from</div>
+ <a href="http://www.ea.com" title="Electronic Arts" target="_blank"><img src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/footer/ea-logo.png" alt="Electronic Arts"></a>
+ <a href="http://www.dice.se" title="Digital Illusions Creative Entertainment" target="_blank"><img src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/footer/dice-logo.png" alt="Dice"></a>
+ <a href="http://www.uprise.se" title="Uprise" target="_blank"><img src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/footer/uprise-logo.png" alt="Uprise"></a>
+ </div>
+ <div id="footer-frostbite" class="footer-box">
+ <div class="footer-box-header">Technology by Frostbite</div>
+ <a href="http://www.frostbite.com" title="Frostbite 3" target="_blank">
+ <img src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/footer/frostbite3.png" alt="Frostbite 2">
+ </a>
+ </div>
+ <div id="footer-esn" class="footer-box">
+ <div class="footer-box-header">Hardware partner</div>
+ <a href="http://www.amd.com/battlefield4" title="AMD" target="_blank">
+ <img src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/footer/amd.png" alt="AMD">
+ </a>
+ </div>
+
+ <div id="footer-ratings" class="footer-box">
+ <div class="footer-rating-image rating-eu">
+ <div class="footer-box-header">Europe</div>
+ <a href="http://www.pegi.info" title="PEGI 18" target="_blank">
+ <img src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/footer/rating-eu18.png" alt="PEGI 18">
+ </a>
+ </div>
+ <div class="footer-rating-image rating-us">
+ <div class="footer-box-header">North America</div>
+ <a id="footer-logo-esrb" href="http://www.esrb.com" title="ESRB RATING" target="_blank">
+ <img src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/footer/rating-us.png" alt="ESRB RATING">
+ </a>
+ <ul class="pull-left more-info">
+ <li>ESRB</li>
+ <li>17+</li>
+ <li>Blood and Gore</li>
+ <li>Intense Violence</li>
+ <li>Strong Language</li>
+ </ul>
+ </div>
+ </div>
+ </div>
+ </div>
+ </div>
+ <div>
+ <div id="footer-legal">
+ <div id="footer-allrightsreserved">
+ EXCEPT AS EXPRESSLY CREDITED, NO WEAPON, VEHICLE OR GEAR MANUFACTURER IS AFFILIATED WITH OR HAS SPONSORED OR ENDORSED THIS GAME.<br>
+ © 2015 Electronic Arts Inc. All rights reserved. Version: 9569832
+ <span class="sep">|</span>
+ <a class="base-no-ajax" href="/bf4/language/" id="footer-change-lang"><span>Change language</span></a>
+ <span class="sep">|</span>
+ <a href="/bf4/switch/?to=mobile">Mobile version</a>
+ </div>
+ <ul id="footer-links">
+ <li>
+ <a href="http://careers.ea.com/" target="_blank">
+ Jobs
+ </a>
+ <span class="sep">|</span>
+ </li>
+ <li><a href="http://tos.ea.com/legalapp/WEBPRIVACY/en/en/PC/" target="_blank">Privacy &amp; Cookie Policy</a><span class="sep">|</span></li>
+ <li><a href="http://www.ea.com/about" target="_blank">Corporate Info</a><span class="sep">|</span></li>
+ <li><a href="http://www.ea.com/2/legal-notices" target="_blank">Legal Notices</a><span class="sep">|</span></li>
+ <li><a href="http://www.ea.com/1/product-eulas" target="_blank">Product EULAs and Other Disclosures</a><span class="sep">|</span></li>
+ <li><a href="http://tos.ea.com/legalapp/WEBTERMS/en/en/PC/" target="_blank">Terms of Service</a><span class="sep">|</span></li>
+ <li><a href="http://tos.ea.com/legalapp/ROC/US/en/PC/BF4" target="_blank">Rules of Conduct</a><span class="sep">|</span></li>
+ 
+ <li class="credits-age-rating"><a href="/bf4/agerating/">Age ratings</a><span class="sep">|</span></li>
+ <li class="credits-link"><a href="/bf4/credits/">Credits</a></li>
+ 
+ </ul>
+ <div id="footer-share">
+ <ul>
+ <li><a href="http://www.youtube.com/battlefield" target="_blank" id="footer-youtube-logo"></a></li>
+ <li><a href="http://twitter.com/battlefield" target="_blank" id="footer-twitter-logo"></a></li>
+ <li class="last"><a href="http://www.facebook.com/battlefield" target="_blank" id="footer-facebook-logo"></a></li>
+ </ul>
+ </div>
+ </div>
+ </div>
+</footer>
+
+
+ 
+
+ <div id="grid-overlay">
+ <div class="row">
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ <div class="span1"></div>
+ </div>
+ </div>
+ </div>
+ 
+
+ </div>
+ <div id="esnlaunch_container"></div>
+ </div>
+ <div id="fb-root"></div>
+
+
+
+
+<div id="draggables"></div>
+<div id="popup-intro-browser-wrapper"></div>
+<div id="soundFxPlayer"></div>
+<div id="dialog-container">
+</div>
+<div id="unified-game-manager" data-intro="fxp" data-intro-step="5"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/generated/en_US/bundle_base_bottombundles_438223020.js"></script>
+
+
+<script type="text/javascript" src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/generated/en_US/bundle_base_bottombundles_3279227929.js"></script>
+
+ 
+<script type="text/javascript" src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/generated/en_US/bundle_base_bottombundles_1230927518.js"></script>
+
+<script type="text/javascript" src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/generated/en_US/bundle_base_bottombundles_3723250967.js"></script>
+
+
+
+
+
+
+
+<script src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/dynamic/bf4/en_US.js"></script>
+<script src="//cdn.battlelog.com/bl-cdn/cdnprefix/develop-8950182/public/dynamic/web/en_US.js"></script>
+
+
+<script type="text/javascript">
+Surface.setTimeZoneData('UTC');
+Surface.urlContext = {"_section":"bf4"};
+Surface.globalContext = {"currentUrl":"|bf4|soldier|chrisley_chrys|stats|347666902|ps4|","userContext":{},"staticContext":{"suggestionTypes":{"real":{},"CAMPAIGN_ASSIGNMENT":256,"ASSIGNMENT":128,"WEAPON":2,"denominator":{},"numerator":{},"KIT_UNLOCK":16,"VEHICLE_ATTACHMENT":8,"PERSONAL_RECORD":1,"SERVICE_STAR":512,"imag":{},"BATTLEPACK":1024,"MEDAL":32,"WEAPON_ATTACHMENT":4,"RIBBON":64},"pluginDownloadUrl":"\/public\/download\/battlelog-web-plugins_2.7.1_162.exe","environmentInfoEnabled":false,"hideBFHLoadout":false,"originLocalHostApiEnabled":true,"locale":"en_US","idleTimeout":600,"showCommunityMissions":true,"knowledgeServiceEndpoint":{"8192":"http:\/\/sats3c1.sov.ea.com\/kbsat15\/knowledge\/article","2048":""},"isProduction":true,"serverBrowserMaxSize":300,"platforms":{"real":{},"imag":{},"denominator":{},"numerator":{},"XBOXONE":64,"XBOX":8,"PC":1,"XBOX360":2,"PS2":16,"PS3":4,"PS4":32},"pluginVersion":"2.7.1","sslAvailable":true,"advertisementService":"https:\/\/adsrv-bf4.ea.com\/api\/20120529\/advertisement","gateDLCBodyClass":"","disableFacebookFriendFinder":true,"preferredLang":null,"currentHost":"http:\/\/battlelog.battlefield.com:80","originStoreExpansions":{"8192":"OFB-EAST:55172","512":"OFB-EAST:41331","4096":"OFB-EAST:51080","16384":"OFB-EAST:109546437","1024":"OFB-EAST:50401","2048":"OFB-EAST:50631"},"ODCStoreLinkDetailUrl":true,"socialSharingEnabled":false,"ODCEndPointUrls":{"bf3":"https:\/\/www.ea.com\/en\/games\/battlefield\/battlefield-3","bfh":"https:\/\/www.ea.com\/en\/games\/battlefield\/battlefield-hardline","bf4":"https:\/\/www.ea.com\/games\/battlefield\/battlefield-4"},"googleAnalyticsJsDebugEnabled":false,"myPersonas":[],"cdnDownloadHost":"eaassets-a.akamaihd.net","showNPXFlow":false,"languages":[{"lang":"en","value":1},{"lang":"de","value":2},{"lang":"fr","value":4},{"lang":"es","value":8},{"lang":"it","value":16},{"lang":"pl","value":32},{"lang":"ru","value":64},{"lang":"ja","value":128},{"lang":"ko","value":256},{"lang":"zh","value":512},{"lang":"cs","value":1024},{"lang":"pt","value":2048}],"serverBrowserPageSize":60,"currentHostSecure":"https:\/\/battlelog.battlefield.com:443","logoutUrl":"https:\/\/accounts.ea.com\/connect\/logout?locale=en_US&state=bf4&redirect_uri=https%3A%2F%2Fbattlelog.battlefield.com%2Fsso%2Flogout&client_id=battlelog","liveScoreboardEnabled":{"4096":{"1":false},"2048":{"64":true,"1":true,"2":false,"4":false,"32":true},"2":{"1":true},"8192":{"64":false,"1":true,"2":false,"4":false,"32":false}},"knowledgeServiceParameters":{"8192":{"gameId":"battlefield-hardline","S-IntegrationId":"Visceral-Hardline"},"2048":{}},"launchTimerInSeconds":0,"loginUrl":"https:\/\/accounts.ea.com\/connect\/auth?locale=en_US&state=bf4&redirect_uri=https%3A%2F%2Fbattlelog.battlefield.com%2Fsso%2F%3Ftokentype%3Dcode&response_type=code&client_id=battlelog&display=web%2Flogin","useJsDebug":false,"sections":{"real":{},"BFBC":128,"ALL":536870912,"BFH":8192,"urlStrings":["bf3","all","api","mohw","bf4","bfh"],"BFMC":512,"imag":{},"denominator":{},"numerator":{},"BF1942":4,"BFP4F":1024,"BF3":2,"BF2":32,"MOHW":4096,"BFHEROES":256,"BF1943":8,"BF2142":64,"BFBC2":1,"GENERAL":1073741824,"BFVIETNAM":16,"WARSAW":2048},"cdnBaseDir":"battlelog\/prod\/","pluginLauncherVersion":"162","friendrecommendationEnabled":false,"signupUrl":"https:\/\/accounts.ea.com\/connect\/auth?state=bf4&redirect_uri=https%3A%2F%2Fbattlelog.battlefield.com%2Fsso%2F%3Ftokentype%3Dcode&response_type=code&client_id=battlelog&locale=en_US&display=web%2Fcreate","originLaunchDisabled":1,"buildVersion":"9569832","keeperQueryEndpoint":"https:\/\/keeper.battlelog.com","facebookOpenGraphEnabled":false,"ownsActiveGame":false,"nucleusNamespaces":{"BATTLEFIELD":"battlefield","CEM_EA_ID":"cem_ea_id","XBOX":"xbox","PS3":"ps3"},"isCte":false,"knowledgeServiceEnabled":{"8192":true,"2048":false},"gameExpansions":{"BF3AM":8192,"BF3AK":4096,"BF4PREPURCHASE":65536,"BFHXP1CA":536870912,"VANILLA":0,"BF2142NS":4,"BF4XP3DT":4194304,"BF3PREMIUM":1024,"BF3EG":16384,"BF1942SW":2,"BFBCPS3DEMO":128,"BF3CQ":2048,"BF2AF":8,"BFHXP3GE":2147483648,"BFHPREORDER":33554432,"XBOXEAACCESS":67108864,"BF4XP2NS":2097152,"BF4XP5SP":268435456,"MOHWPDLC0":32768,"BFBC360DEMO":64,"real":{},"BFHPREMIUM":134217728,"BF4TRIAL":16777216,"imag":{},"denominator":{},"BF2SF":32,"BF4DDPREPURCHASE":131072,"BF1942RTR":1,"BF4XP1CR":1048576,"BF4XP7WP":17179869184,"BFHXP2RO":1073741824,"BF3B2K":512,"BF4PREMIUM":262144,"BFHXP4BE":4294967296,"BF4XP4FS":8388608,"numerator":{},"BF4XP0SA":524288,"BF4XP6FP":8589934592,"BF2EF":16,"BFBC2NAM":256},"devguideEnabled":false,"googleAnalyticsMeasurementId":"","originLaunchEnabled":2,"isTouchDevice":false,"gameServerMapModes":{"TEAMDEATHMATCH":32,"real":{},"RUSHSMALL":2,"CONQUESTASSAULTLARGE":128,"BOUNTYHUNTER":274877906944,"UNKNOWN":1,"CARRIERASSAULTSMALL":134217728,"GUNMASTER":512,"DOMINATION":1024,"CASHGRAB":274877906944,"SQUADDEATHMATCH":8,"BLOODMONEY":268435456,"CARRIERASSAULT":33554432,"OBJECTIVERAID":262144,"CONQUESTSMALL":1,"CONQUEST_LADDER":68719476736,"BOMBSQUAD":1048576,"TANKSUPERIORITY":131072,"NONE":1,"HIT":8589934592,"COMBATMISSION":8192,"HOSTAGE":17179869184,"CONQUESTASSAULTSMALL":256,"AIRSUPERIORITY":8388608,"SQOBLITERATION":137438953472,"HOTWIRE":4294967296,"CONQUESTLARGE":64,"SQRUSH":4,"SCAVENGER":4194304,"SPORT":65536,"HEIST":2147483648,"SQHEIST":549755813888,"SQUADOBLITERATION":137438953472,"TURFWARLARGE":1073741824,"RUSHLARGE":2,"TEAMDEATHMATCH_FIRETEAM":4096,"CONQUEST":1,"denominator":{},"RUSH":2,"SQUADHEIST":549755813888,"OBLITERATION":2097152,"imag":{},"FIRETEAM_SURVIVOR":32768,"TEAMDEATHMATCHC":2048,"ONSLAUGHT":16,"numerator":{},"SQDM":8,"SECTORCONTROL":16384,"CARRIERASSAULTLARGE":67108864,"SQUADRUSH":4,"CHAINLINK":34359738368,"CAPTURETHEFLAG":524288,"ELIMINATION":16777216,"TURFWARSMALL":536870912},"allowRunGame":false,"skipOriginLaunchBf3Check":true,"userPresenceStates":{"AWAY_ORIGIN":131072,"PLAYING_MP":256,"ONLINE_TABLET":2,"PLAYING_ORIGIN":1024,"ONLINE_ORIGIN":16,"numerator":{},"INVISIBLE_MOBILE":67108864,"denominator":{},"INVISIBLE_TABLET":33554432,"PLAYING_COOP":512,"GROUP_WEB":4294967296,"ONLINE_GAME":8,"GROUP_ORIGIN":8589934592,"ONLINE_MOBILE":4,"real":{},"imag":{},"INVISIBLE_WEB":16777216,"ONLINE_WEB":1,"AWAY_WEB":65536},"externalForumsOnly":"https:\/\/answers.ea.com\/t5\/Battlefield\/ct-p\/battlefield\/en-us","cdnAccountDirectory":"battlelog","isSC":false,"checkPlugin":true,"gravatarDefaultUrl":"https:\/\/eaassets-a.akamaihd.net\/battlelog\/defaultavatars\/default-avatar-[SIZE].png","logClientSideErrors":false,"pluginLauncherId":"application\/x-battlelog-game-launcher-2.7.1","gameType":{"real":{},"COOP":4,"imag":{},"SP":2,"numerator":{},"denominator":{},"MP":1,"NOT_PLAYING":0},"warsawCommanderRequiredRank":10,"overrideStoreLinksToODC":true,"checkGameInstalled":false,"keeperQueryEnabled":true,"games":{"real":{},"BFBC":128,"BF1943":8,"BFH":8192,"BFMC":512,"imag":{},"denominator":{},"numerator":{},"BF1942":4,"BFP4F":1024,"BF3":2,"BF2":32,"MOHW":4096,"BFHEROES":256,"BF2142":64,"BFBC2":1,"BFVIETNAM":16,"WARSAW":2048},"newsCommentsEnabled":false,"isBF1Visible":true,"detectedBrowser":{"ppi":false,"isAndroidVersion":null,"isOriginIGO":false,"isTablet":false,"isGameClientX360":false,"isGameClientPC":false,"isBattledash":false,"userAgentString":"Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/138.0.0.0 Safari\/537.36 Edg\/138.0.0.0","isIOSVersion":null,"isFirefox":false,"isGameClientPS4":false,"isGameClientPS3":false,"appVersion":null,"isEaWebkit":false,"isTabletApp":false,"appCapabilities":null,"isCommanderApp":false,"deviceHeight":false,"isNexus":false,"isWin64":true,"appLanguage":null,"isHybridApp":false,"isIOS":false,"isFacebookExternalHit":false,"isIPhone":false,"isAndroidMobile":false,"isEdge":false,"isTouchDevice":false,"pluginSupported":false,"isWindows":true,"isGameClientXONE":false,"isAndroid":false,"isWinXP":false,"isChrome":138,"isIE":false,"deviceWidth":false,"isIPad":false},"originStoreScriptUrl":"https:\/\/games.web.dm.origin.com\/web\/ecommerce\/originStoreWeb","hideVideoBackground":false,"backdropUrl":"","sslStrategy":"all","facebookOpenGraphDisableBFH":true},"isAjaxFetch":false,"currentCanonicalURL":"http:\/\/battlelog.battlefield.com\/bf4\/soldier\/chrisley_chrys\/stats\/347666902\/ps4\/","useIdentity2RedirectFlow":true,"session":{"hasAdminAccess":false,"originLaunch":false,"userProducts":[],"npxExploration":{},"locale":{"shortdate":"%d\/%m","fulldate":"%Y-%m-%d","offset":0,"time":"%H:%M"},"introSectionBits":4294967295,"userId":"0","postChecksum":"b1e59f7356","facebook":{},"user":null,"isLoggedIn":false,"rollouts":[],"userGameExpansions":{},"userGames":{}},"systemUtcTime":1753671554,"mutedSounds":0,"bf4trialbannerActive":true,"staticPrefix":"\/\/cdn.battlelog.com\/bl-cdn\/cdnprefix\/develop-8950182","realm":{"lang":1,"game":2048,"section":2048},"focusGame":true,"pushConnections":[{"sslAddress":"beaconpush.battlelog.com","apiKey":"planet","nodeNumber":0,"channelsWithAuth":["1753714754;c0bbcd89aa9e4481004a8691b6f8c425c4de5f05bp:user"],"sslEnabled":true,"sslWsAddress":"beaconpush.battlelog.com","channels":["bp:user"],"token":"1753714754;6f469ea4ee86a38684072704bcc4dbab4f795e20","user":"guest_1753671554.32","address":"beaconpush.battlelog.com","wsAddress":"beaconpush.battlelog.com","log":false}],"isBFHVisible":true,"requestURI":"http:\/\/battlelog.battlefield.com\/bf4\/soldier\/chrisley_chrys\/stats\/347666902\/ps4\/","pushOperator":"planet","writeBanUntil":0,"componentName":"profile","hasWriteBan":false,"pushFlashUrl":"https:\/\/beaconpush.battlelog.com\/clients\/client-1.swf","activeMenu":"","filePrefix":"\/\/d34ymitoc1pg7m.cloudfront.net","isAjaxNavigation":false,"actionName":"stats","isSecure":true,"pushJavascriptUrl":"https:\/\/beaconpush.battlelog.com\/clients\/client-2.js","banType":0,"hideComcenter":false,"clientIp":"177.148.238.151","bfhbetabannerActive":false};
+Surface.urlactionMap = {};
+Surface.Renderer.state.usedTemplates = ['gamemanager.empty', 'ui.loader', 'ui.cookieprefs', 'common.gameExpansionsList', 'popup.empty', 'base.footer', 'npx.empty', 'ui.avatar', 'battlereport.empty', 'base.gameselector', 'profile.warsawstatsheader', 'base.headersecondarynav', 'surfaceframework.index', 'base.facebookbar', 'base.header', 'base.topbundles', 'base.headerusertools', 'notificationevent.empty', 'unifiedgamemanager.empty', 'dialog.empty', 'base.index', 'header.dropdownsoldier', 'xpack.empty', 'common.loadingbox', 'launcher.empty', 'comcenter.index', 'base.push', 'base.analytics', 'battlepacks.empty', 'common.gameExpansionImage', 'friend.empty', 'base.ajaxindex', 'profile.warsawstats', 'base.bottombundles', 'notification.empty', 'base.headernav', 'footer.warsawindex', 'base.warsawheaderdropdown'];
+Surface.Renderer.state.usedComponents = ['profile', 'popup', 'xpack', 'footer', 'launcher', 'notification', 'unifiedgamemanager', 'battlereport', 'notificationevent', 'battlepacks', 'header', 'base', 'ui', 'common', 'dialog', 'gamemanager', 'surfaceframework', 'comcenter', 'friend', 'npx'];
+Surface.domReady(Surface.Renderer.invokeUsedComponents);
+typeof(block_profile_warsawstats) != 'undefined' ? base.index.surface_164_6.render({}, block_profile_warsawstats) : Surface.logMissingBlockConfig('block_profile_warsawstats', 'comcenter_container');
+typeof(block_profile_warsawstatsheader) != 'undefined' ? profile.warsawstatsheader.surface_63_18.render({"challengesVersus":null,"user":{"userId":"2955050137506271746"}}, block_profile_warsawstatsheader) : Surface.logMissingBlockConfig('block_profile_warsawstatsheader', 'stats-header-challenges');Surface.Renderer.warnDuplicateSurfaces();
+</script>
+
+<script type="text/javascript">
+ /* We want to store these right away, not on dom ready */
+ base.staticContext = S.globalContext.staticContext;
+ base.userContext = S.globalContext.userContext
+ // console.log spam fix
+ Surface.$.event.props = Surface.$.event.props.join('|').replace('layerX|layerY|', '').split('|');
+</script>
+
+<script>
+ try {
+
+
+ main.beaconPush = new Beaconpush(
+ 'https://beaconpush.battlelog.com/session', 'planet', 'guest_1753671554.32', '1753714754;6f469ea4ee86a38684072704bcc4dbab4f795e20', { debug: false }
+ );
+ main.beaconPush.connect();
+ main.beaconPush.setSubscriptions(["bp:user"], Push.listener);
+ 
+ } catch(e) {
+ // BP failed to load so we need to create a dummy object
+ S.error("Beaconpush failed to load!");
+ var fn = function(){};
+ var props = "connect,setSubscriptions,subscribe,trigger,triggerInterval,triggerUser".split(",");
+ main.beaconPush = {};
+ while (props.length) {
+ main.beaconPush[props.splice(0,1)] = fn;
+ }
+ }
+</script>
+
+
+
+
+
+ 
+<div id="cookie-preferences">
+ <div id="consent_blackbar"><style>    #truste-consent-track {    position: fixed;    bottom: 0;    left: 0;    right: 0;   direction: ltr;  }    .trustetrack {  background-color: #000;}.truste-banner {  margin: 0 auto;  display: flex;}.truste-messageColumn {  font-family: Arial, sans-serif;  font-size: 12px;  color: #fff;  margin: 15px 0px 15px 5px;  float: left;  display: flex;  flex-direction: row;  align-items: center;}.truste-buttonsColumn {  float: right;  margin: 10px 5px 10px 0px;  display: flex;  min-width: 275px;  flex-direction: column;  justify-content: center;  align-items: end;}.truste-button1,.truste-button2 {  font-family: Arial, sans-serif;  background: #000;  color: #fff;  font-size: 14px;  width: 200px;  height: auto;  cursor: pointer;  margin: 5px;  padding: 15px;  border: 1px solid #fff;}.truste-button1:hover,.truste-button2:hover {  background: #fff;  color: #000;}.truste-button3 {  font-family: Arial, sans-serif;  font-size: 12px;  width: 140px;  height: auto;  cursor: pointer;  margin-left: 5px;  padding: 5px;  color: #00559c;  border: none;  background-color: transparent;  outline: none;}.hidedesktop {  display: none;  font-family: Arial, sans-serif;  font-size: 14px;  cursor: pointer;  color: #00559c;  text-decoration: none;}.truste-cookie-link,.ea-donotsell {  font-family: Arial, sans-serif;  font-size: 12px;  cursor: pointer;  color: red;  text-decoration: none;  font-weight: bold;}.cookiespage {  cursor: pointer;  color: red;  font-weight: bold;}.advancedsettings {  cursor: pointer;}/* MEDIA QUERIES */@media screen and (max-width: 1240px) {    .truste-banner {        margin: 0 10px;    }}@media screen and (min-width: 535px) and (max-width: 856px) {  .truste-banner {    margin: 0 10px;    display: block;  }  .truste-messageColumn,  .truste-buttonsColumn {    float: left;    width: 100%;  }  .truste-messageColumn {    margin: 15px 0px 10px 0px;  }  .truste-buttonsColumn {    margin: 10px 0px 10px 0px;    align-items: center;  }  .truste-button1,  .truste-button2 {    margin-top: 0px;    margin-left: 0px;    width: 49%;    float: left;  }  .truste-button2 {    margin-right: 5px;  }  .truste-button3 {    display: none;  }  .hidedesktop {    display: inline;    font-size: 14px;    cursor: pointer;    color: #00559c;    text-decoration: none;  }}@media screen and (max-width: 534px) {  .truste-banner {    margin: 0 10px;    display: block;  }  .truste-messageColumn,  .truste-buttonsColumn {    float: left;    width: 100%;  }  .truste-messageColumn {    margin: 15px 0px 10px 0px;  }  .truste-buttonsColumn {    float: right;    margin: 10px 0px 10px 0px;    align-items: center;  }  .truste-button1,  .truste-button2 {    margin: 5px 0 0 0;    width: 100%;  }  .truste-button3 {    display: none;  }  .hidedesktop {    display: inline;    font-size: 14px;    cursor: pointer;    color: #00559c;    text-decoration: none;  }}.cookiespage {  cursor: pointer;  font-family: Arial, sans-serif;  font-size: 12px;  color: red;  font-weight: bold;}.advancedsettings {  cursor: pointer;  font-family: Arial, sans-serif;  font-size: 12px;  color: red;  font-weight: bold;}  /*.ea-donotsell{color: #fff;}*/.truste-messageColumn a{text-decoration:underline;}.truste-banner-close {  position: absolute;  right: 20px;  top: 15px;  cursor: pointer;}.truste-banner-close img {  width: 15px;  height: 15px;}.gpc-detected {      display: none;}.no-gpc-detected {}.hide-no-gpc-detected {      display: none;}#truste-consent-buttons button {  padding-top: 7px;  padding-bottom:7px;}</style><div class="trustetrack" id="truste-consent-track" style="opacity: 1; display: block;">   <div id="truste-consent-content" class="truste-banner" style="overflow: hidden; max-width: 1200px; max-height:auto;">      <div id="truste-consent-text" class="truste-messageColumn">         <p><span class="no-gpc-detected">            <strong>Este site usa cookies e outras tecnologias de rastreamento online</strong> ("cookies") para auxiliar o funcionamento do site, melhorar sua experiência, analisar o uso e ativar publicidade segmentada que pode aparecer em outros sites ou plataformas.            <br><br>            Ao escolher <strong>Aceitar</strong>, você consente com o uso de cookies para <strong>publicidade segmentada</strong> da EA e de seus parceiros publicitários terceiros, bem como para fins de <strong>funcionalidade</strong>, como análises. Certos cookies obrigatórios para o funcionamento do nosso site permanecem ativados, independentemente da sua escolha. Para ver mais detalhes e gerenciar suas preferências, consulte nossa <a href="https://www.ea.com/pt-br/legal/privacy-and-cookie-policy" target="_blank" id="truste-privacy-button" class="truste-cookie-link">Política de Privacidade e Cookies</a> e <strong>Suas opções de privacidade</strong>.            </span>            <!-- <span class="gpc-detected"><strong>Este site usa cookies e outras tecnologias de rastreamento online</strong> (&#34;cookies&#34;) para auxiliar o funcionamento do site, melhorar sua experiência, analisar o uso e ativar publicidade segmentada que pode aparecer em outros sites ou plataformas.<br><br>            We have detected a <strong>Global Privacy Control</strong> signal from your browser and disabled Cookies used for <strong>targeted advertising</strong>, which may have also been considered a sale or sharing of your personal information. Optional Cookies used for <strong>functional</strong> purposes, like analytics, are also disabled. Playing videos on our site requires enabling these Cookie categories, or the separate Multimedia Player control available in <strong>Your Privacy Choices</strong>. For more details and to manage your preferences, please review our&nbsp;<a href="https://www.ea.com/pt-br/legal/privacy-and-cookie-policy" target="_blank" id="truste-privacy-button" class="truste-cookie-link">Política de Privacidade e Cookies</a> e <strong>Suas opções de privacidade</strong>.            <a id="truste-consent-close" class="truste-banner-close"><img src="https://consent.trustarc.com/get?name=adidas_close_white.png" alt="close icon"></a>            </span> -->         </p>      </div>      <div id="truste-consent-buttons" class="truste-buttonsColumn">         <button id="truste-consent-button" type="button" class="truste-button2 no-gpc-detected">Aceitar</button>         <button id="truste-consent-required" type="button" class="truste-button1 no-gpc-detected">Recusar</button>         <button id="truste-show-consent" type="button" class="truste-button1" aria-haspopup="dialog">Suas opções de privacidade</button>      </div>   </div></div></div>
+ <div id="teconsent" consent="undefined" aria-label="Open Cookie Preferences Modal" role="complementary"><script src="https://consent.trustarc.com/asset/notice.js/v/v1.7-3018" async="async" crossorigin="" importance="high"></script><a role="link" id="icon-id08265249238208814" tabindex="0" lang="pt" aria-haspopup="dialog" aria-label="Cookie Preferences, opens a dedicated popup modal window" class="truste_cursor_pointer">Suas opções de privacidade</a></div>
+ <script async="async" src="//consent.trustarc.com/notice?domain=ea.com&amp;c=teconsent&amp;js=nj&amp;noticeType=bb&amp;text=true&amp;gtm=1" crossorigin="" id="truste_0.0009833375841408198"></script>
+</div>
+
+
+<noscript><img src="https://battlelog.battlefield.com/akam/13/pixel_79102768?a=dD1kMTJhMDEzYWJiMWFkZmI5YzY2OWYzZTFjODk5NjkzNWM5MmY5NGQ0JmpzPW9mZg==" style="visibility: hidden; position: absolute; left: -999px; top: -999px;" /></noscript>
+
+
+
+
+</body></html>
