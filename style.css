@@ -458,3 +458,11 @@ body {
     font-style: italic;
     opacity: 0.8;
 }
+
+/* Adicione isso ao seu style.css */
+.contador-visitantes {
+    text-align: center; /* Centraliza todo o texto e elementos inline dentro da div */
+    margin-top: 2rem;   /* Adiciona um espaço acima (opcional) */
+    margin-bottom: 2rem;/* Adiciona um espaço abaixo (opcional) */
+    color: var(--text-muted-color); /* Usa a cor de texto secundária (opcional) */
+}
