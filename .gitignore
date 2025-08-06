@@ -3,7 +3,7 @@
 # Arquivos de ambiente com informações sensíveis
 .env
 credentials.json
-token.json
+token*.json
 
 # Dependências e arquivos de ambiente do Python
 myenv/

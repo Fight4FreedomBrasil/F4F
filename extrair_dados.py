@@ -24,7 +24,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # --- Configuração Global ---
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly']
+# Linha corrigida no extrair_dados.py
+SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 RANGE_NAME = 'Platoon!C2:C'
 BASE_URL = "https://battlelog.battlefield.com"
