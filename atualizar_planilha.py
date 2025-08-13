@@ -102,14 +102,14 @@ def update_timestamp(sheet):
         
         print(f"\n🕒 Registrando data e hora: '{timestamp_str}'")
         
-        values_to_write = [[timestamp_str]]
-        body = {'values': values_to_write}
+        #values_to_write = [[timestamp_str]]
+        #body = {'values': values_to_write}
         
         sheet.values().update(
             spreadsheetId=SPREADSHEET_ID,
             range=UPDATE_TIMESTAMP_CELL,
-            valueInputOption='USER_ENTERED',
-            body=body
+            valueInputOption='USER_ENTERED'
+            #body=body
         ).execute()
         print("✅ Data e hora de atualização registradas com sucesso na planilha.")
     except HttpError as err:
