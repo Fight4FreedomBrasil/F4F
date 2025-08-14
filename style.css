@@ -466,3 +466,15 @@ body {
     margin-bottom: 2rem;/* Adiciona um espaço abaixo (opcional) */
     color: var(--text-muted-color); /* Usa a cor de texto secundária (opcional) */
 }
+
+/* --- Estilo para Destaque de Estatísticas --- */
+.stat-card.highlight {
+    background-color: #3a3a2a;
+    border: 2px solid #ffd700; /* Cor dourada do Tier S */
+    color: #fff;
+}
+
+.stat-card.highlight .stat-value {
+    color: #ffd700;
+    font-weight: bold;
+}
