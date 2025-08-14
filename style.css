@@ -478,3 +478,69 @@ body {
     color: #ffd700;
     font-weight: bold;
 }
+
+/* --- Estilo para Medalhas (com Tooltip) --- */
+.member-medals {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px; /* Espaçamento abaixo do ID do jogador */
+    justify-content: flex-start; /* Alinha as medalhas à esquerda */
+    padding-left: 5px;
+}
+
+.medal-wrapper {
+    position: relative; /* Essencial para o posicionamento do tooltip */
+    display: inline-block;
+}
+
+.medal-icon {
+    width: 28px; /* Tamanho pequeno como pedido */
+    height: 28px;
+    transition: transform 0.2s;
+}
+
+/* O tooltip que aparece ao passar o mouse */
+.medal-tooltip {
+    position: absolute;
+    bottom: 110%; /* Posiciona acima do ícone */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #181818;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #444;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    width: 250px; /* Largura do tooltip */
+    text-align: center;
+    
+    /* Escondido por padrão */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+    z-index: 10;
+}
+
+/* Mostra o tooltip quando o mouse está sobre o wrapper */
+.medal-wrapper:hover .medal-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Estilos dentro do tooltip */
+.tooltip-img {
+    width: 80px; /* Imagem ampliada */
+    height: 80px;
+    margin-bottom: 10px;
+}
+.tooltip-title {
+    margin: 0 0 5px 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #ffd700;
+}
+.tooltip-desc {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #ccc;
+}

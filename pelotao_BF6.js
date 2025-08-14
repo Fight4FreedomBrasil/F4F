@@ -1,4 +1,4 @@
-// Arquivo: pelotao_BF6.js
+// Arquivo: pelotao_BF6.js (com sistema de Medalhas por Tooltip/Hover)
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -6,38 +6,27 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const container = document.getElementById('platoon-container');
 
-    async function fetchPlatoonData() {
+    async function initialize() {
         try {
             const response = await fetch(API_URL);
             if (!response.ok) throw new Error(`Erro na rede: ${response.statusText}`);
             
             const members = await response.json();
-            
-            if (!Array.isArray(members)) {
-                 throw new Error("A resposta da API não retornou uma lista de membros válida.");
-            }
+            if (!Array.isArray(members)) throw new Error("A API não retornou uma lista de membros válida.");
             
             renderPlatoon(members);
+            // A função setupMedalLightbox() foi removida, não é mais necessária.
 
         } catch (error) {
             console.error("Erro ao buscar dados do pelotão:", error);
-            container.innerHTML = `<p class="loading-text" style="color:red;">Não foi possível carregar os dados do pelotão. Verifique o console (F12) para detalhes.</p>`;
+            container.innerHTML = `<p class="loading-text" style="color:red;">Não foi possível carregar os dados. Verifique o console (F12).</p>`;
         }
     }
 
     function renderPlatoon(members) {
         container.innerHTML = '';
-        
-        // --- LÓGICA DE DESTAQUE (INÍCIO) ---
-        // 1. Encontra os maiores valores para cada estatística antes de renderizar
         const topStats = findTopStats(members);
-        // --- LÓGICA DE DESTAQUE (FIM) ---
-
-        const rankOrder = [
-            'Marechal', 'General', 'Coronel', 'Tenente', 'Major',
-            'Capitão', 'Cabo', 'Soldado', 'Sem Patente'
-        ];
-        
+        const rankOrder = [ 'Marechal', 'General', 'Coronel', 'Tenente', 'Major', 'Capitão', 'Cabo', 'Soldado', 'Sem Patente' ];
         const membersByRank = groupBy(members, 'Ranking');
         
         rankOrder.forEach(rankName => {
@@ -52,45 +41,55 @@ document.addEventListener('DOMContentLoaded', () => {
                 const sortedMembers = membersByRank[rankName].sort((a, b) => (a.Nome || "").localeCompare(b.Nome || ""));
 
                 sortedMembers.forEach(member => {
-                    // 2. Passa os maiores valores para a função que cria o card
                     membersGrid.appendChild(createMemberCard(member, topStats));
                 });
-
                 rankSection.appendChild(membersGrid);
                 container.appendChild(rankSection);
             }
         });
     }
 
-    // Função que encontra os maiores valores de cada estatística
     function findTopStats(members) {
         const top = { 'K/D': 0, 'Kills': 0, 'Assists': 0, 'Revives': 0, 'Partidas': 0, 'XP': 0 };
-        const statKeys = Object.keys(top);
-
-        members.forEach(member => {
-            statKeys.forEach(key => {
+        Object.keys(top).forEach(key => {
+            members.forEach(member => {
                 try {
-                    // Converte o valor para número da forma correta
                     const value = parseFloat(String(member[key] || '0').replace(/,/g, ''));
                     if (value > top[key]) {
                         top[key] = value;
                     }
-                } catch(e) { /* Ignora erros de conversão */ }
+                } catch(e) {}
             });
         });
-        console.log("Maiores estatísticas encontradas:", top); // Para depuração
         return top;
     }
 
-    // A função de criar o card agora recebe os 'topStats'
     function createMemberCard(member, topStats) {
         const card = document.createElement('div');
         card.className = 'member-card';
 
+        // --- LÓGICA ATUALIZADA PARA CRIAR AS MEDALHAS COM TOOLTIP ---
+        let medalsHTML = '';
+        if (member.MedalhasData && member.MedalhasData.length > 0) {
+            medalsHTML = '<div class="member-medals">';
+            member.MedalhasData.forEach(medal => {
+                medalsHTML += `
+                    <div class="medal-wrapper">
+                        <img src="${medal.url}" alt="${medal.nome}" class="medal-icon">
+                        <div class="medal-tooltip">
+                            <img src="${medal.url}" alt="${medal.nome}" class="tooltip-img">
+                            <h4 class="tooltip-title">${medal.nome}</h4>
+                            <p class="tooltip-desc">${medal.descricao}</p>
+                        </div>
+                    </div>
+                `;
+            });
+            medalsHTML += '</div>';
+        }
+
         const consoleIcons = { 'PS5': 'fa-playstation', 'PS4': 'fa-playstation', 'XBOX': 'fa-xbox', 'PC': 'fa-windows' };
         const iconClass = (member.Plataforma && consoleIcons[member.Plataforma.toUpperCase()]) || 'fa-gamepad';
         
-        // 3. Verifica se a estatística do membro é a maior e adiciona a classe 'highlight' se for
         const isTopKD = parseFloat(String(member['K/D'] || 0).replace(/,/g, '')) === topStats['K/D'];
         const isTopKills = parseFloat(String(member['Kills'] || 0).replace(/,/g, '')) === topStats['Kills'];
         const isTopAssists = parseFloat(String(member['Assists'] || 0).replace(/,/g, '')) === topStats['Assists'];
@@ -98,11 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const isTopPartidas = parseFloat(String(member['Partidas'] || 0).replace(/,/g, '')) === topStats['Partidas'];
         const isTopXP = parseFloat(String(member['XP'] || 0).replace(/,/g, '')) === topStats['XP'];
 
+        // --- POSIÇÃO DAS MEDALHAS AJUSTADA ---
         card.innerHTML = `
             <div class="member-details">
                 <h3>${member['Nome'] || 'N/A'}</h3>
                 <p><span>${member['ID'] || 'N/A'}</span><i class="fab ${iconClass} console-icon"></i></p>
-            </div>
+                ${medalsHTML} </div>
             <div class="member-stats">
                 <div class="stats-grid">
                     <div class="stat-card ${isTopKD ? 'highlight' : ''}"><span class="stat-label">K/D</span><span class="stat-value">${member['K/D'] || 'N/A'}</span></div>
@@ -125,5 +125,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }, {});
     }
 
-    fetchPlatoonData();
+    initialize();
 });
