@@ -97,7 +97,7 @@ def main():
 
                 print("⏳ Aguardando o carregamento dinâmico das estatísticas (até 15s)...")
                 wait = WebDriverWait(driver, 15)
-                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "div.StatsSection_content__1iOOz")))
+                wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, "li.StatsSection_rowItems__KWyDB")))
                 
                 print("✅ Conteúdo carregado. Extraindo HTML...")
                 html_content = driver.page_source

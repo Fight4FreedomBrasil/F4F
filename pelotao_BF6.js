@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!Array.isArray(members)) throw new Error("A API não retornou uma lista de membros válida.");
             
             renderPlatoon(members);
-            // A função setupMedalLightbox() foi removida, não é mais necessária.
 
         } catch (error) {
             console.error("Erro ao buscar dados do pelotão:", error);
@@ -65,56 +64,60 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function createMemberCard(member, topStats) {
-        const card = document.createElement('div');
-        card.className = 'member-card';
+    const card = document.createElement('div');
+    card.className = 'member-card';
 
-        // --- LÓGICA ATUALIZADA PARA CRIAR AS MEDALHAS COM TOOLTIP ---
-        let medalsHTML = '';
-        if (member.MedalhasData && member.MedalhasData.length > 0) {
-            medalsHTML = '<div class="member-medals">';
-            member.MedalhasData.forEach(medal => {
-                medalsHTML += `
-                    <div class="medal-wrapper">
-                        <img src="${medal.url}" alt="${medal.nome}" class="medal-icon">
-                        <div class="medal-tooltip">
-                            <img src="${medal.url}" alt="${medal.nome}" class="tooltip-img">
-                            <h4 class="tooltip-title">${medal.nome}</h4>
-                            <p class="tooltip-desc">${medal.descricao}</p>
-                        </div>
-                    </div>
-                `;
-            });
-            medalsHTML += '</div>';
-        }
-
-        const consoleIcons = { 'PS5': 'fa-playstation', 'PS4': 'fa-playstation', 'XBOX': 'fa-xbox', 'PC': 'fa-windows' };
-        const iconClass = (member.Plataforma && consoleIcons[member.Plataforma.toUpperCase()]) || 'fa-gamepad';
+    let medalsHTML = '';
+    if (member.MedalhasData && member.MedalhasData.length > 0) {
+        medalsHTML = '<div class="member-medals">';
         
-        const isTopKD = parseFloat(String(member['K/D'] || 0).replace(/,/g, '')) === topStats['K/D'];
-        const isTopKills = parseFloat(String(member['Kills'] || 0).replace(/,/g, '')) === topStats['Kills'];
-        const isTopAssists = parseFloat(String(member['Assists'] || 0).replace(/,/g, '')) === topStats['Assists'];
-        const isTopRevives = parseFloat(String(member['Revives'] || 0).replace(/,/g, '')) === topStats['Revives'];
-        const isTopPartidas = parseFloat(String(member['Partidas'] || 0).replace(/,/g, '')) === topStats['Partidas'];
-        const isTopXP = parseFloat(String(member['XP'] || 0).replace(/,/g, '')) === topStats['XP'];
-
-        // --- POSIÇÃO DAS MEDALHAS AJUSTADA ---
-        card.innerHTML = `
-            <div class="member-details">
-                <h3>${member['Nome'] || 'N/A'}</h3>
-                <p><span>${member['ID'] || 'N/A'}</span><i class="fab ${iconClass} console-icon"></i></p>
-                ${medalsHTML} </div>
-            <div class="member-stats">
-                <div class="stats-grid">
-                    <div class="stat-card ${isTopKD ? 'highlight' : ''}"><span class="stat-label">K/D</span><span class="stat-value">${member['K/D'] || 'N/A'}</span></div>
-                    <div class="stat-card ${isTopKills ? 'highlight' : ''}"><span class="stat-label">Kills</span><span class="stat-value">${member['Kills'] || 'N/A'}</span></div>
-                    <div class="stat-card ${isTopAssists ? 'highlight' : ''}"><span class="stat-label">Assists</span><span class="stat-value">${member['Assists'] || 'N/A'}</span></div>
-                    <div class="stat-card ${isTopRevives ? 'highlight' : ''}"><span class="stat-label">Revives</span><span class="stat-value">${member['Revives'] || 'N/A'}</span></div>
-                    <div class="stat-card ${isTopPartidas ? 'highlight' : ''}"><span class="stat-label">Partidas</span><span class="stat-value">${member['Partidas'] || 'N/A'}</span></div>
-                    <div class="stat-card ${isTopXP ? 'highlight' : ''}"><span class="stat-label">XP</span><span class="stat-value">${member['XP'] || 'N/A'}</span></div>
+        member.MedalhasData.forEach((medal, index) => {
+            medalsHTML += `
+                <div class="medal-wrapper">
+                    <img src="${medal.url}" alt="${medal.nome}" class="medal-icon">
+                    <div class="medal-tooltip">
+                        <img src="${medal.url}" alt="${medal.nome}" class="tooltip-img">
+                        <h4 class="tooltip-title">${medal.nome}</h4>
+                        <p class="tooltip-desc">${medal.descricao}</p>
+                    </div>
                 </div>
-            </div>`;
-        return card;
+            `;
+
+            // *** ALTERAÇÃO: Usando <br> para forçar a quebra de linha ***
+            if ((index + 1) % 7 === 0 && (index + 1) < member.MedalhasData.length) {
+                medalsHTML += `<br>`;
+            }
+        });
+        medalsHTML += '</div>';
     }
+
+    const consoleIcons = { 'PS5': 'fa-playstation', 'PS4': 'fa-playstation', 'XBOX': 'fa-xbox', 'PC': 'fa-windows' };
+    const iconClass = (member.Plataforma && consoleIcons[member.Plataforma.toUpperCase()]) || 'fa-gamepad';
+    
+    const isTopKD = parseFloat(String(member['K/D'] || 0).replace(/,/g, '')) === topStats['K/D'];
+    const isTopKills = parseFloat(String(member['Kills'] || 0).replace(/,/g, '')) === topStats['Kills'];
+    const isTopAssists = parseFloat(String(member['Assists'] || 0).replace(/,/g, '')) === topStats['Assists'];
+    const isTopRevives = parseFloat(String(member['Revives'] || 0).replace(/,/g, '')) === topStats['Revives'];
+    const isTopPartidas = parseFloat(String(member['Partidas'] || 0).replace(/,/g, '')) === topStats['Partidas'];
+    const isTopXP = parseFloat(String(member['XP'] || 0).replace(/,/g, '')) === topStats['XP'];
+
+    card.innerHTML = `
+        <div class="member-details">
+            <h3>${member['Nome'] || 'N/A'}</h3>
+            <p><span>${member['ID'] || 'N/A'}</span><i class="fab ${iconClass} console-icon"></i></p>
+            ${medalsHTML} </div>
+        <div class="member-stats">
+            <div class="stats-grid">
+                <div class="stat-card ${isTopKD ? 'highlight' : ''}"><span class="stat-label">K/D</span><span class="stat-value">${member['K/D'] || 'N/A'}</span></div>
+                <div class="stat-card ${isTopKills ? 'highlight' : ''}"><span class="stat-label">Kills</span><span class="stat-value">${member['Kills'] || 'N/A'}</span></div>
+                <div class="stat-card ${isTopAssists ? 'highlight' : ''}"><span class="stat-label">Assists</span><span class="stat-value">${member['Assists'] || 'N/A'}</span></div>
+                <div class="stat-card ${isTopRevives ? 'highlight' : ''}"><span class="stat-label">Revives</span><span class="stat-value">${member['Revives'] || 'N/A'}</span></div>
+                <div class="stat-card ${isTopPartidas ? 'highlight' : ''}"><span class="stat-label">Partidas</span><span class="stat-value">${member['Partidas'] || 'N/A'}</span></div>
+                <div class="stat-card ${isTopXP ? 'highlight' : ''}"><span class="stat-label">XP</span><span class="stat-value">${member['XP'] || 'N/A'}</span></div>
+            </div>
+        </div>`;
+    return card;
+}
 
     function groupBy(array, key) {
         if (!Array.isArray(array)) return {};

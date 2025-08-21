@@ -481,11 +481,17 @@ body {
 
 /* --- Estilo para Medalhas (com Tooltip) --- */
 .member-medals {
-    display: flex;
-    gap: 8px;
-    margin-top: 10px; /* Espaçamento abaixo do ID do jogador */
-    justify-content: flex-start; /* Alinha as medalhas à esquerda */
-    padding-left: 5px;
+    display: flex;         /* Essencial: ativa o layout flexível */
+    flex-wrap: wrap;       /* Essencial: permite que os itens quebrem a linha */
+    align-items: center;   /* Alinha as medalhas verticalmente */
+    gap: 4px;              /* Um pequeno espaço entre as medalhas */
+    margin-top: 8px;       /* Espaço entre o nome do jogador e as medalhas */
+}
+
+/* Garante que a classe para quebra de linha funcione */
+.medal-line-break {
+    flex-basis: 100%;      /* Força o elemento a ocupar toda a largura, empurrando os próximos para baixo */
+    height: 0;             /* Garante que a quebra não adicione altura extra */
 }
 
 .medal-wrapper {
