@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderPlatoon(members) {
         container.innerHTML = '';
         const topStats = findTopStats(members);
-        const rankOrder = [ 'Marechal', 'General', 'Coronel', 'Tenente', 'Major', 'Capitão', 'Cabo', 'Soldado', 'Sem Patente' ];
+        const rankOrder = [ 'Marechal', 'General', 'Coronel', 'Tenente', 'Major', 'Capitão', 'Sargento', 'Cabo', 'Soldado', 'Sem Patente' ];
         const membersByRank = groupBy(members, 'Ranking');
         
         rankOrder.forEach(rankName => {
