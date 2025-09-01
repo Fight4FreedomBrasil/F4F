@@ -550,3 +550,80 @@ body {
     font-size: 0.9rem;
     color: #ccc;
 }
+
+/* --- 6. RESPONSIVIDADE (MEDIA QUERIES) --- */
+
+/* Para tablets e telas um pouco menores (até 992px) */
+@media (max-width: 992px) {
+    .members-grid {
+        /* Altera o grid para ter apenas uma coluna, empilhando os cards */
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Para celulares e tablets na vertical (até 768px) */
+@media (max-width: 768px) {
+    .main-header {
+        padding-bottom: 20px;
+    }
+
+    .main-title {
+        font-size: 2.2rem; /* Reduz o tamanho do título principal */
+    }
+
+    .rank-title {
+        font-size: 1.6rem; /* Reduz o título da patente */
+    }
+
+    .member-card {
+        /* Faz os detalhes e as estatísticas ficarem um sobre o outro */
+        flex-direction: column;
+        align-items: flex-start; /* Alinha tudo à esquerda dentro do card */
+        gap: 1rem;
+        padding: 1rem; /* Reduz o espaçamento interno */
+    }
+
+    .member-details, .member-stats {
+        width: 100%; /* Faz as seções ocuparem toda a largura do card */
+        min-width: unset; /* Remove a largura mínima que atrapalhava */
+    }
+
+    .member-stats .stats-grid {
+        /* Muda o grid de stats de 6 para 3 colunas, mais legível no celular */
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.2rem; /* Diminui o número da estatística */
+    }
+
+    .top-nav {
+        padding: 10px;
+    }
+}
+
+/* Para celulares com telas menores (até 480px) */
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 1.8rem;
+    }
+
+    .intro-text {
+        font-size: 1rem;
+    }
+    
+    .member-stats .stats-grid {
+        /* Para telas muito pequenas, 2 colunas ficam ainda melhores */
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .member-details h3 {
+        font-size: 1.3rem; /* Ajusta o nome do jogador */
+    }
+
+    .nav-button {
+        padding: 8px 12px; /* Deixa os botões de navegação um pouco menores */
+        font-size: 0.9rem;
+    }
+}
