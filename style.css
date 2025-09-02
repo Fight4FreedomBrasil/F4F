@@ -551,6 +551,19 @@ body {
     color: #ccc;
 }
 
+.rank-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rank-icon {
+  width: 64px;
+  height: 64px;
+  vertical-align: middle;
+}
+
+
 /* --- 6. RESPONSIVIDADE (MEDIA QUERIES) --- */
 
 /* Para tablets e telas um pouco menores (até 992px) */
@@ -627,3 +640,4 @@ body {
         font-size: 0.9rem;
     }
 }
+

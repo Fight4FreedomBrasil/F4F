@@ -38,20 +38,45 @@ def authenticate_google_sheets():
             token.write(creds.to_json())
     return build('sheets', 'v4', credentials=creds)
 
+def get_stat_value(stats_object, stat_key, default_value="N/A"):
+    """
+    Extrai de forma segura o valor de uma estatística específica.
+    Retorna o default_value se a estatística for nula ou não tiver a chave 'value'.
+    """
+    # 1. Tenta pegar o dicionário da estatística (ex: {'label': 'K/D Ratio', 'value': 1.23})
+    stat_data = stats_object.get(stat_key)
+
+    # 2. Verifica se o resultado é um dicionário válido (e não None)
+    if isinstance(stat_data, dict):
+        # 3. Se for, retorna o valor de 'value'. Se 'value' não existir, retorna o padrão.
+        return stat_data.get('value', default_value)
+    
+    # 4. Se stat_data for None ou qualquer outra coisa, retorna o valor padrão.
+    return default_value
+
 def extract_stats_from_json(data):
     """Extrai os dados de estatísticas do objeto JSON da página."""
     try:
         stats = data['props']['pageProps']['statsSummary']['playerStatsSummary']['stats']
+
+        # Se o bloco principal de 'stats' não existir, aí sim retornamos tudo como 0.
+        if stats is None:
+            print(f"⚠️ Jogador encontrado, mas sem nenhum bloco de estatísticas. Atribuindo valor 0 a tudo.")
+            return {header: 0 for header in HEADERS_ORDER}
+
+        # Usa a função auxiliar para extrair cada valor de forma segura e individual
         player_stats = {
-            'KD': stats.get('kill_death_ratio', {}).get('value', 'N/A'),
-            'Kills': stats.get('total_kills', {}).get('value', 'N/A'),
-            'Assists': stats.get('total_assists', {}).get('value', 'N/A'),
-            'Revives': stats.get('total_revives', {}).get('value', 'N/A'),
-            'Partidas': stats.get('total_matches_played', {}).get('value', 'N/A'),
-            'XP': stats.get('total_xp', {}).get('value', 'N/A')
+            'KD': get_stat_value(stats, 'kill_death_ratio'),
+            'Kills': get_stat_value(stats, 'total_kills'),
+            'Assists': get_stat_value(stats, 'total_assists'),
+            'Revives': get_stat_value(stats, 'total_revives'),
+            'Partidas': get_stat_value(stats, 'total_matches_played'),
+            'XP': get_stat_value(stats, 'total_xp')
         }
         return player_stats
+        
     except (KeyError, TypeError):
+        # Se a estrutura do JSON for inesperada, retorna None para pular o jogador.
         return None
 
 def main():
