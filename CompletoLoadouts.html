@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loadouts de Armas - [F4F]</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* --- ESTILOS GERAIS --- */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --border-color: #2a2a2a;
+            --primary-color: #00aeff; /* Azul F4F */
+            --highlight-color: #ffd700; /* Dourado para Tiers S */
+            --text-color: #e0e0e0;
+            --text-muted-color: #888;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            font-weight: 900;
+            margin-bottom: 2rem;
+        }
+
+        /* --- CONTROLES DE FILTRO E BUSCA --- */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .search-wrapper {
+            flex-grow: 1;
+            min-width: 250px;
+        }
+        #search-box {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-muted-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .filter-btn:hover {
+            color: var(--text-color);
+            border-color: var(--primary-color);
+        }
+        .filter-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: 700;
+            border-color: var(--primary-color);
+        }
+
+        /* --- SEÇÕES DE TIER --- */
+        .tier-section {
+            margin-bottom: 3rem;
+        }
+        .tier-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--primary-color);
+        }
+        .tier-S .tier-title { color: var(--highlight-color); }
+        .tier-A .tier-title { color: #c0c0c0; } /* Prata */
+        .tier-B .tier-title { color: #cd7f32; } /* Bronze */
+        
+        .loading-text, .error-text, .no-results-text {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-muted-color);
+            padding: 3rem 0;
+        }
+
+        /* --- CARD DA ARMA (ACCORDION) --- */
+        .weapon-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+        .weapon-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .weapon-header:hover {
+            background-color: #282828;
+        }
+        .weapon-image {
+            width: 180px;
+            height: 50px;
+            object-fit: contain;
+        }
+        .weapon-info {
+            flex-grow: 1;
+        }
+        .weapon-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.5rem;
+            color: var(--text-color);
+        }
+        .weapon-info p {
+            margin: 0;
+            color: var(--text-muted-color);
+            font-size: 0.9rem;
+        }
+        .expand-icon {
+            font-size: 1.5rem;
+            color: var(--text-muted-color);
+            transition: transform 0.3s ease;
+        }
+        .weapon-card.expanded .expand-icon {
+            transform: rotate(45deg);
+        }
+
+        /* --- DETALHES DOS ACESSÓRIOS --- */
+        .weapon-attachments {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            background-color: #181818;
+            padding: 0 1.5rem;
+        }
+        .weapon-card.expanded .weapon-attachments {
+            max-height: 500px; /* Altura suficiente para mostrar os acessórios */
+            padding: 1.5rem;
+        }
+        .attachments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .attachment-item {
+            background-color: var(--bg-color);
+            padding: 0.75rem;
+            border-radius: 6px;
+        }
+        .attachment-item .slot {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted-color);
+            text-transform: uppercase;
+        }
+        .attachment-item .name {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Loadouts de Armas</h1>
+
+        <div class="controls">
+            <div class="search-wrapper">
+                <input type="search" id="search-box" placeholder="🔎 Procurar por nome da arma...">
+            </div>
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="Long Range">Longo Alcance</button>
+                <button class="filter-btn" data-filter="Close Range">Curto Alcance</button>
+                <button class="filter-btn" data-filter="Sniper Support">Suporte de Sniper</button>
+                <button class="filter-btn" data-filter="Sniper">Atirador de Elite</button>
+                <button class="filter-btn" data-filter="Secondary">Secundário</button>
+                <button class="filter-btn" data-filter="Semi Auto">Semi Automático</button>
+            </div>
+            </div>
+
+        <div id="loadouts-container">
+            <p class="loading-text">Carregando dados da API...</p>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzLXYwQzjMvHTg1CsxvNP0xhrSnSJj7-c7nSY-iVi9ffzKZyeStpEqixHNuvNKwWYXT/exec?page=loadouts';
+        
+        const container = document.getElementById('loadouts-container');
+        const searchBox = document.getElementById('search-box');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+
+        let allTiersData = []; 
+        let activeFilter = 'all';
+
+        // ===== DICIONÁRIO DE TRADUÇÕES ATUALIZADO =====
+        const traducoes = {
+            "Muzzle": "Bocal",
+            "Barrel": "Cano",
+            "Underbarrel": "Acoplamento",
+            "Magazine": "Carregador",
+            "Ammunition": "Munição",
+            "Scope": "Luneta",
+            "Ergonomics": "Ergonomia",
+            "Optic": "Óptica",
+            "Top": "Trilho Superior",
+            "Right": "Trilho Direito",
+            "Playstyle": "Estilo de Jogo",
+            "Balanced": "Equilibrado",
+            "Close Quarters": "Curta Distância",
+            "Long Range": "Longo Alcance",
+            "Close Range": "Curto Alcance",
+            "Sniper Support": "Suporte de Sniper",
+            "Sniper": "Atirador de Elite",
+            "Secondary": "Secundário",
+            "Semi Auto": "Semi Automático"
+        };
+        // ===============================================
+
+        function traduzir(palavra) {
+            return traducoes[palavra] || palavra;
+        }
+
+        async function fetchData() {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
+                const data = await response.json();
+                
+                if (data.success === false) throw new Error(data.error);
+
+                allTiersData = data;
+                renderLoadouts();
+            } catch (error) {
+                container.innerHTML = `<p class="error-text">❌ Falha ao carregar os dados. Tente novamente mais tarde. (${error.message})</p>`;
+            }
+        }
+
+        function renderLoadouts() {
+            container.innerHTML = '';
+            const searchTerm = searchBox.value.toLowerCase();
+            let hasResults = false;
+            
+            const filteredTiers = allTiersData
+                .map(tier => {
+                    const filteredWeapons = tier.weapons.filter(weapon => {
+                        const matchesSearch = weapon.Arma.toLowerCase().includes(searchTerm);
+                        const matchesFilter = activeFilter === 'all' || (weapon.Playstyle && weapon.Playstyle.toLowerCase() === activeFilter.toLowerCase());
+                        return matchesSearch && matchesFilter;
+                    });
+                    
+                    return { ...tier, weapons: filteredWeapons };
+                })
+                .filter(tier => tier.weapons.length > 0);
+
+            if (filteredTiers.length > 0) {
+                hasResults = true;
+                filteredTiers.forEach(tier => {
+                    const tierSection = document.createElement('div');
+                    tierSection.className = `tier-section tier-${tier.tier}`;
+                    
+                    let weaponsHTML = '';
+                    tier.weapons.forEach(weapon => {
+                        const attachments = [
+                            'Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Ammunition', 
+                            'Scope', 'Ergonomics', 'Optic', 'Top', 'Right'
+                        ];
+
+                        let attachmentsHTML = '';
+                        attachments.forEach(att => {
+                            if (weapon[att]) {
+                                attachmentsHTML += `
+                                    <div class="attachment-item">
+                                        <span class="slot">${traduzir(att)}</span>
+                                        <span class="name">${weapon[att]}</span>
+                                    </div>
+                                `;
+                            }
+                        });
+
+                        weaponsHTML += `
+                            <div class="weapon-card">
+                                <div class="weapon-header">
+                                    <img class="weapon-image" src="${weapon.Imagem}" alt="${weapon.Arma}">
+                                    <div class="weapon-info">
+                                        <h3>${weapon.Arma}</h3>
+                                        <p>${weapon.Categoria} • ${traduzir(weapon.Playstyle)}</p>
+                                    </div>
+                                    <i class="fas fa-plus expand-icon"></i>
+                                </div>
+                                <div class="weapon-attachments">
+                                    <div class="attachments-grid">
+                                        ${attachmentsHTML}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    tierSection.innerHTML = `<h2 class="tier-title">${tier.title}</h2>${weaponsHTML}`;
+                    container.appendChild(tierSection);
+                });
+            }
+
+            if (!hasResults) {
+                container.innerHTML = '<p class="no-results-text">Nenhuma arma encontrada com os filtros atuais.</p>';
+            }
+
+            addAccordionListeners();
+        }
+
+        function addAccordionListeners() {
+            const headers = document.querySelectorAll('.weapon-header');
+            headers.forEach(header => {
+                header.addEventListener('click', () => {
+                    const card = header.parentElement;
+                    card.classList.toggle('expanded');
+                    const icon = header.querySelector('.expand-icon');
+                    icon.classList.toggle('fa-plus');
+                    icon.classList.toggle('fa-times');
+                });
+            });
+        }
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                activeFilter = button.dataset.filter; // O data-filter continua em inglês para bater com os dados da API
+                renderLoadouts();
+            });
+        });
+
+        searchBox.addEventListener('input', renderLoadouts);
+
+        fetchData();
+    });
+    </script>
+    <center><!-- Inicio codigo Contador -->
+        Visitantes desde 13/08/2025:
+        <div align="center"><a title="contador de dias"
+                href="https://www.calendario.cnt.br/ferramentas/contador-de-dias-calculadora-prazo-entre-datas"><img
+                    src="https://contador-gratis.com/contadores-de-visitas/290925064926284.gif"></a>
+            <div><a href="https://www.contador-gratis.com/" title="contador de visitas"></a></div>
+        </div>
+        <!-- Fim do codigo Contador -->
+    </center>
+</body>
+</html>

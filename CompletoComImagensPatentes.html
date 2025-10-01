@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Pelotão - [F4F] Fight 4 Freedom</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- ESTILOS GERAIS E TIPOGRAFIA --- */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --primary-color: #007bff;
+            --text-color: #e0e0e0;
+            --text-muted-color: #888;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+        .loading-text, .error-text { text-align: center; font-size: 1.2rem; color: var(--text-muted-color); padding: 3rem 0; }
+        .error-text { color: #ff6b6b; }
+
+        /* --- ESTILOS DA PÁGINA PRINCIPAL (LISTA DO PELOTÃO) --- */
+        .rank-section { margin-bottom: 3rem; }
+        .rank-title {
+            font-size: 2rem;
+            color: #00aeff;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .rank-icon { width: 65px; height: 65px; object-fit: contain; }
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
+            gap: 1.5rem;
+        }
+        .member-card {
+            background-color: var(--surface-color);
+            border: 1px solid #2a2a2a;
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .member-details { flex: 1; min-width: 200px; }
+        .member-details h3 { margin: 0 0 0.25rem 0; font-size: 1.5rem; }
+        .member-details p { margin: 0; font-size: 1rem; color: var(--text-muted-color); display: flex; align-items: center; gap: 8px; }
+        .console-icon { font-size: 1.1rem; color: #ccc; }
+        .member-stats { flex: 3; min-width: 400px; }
+        .member-stats .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem; }
+        .stat-card { background-color: #2a2a2a; border-radius: 8px; padding: 1rem; text-align: center; }
+        .stat-label { display: block; font-size: 0.8rem; color: var(--text-muted-color); margin-bottom: 0.25rem; text-transform: uppercase; }
+        .stat-value { display: block; font-size: 1.4rem; font-weight: 700; color: var(--text-color); }
+        .stat-card.highlight { background-color: #3a3a2a; border: 2px solid #ffd700; }
+        .stat-card.highlight .stat-value { color: #ffd700; font-weight: bold; }
+        .member-medals { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 8px; }
+        .medal-wrapper { position: relative; display: inline-block; }
+        .medal-icon { width: 28px; height: 28px; }
+        .medal-tooltip { position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background-color: #181818; color: #fff; padding: 15px; border-radius: 8px; border: 1px solid #444; box-shadow: 0 4px 15px rgba(0,0,0,0.5); width: 250px; text-align: center; opacity: 0; visibility: hidden; transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; z-index: 10; }
+        .medal-wrapper:hover .medal-tooltip { opacity: 1; visibility: visible; }
+        .tooltip-img { width: 80px; height: 80px; margin-bottom: 10px; }
+        .tooltip-title { margin: 0 0 5px 0; font-size: 1.1rem; font-weight: bold; color: #ffd700; }
+        .tooltip-desc { margin: 0; font-size: 0.9rem; color: #ccc; }
+
+        /* --- NOVOS ESTILOS (DA PÁGINA DE PERFIL) --- */
+        .profile-view-container { max-width: 900px; }
+        .back-link { display: inline-block; margin-bottom: 2rem; color: var(--primary-color); text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; }
+        .profile-header { background-color: var(--surface-color); border-radius: 12px; padding: 2rem; text-align: center; border: 1px solid #2a2a2a; margin-bottom: 2rem; }
+        .profile-name { font-size: 2.8rem; font-weight: 900; margin: 0 0 10px; }
+        .profile-id { font-size: 1.2rem; color: var(--text-muted-color); display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .profile-rank { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 1.5rem; }
+        .profile-rank .rank-icon { width: 80px; height: 80px; }
+        .rank-name { font-size: 1.5rem; font-weight: 700; }
+        .section-title { font-size: 2rem; font-weight: 900; margin-bottom: 1.5rem; border-left: 5px solid var(--primary-color); padding-left: 15px; }
+        .profile-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
+        .medals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .medal-card { background-color: var(--surface-color); border: 1px solid #2a2a2a; border-radius: 8px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .medal-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        .medal-card-img { width: 80px; height: 80px; object-fit: contain; flex-shrink: 0; }
+        .medal-card-info h3 { margin: 0 0 5px; font-size: 1.2rem; font-weight: 700; color: #ffd700; }
+        .medal-card-info p { margin: 0; font-size: 0.9rem; color: #ccc; }
+        .no-medals { color: var(--text-muted-color); text-align: center; font-style: italic; padding: 2rem; background-color: var(--surface-color); border-radius: 8px; }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 992px) { .members-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .member-card { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1rem; }
+            .member-details, .member-stats { width: 100%; min-width: unset; }
+            .member-stats .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+            .stat-value { font-size: 1.2rem; }
+        }
+        @media (max-width: 480px) { .member-stats .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+    
+    <main class="container" id="platoon-view">
+        <div id="platoon-container">
+            <p class="loading-text">Carregando...</p>
+        </div>
+    </main>
+
+    <main class="container profile-view-container" id="profile-view" style="display: none;">
+    </main>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzLXYwQzjMvHTg1CsxvNP0xhrSnSJj7-c7nSY-iVi9ffzKZyeStpEqixHNuvNKwWYXT/exec';
+        
+        // 🚀 SISTEMA DE CACHE
+        const CACHE_DURATION = 5 * 60 * 1000; // 5 minutos
+        const CACHE_KEY = 'platoon_data';
+        const CACHE_KEY_PATENTES = 'platoon_patentes';
+
+        // Elementos das duas "páginas"
+        const platoonView = document.getElementById('platoon-view');
+        const profileView = document.getElementById('profile-view');
+        const platoonContainer = document.getElementById('platoon-container');
+
+        // Pega o parâmetro 'id' da URL
+        const params = new URLSearchParams(window.location.search);
+        const memberId = params.get('id');
+
+        // 🚀 FUNÇÕES DE CACHE
+        function getCachedData(key) {
+            try {
+                const cached = JSON.parse(localStorage.getItem(key));
+                if (cached && (Date.now() - cached.timestamp) < CACHE_DURATION) {
+                    return cached.data;
+                }
+            } catch (e) {
+                console.warn('Erro ao ler cache:', e);
+            }
+            return null;
+        }
+
+        function setCachedData(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify({
+                    data: data,
+                    timestamp: Date.now()
+                }));
+            } catch (e) {
+                console.warn('Erro ao salvar cache:', e);
+            }
+        }
+
+        // 🚀 FETCH COM TIMEOUT E RETRY
+        async function fetchWithTimeout(url, options = {}) {
+            const timeout = options.timeout || 15000; // 15 segundos
+            const maxRetries = options.maxRetries || 2;
+            
+            for (let attempt = 1; attempt <= maxRetries; attempt++) {
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), timeout);
+                    
+                    const response = await fetch(url, {
+                        ...options,
+                        signal: controller.signal
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    
+                    return response;
+                } catch (error) {
+                    if (attempt === maxRetries) {
+                        throw new Error(`Falha após ${maxRetries} tentativas: ${error.message}`);
+                    }
+                    console.warn(`Tentativa ${attempt} falhou, tentando novamente...`);
+                    await new Promise(resolve => setTimeout(resolve, 1000 * attempt)); // delay progressivo
+                }
+            }
+        }
+
+        // Função principal que decide qual visão mostrar
+        async function router() {
+            // 🚀 Mostra loading mais informativo
+            updateLoadingMessage('Carregando dados do pelotão...');
+            
+            try {
+                // 🚀 Tenta buscar do cache primeiro
+                let data = getCachedData(CACHE_KEY);
+                let fromCache = true;
+                
+                if (!data) {
+                    fromCache = false;
+                    updateLoadingMessage('Conectando com servidor...');
+                    const response = await fetchWithTimeout(API_URL, { 
+                        cache: 'no-store',
+                        timeout: 15000,
+                        maxRetries: 3
+                    });
+                    data = await response.json();
+                    
+                    // 🚀 Salva no cache
+                    setCachedData(CACHE_KEY, data);
+                }
+
+                // 🚀 Compatibilidade: aceita tanto ARRAY quanto {membros, patentes}
+                let members = [];
+                let patentesMap = {};
+
+                if (Array.isArray(data)) {
+                    members = data;
+                    patentesMap = await fetchPatentesOptimized();
+                } else if (data && Array.isArray(data.membros)) {
+                    members = data.membros;
+                    patentesMap = data.patentes || await fetchPatentesOptimized();
+                } else if (data && data.membros) {
+                    members = Array.isArray(data.membros) ? data.membros : [];
+                    patentesMap = data.patentes || await fetchPatentesOptimized();
+                } else {
+                    throw new Error("A API não retornou uma lista de membros válida.");
+                }
+
+                if (!members.length) throw new Error("Nenhum membro encontrado.");
+
+                // 🚀 Pré-carrega imagens importantes em background
+                if (!fromCache) {
+                    preloadImages(members, patentesMap);
+                }
+
+                if (memberId) {
+                    // Se existe um ID na URL, mostra o perfil
+                    const member = members.find(m => m.ID === memberId);
+                    platoonView.style.display = 'none';
+                    profileView.style.display = 'block';
+
+                    if (member) {
+                        renderProfile(member, patentesMap);
+                    } else {
+                        profileView.innerHTML = `<p class="error-text">Membro "${memberId}" não encontrado.</p>`;
+                    }
+                } else {
+                    // Se não existe ID, mostra a lista do pelotão
+                    platoonView.style.display = 'block';
+                    profileView.style.display = 'none';
+                    renderPlatoon(members, patentesMap);
+                }
+
+                // 🚀 Mostra se os dados vieram do cache
+                if (fromCache) {
+                    console.log('✅ Dados carregados do cache local');
+                }
+
+            } catch (error) {
+                console.error("Erro ao carregar dados:", error);
+                const errorMsg = `❌ Erro: ${error.message}`;
+                platoonContainer.innerHTML = `<p class="error-text">${errorMsg}</p>`;
+                profileView.innerHTML = `<p class="error-text">${errorMsg}</p>`;
+            }
+        }
+
+        // 🚀 Atualiza mensagem de loading
+        function updateLoadingMessage(message) {
+            const loadingElement = document.querySelector('.loading-text');
+            if (loadingElement) {
+                loadingElement.textContent = message;
+            }
+        }
+
+        // 🚀 Função otimizada para buscar patentes
+        async function fetchPatentesOptimized() {
+            // Tenta buscar do cache primeiro
+            let patentes = getCachedData(CACHE_KEY_PATENTES);
+            if (patentes) {
+                return patentes;
+            }
+
+            try {
+                const r = await fetchWithTimeout(API_URL + '?patentes=1', { 
+                    cache: 'no-store',
+                    timeout: 10000,
+                    maxRetries: 2
+                });
+                const map = await r.json();
+                const result = (map && typeof map === 'object' && !Array.isArray(map)) ? map : {};
+                
+                // Salva no cache
+                setCachedData(CACHE_KEY_PATENTES, result);
+                return result;
+            } catch (e) {
+                console.warn('Patentes não disponíveis. Seguindo sem ícones de patente.');
+                return {};
+            }
+        }
+
+        // 🚀 Pré-carrega imagens importantes
+        function preloadImages(members, patentesMap) {
+            const imagesToPreload = new Set();
+            
+            // Adiciona imagens de patentes
+            Object.values(patentesMap).forEach(url => {
+                if (url) imagesToPreload.add(url);
+            });
+            
+            // Adiciona algumas medalhas (primeiras 20 para não sobrecarregar)
+            members.slice(0, 20).forEach(member => {
+                if (member.MedalhasData) {
+                    member.MedalhasData.slice(0, 5).forEach(medal => {
+                        if (medal.url) imagesToPreload.add(medal.url);
+                    });
+                }
+            });
+            
+            // Pré-carrega as imagens
+            imagesToPreload.forEach(url => {
+                const img = new Image();
+                img.src = url;
+            });
+        }
+
+        // --- FUNÇÕES DE RENDERIZAÇÃO ---
+
+        // Função para renderizar a lista completa do pelotão
+        function renderPlatoon(members, patentesMap) {
+            platoonContainer.innerHTML = '';
+            const topStats = findTopStats(members);
+            const rankOrder = ['Marechal', 'General de Exército', 'General de Divisão', 'General de Brigada', 'Coronel', 'Tenente-Coronel', 'Major', 'Capitão', '1º Tenente', '2º Tenente', 'Subtenente', '1º Sargento', '2º Sargento', '3º Sargento', 'Cabo', 'Soldado', 'Sem Patente'];
+            const membersByRank = groupBy(members, 'Ranking');
+
+            // 🚀 Renderiza em batches para não travar a UI
+            let currentBatch = 0;
+            const batchSize = 2; // 2 ranks por vez
+            
+            function renderBatch() {
+                const startIdx = currentBatch * batchSize;
+                const endIdx = Math.min(startIdx + batchSize, rankOrder.length);
+                
+                for (let i = startIdx; i < endIdx; i++) {
+                    const rankName = rankOrder[i];
+                    if (membersByRank[rankName]) {
+                        const rankSection = document.createElement('div');
+                        rankSection.className = 'rank-section';
+                        
+                        // 🔥 Imagem ao lado do título da patente
+                        const imgUrl = patentesMap[rankName] || '';
+                        rankSection.innerHTML = `
+                            <h2 class="rank-title">
+                                ${imgUrl ? `<img src="${imgUrl}" alt="${rankName}" class="rank-icon" loading="lazy">` : ''}
+                                ${rankName}
+                            </h2>
+                        `;
+                        
+                        const membersGrid = document.createElement('div');
+                        membersGrid.className = 'members-grid';
+                        
+                        const sortedMembers = membersByRank[rankName].sort((a, b) => (a.Nome || "").localeCompare(b.Nome || ""));
+                        sortedMembers.forEach(member => membersGrid.appendChild(createMemberCard(member, topStats)));
+                        
+                        rankSection.appendChild(membersGrid);
+                        platoonContainer.appendChild(rankSection);
+                    }
+                }
+                
+                currentBatch++;
+                if (currentBatch * batchSize < rankOrder.length) {
+                    // Agenda o próximo batch
+                    setTimeout(renderBatch, 50); // 50ms de delay entre batches
+                }
+            }
+            
+            renderBatch();
+        }
+
+        // Função para criar o card de cada membro na lista
+        function createMemberCard(member, topStats) {
+            const card = document.createElement('div');
+            card.className = 'member-card';
+            
+            let medalsHTML = '';
+            if (member.MedalhasData && member.MedalhasData.length > 0) {
+                medalsHTML = '<div class="member-medals">';
+                member.MedalhasData.forEach((medal) => {
+                    medalsHTML += `
+                        <div class="medal-wrapper">
+                            <img src="${medal.url}" alt="${medal.nome}" class="medal-icon" loading="lazy">
+                            <div class="medal-tooltip">
+                                <img src="${medal.url}" alt="${medal.nome}" class="tooltip-img" loading="lazy">
+                                <h4 class="tooltip-title">${medal.nome}</h4>
+                                <p class="tooltip-desc">${medal.descricao}</p>
+                            </div>
+                        </div>
+                    `;
+                });
+                medalsHTML += '</div>';
+            }
+
+            const consoleIcons = { 'PS5': 'fa-playstation', 'PS4': 'fa-playstation', 'XBOX': 'fa-xbox', 'PC': 'fa-windows' };
+            const iconClass = (member.Plataforma && consoleIcons[member.Plataforma.toUpperCase()]) || 'fa-gamepad';
+            
+            // Verifica se é top stat de forma mais robusta
+            const isTopKD = parseFloat(String(member['K/D'] || 0).replace(',', '.')) === topStats['K/D'];
+            const isTopKills = parseInt(member['Kills'] || 0) === topStats['Kills'];
+            const isTopAssists = parseInt(member['Assists'] || 0) === topStats['Assists'];
+            const isTopRevives = parseInt(member['Revives'] || 0) === topStats['Revives'];
+            const isTopPartidas = parseInt(member['Partidas'] || 0) === topStats['Partidas'];
+            const isTopXP = parseInt(member['XP'] || 0) === topStats['XP'];
+            
+            // Links para perfil individual
+            card.innerHTML = `
+                <div class="member-details">
+                    <h3><a href="?id=${encodeURIComponent(member['ID'] || '')}" style="color: var(--text-color); text-decoration: none;">${member['Nome'] || 'N/A'}</a></h3>
+                    <p><a href="?id=${encodeURIComponent(member['ID'] || '')}" style="color: var(--text-muted-color); text-decoration: none;">${member['ID'] || 'N/A'}</a> <i class="fab ${iconClass} console-icon"></i></p>
+                    ${medalsHTML}
+                </div>
+                <div class="member-stats">
+                    <div class="stats-grid">
+                        <div class="stat-card ${isTopKD ? 'highlight' : ''}"><span class="stat-label">K/D</span><span class="stat-value">${member['K/D'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTopKills ? 'highlight' : ''}"><span class="stat-label">Kills</span><span class="stat-value">${member['Kills'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTopAssists ? 'highlight' : ''}"><span class="stat-label">Assists</span><span class="stat-value">${member['Assists'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTopRevives ? 'highlight' : ''}"><span class="stat-label">Revives</span><span class="stat-value">${member['Revives'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTopPartidas ? 'highlight' : ''}"><span class="stat-label">Partidas</span><span class="stat-value">${member['Partidas'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTopXP ? 'highlight' : ''}"><span class="stat-label">XP</span><span class="stat-value">${member['XP'] || 'N/A'}</span></div>
+                    </div>
+                </div>`;
+            return card;
+        }
+
+        // Função para renderizar a página de perfil individual
+        function renderProfile(member, patentesMap) {
+            profileView.innerHTML = ''; // Limpa a view antes de adicionar novo conteúdo
+            
+            const consoleIcons = { 'PS5': 'fa-playstation', 'PS4': 'fa-playstation', 'XBOX': 'fa-xbox', 'PC': 'fa-windows' };
+            const iconClass = (member.Plataforma && consoleIcons[member.Plataforma.toUpperCase()]) || 'fa-gamepad';
+            const rankImgUrl = patentesMap[member.Ranking] || '';
+
+            // Link de "Voltar" aponta para a página sem parâmetros
+            const backLinkHTML = `<a href="${window.location.pathname}" class="back-link">&larr; Voltar para a lista do Pelotão</a>`;
+
+            const profileHeaderHTML = `
+                <header class="profile-header">
+                    <h1 class="profile-name">${member.Nome || 'N/A'}</h1>
+                    <div class="profile-id">${member.ID || 'N/A'} <i class="fab ${iconClass} console-icon"></i></div>
+                    <div class="profile-rank">
+                        ${rankImgUrl ? `<img src="${rankImgUrl}" alt="${member.Ranking}" class="rank-icon" loading="lazy">` : ''}
+                        <span class="rank-name">${member.Ranking || 'Sem Patente'}</span>
+                    </div>
+                </header>`;
+            
+            const statsSectionHTML = `
+                <section class="stats-section">
+                    <h2 class="section-title">Estatísticas de Combate</h2>
+                    <div class="profile-stats-grid">
+                        <div class="stat-card"><span class="stat-label">K/D</span><span class="stat-value">${member['K/D'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">Kills</span><span class="stat-value">${member['Kills'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">Assists</span><span class="stat-value">${member['Assists'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">Revives</span><span class="stat-value">${member['Revives'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">Partidas</span><span class="stat-value">${member['Partidas'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">XP</span><span class="stat-value">${member['XP'] || '0'}</span></div>
+                    </div>
+                </section>`;
+
+            let medalsHTML = '<h2 class="section-title">Quadro de Medalhas</h2>';
+            if (member.MedalhasData && member.MedalhasData.length > 0) {
+                medalsHTML += '<div class="medals-grid">';
+                member.MedalhasData.forEach(medal => {
+                    medalsHTML += `
+                        <div class="medal-card">
+                            <img src="${medal.url}" alt="${medal.nome}" class="medal-card-img" loading="lazy">
+                            <div class="medal-card-info">
+                                <h3>${medal.nome}</h3>
+                                <p>${medal.descricao}</p>
+                            </div>
+                        </div>`;
+                });
+                medalsHTML += '</div>';
+            } else {
+                medalsHTML += '<p class="no-medals">Este membro ainda não possui medalhas.</p>';
+            }
+            const medalsSectionHTML = `<section class="medals-section">${medalsHTML}</section>`;
+
+            profileView.innerHTML = backLinkHTML + profileHeaderHTML + statsSectionHTML + medalsSectionHTML;
+        }
+
+        // --- FUNÇÕES AUXILIARES ---
+        function findTopStats(members) {
+            const top = { 'K/D': 0, 'Kills': 0, 'Assists': 0, 'Revives': 0, 'Partidas': 0, 'XP': 0 };
+            Object.keys(top).forEach(key => {
+                members.forEach(member => {
+                    try {
+                        const value = key === 'K/D' 
+                            ? parseFloat(String(member[key] || '0').replace(',', '.')) 
+                            : parseInt(member[key] || '0');
+                        if (value > top[key]) {
+                            top[key] = value;
+                        }
+                    } catch(e) {
+                        // Ignora erros de conversão
+                    }
+                });
+            });
+            return top;
+        }
+
+        function groupBy(array, key) {
+            if (!Array.isArray(array)) return {};
+            return array.reduce((result, currentValue) => {
+                const groupKey = currentValue[key] || 'Sem Patente';
+                (result[groupKey] = result[groupKey] || []).push(currentValue);
+                return result;
+            }, {});
+        }
+
+        // Inicia o processo
+        router();
+    });
+    </script>
+</body>
+</html>

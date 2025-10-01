@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil do Membro - [F4F] Fight 4 Freedom</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --primary-color: #007bff;
+            --text-color: #e0e0e0;
+            --text-muted-color: #888;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container { max-width: 900px; margin: 20px auto; padding: 0 15px; }
+        .loading-text, .error-text { text-align: center; font-size: 1.2rem; color: var(--text-muted-color); padding: 3rem 0; }
+        .error-text { color: #ff6b6b; }
+
+        /* Estilos do Perfil */
+        .profile-header {
+            background-color: var(--surface-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid #2a2a2a;
+            margin-bottom: 2rem;
+        }
+        .profile-name {
+            font-size: 2.8rem;
+            font-weight: 900;
+            margin: 0 0 10px;
+        }
+        .profile-id {
+            font-size: 1.2rem;
+            color: var(--text-muted-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        .console-icon { font-size: 1.3rem; color: #ccc; }
+        .profile-rank {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 1.5rem;
+        }
+        .rank-icon { width: 60px; height: 60px; object-fit: contain; }
+        .rank-name { font-size: 1.5rem; font-weight: 700; }
+
+        /* Estatísticas */
+        .stats-section { margin-bottom: 2rem; }
+        .section-title { font-size: 2rem; font-weight: 900; margin-bottom: 1.5rem; border-left: 5px solid var(--primary-color); padding-left: 15px;}
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 1rem;
+        }
+        .stat-card { background-color: #2a2a2a; border-radius: 8px; padding: 1rem; text-align: center; }
+        .stat-label { display: block; font-size: 0.8rem; color: var(--text-muted-color); margin-bottom: 0.25rem; text-transform: uppercase; }
+        .stat-value { display: block; font-size: 1.6rem; font-weight: 700; color: var(--text-color); }
+
+        /* --- SEÇÃO DE MEDALHAS EM DESTAQUE --- */
+        .medals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .medal-card {
+            background-color: var(--surface-color);
+            border: 1px solid #2a2a2a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .medal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+        .medal-card-img {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            flex-shrink: 0; /* Impede que a imagem encolha */
+        }
+        .medal-card-info h3 {
+            margin: 0 0 5px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffd700; /* Cor dourada para o título */
+        }
+        .medal-card-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+        .no-medals {
+            color: var(--text-muted-color);
+            text-align: center;
+            font-style: italic;
+            padding: 2rem;
+            background-color: var(--surface-color);
+            border-radius: 8px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <main class="container" id="profile-container">
+        <p class="loading-text">Carregando perfil do membro...</p>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const API_URL = 'https://script.google.com/macros/s/AKfycbzLXYwQzjMvHTg1CsxvNP0xhrSnSJj7-c7nSY-iVi9ffzKZyeStpEqixHNuvNKwWYXT/exec';
+            const container = document.getElementById('profile-container');
+
+            // 1. Pega o ID do membro da URL
+            const params = new URLSearchParams(window.location.search);
+            const memberId = params.get('id');
+
+            if (!memberId) {
+                container.innerHTML = `<p class="error-text">Nenhum ID de membro fornecido.</p>`;
+                return;
+            }
+
+            async function loadProfile() {
+                try {
+                    const response = await fetch(API_URL, { cache: 'no-store' });
+                    if (!response.ok) throw new Error(`Erro na rede: ${response.statusText}`);
+                    
+                    const data = await response.json();
+                    
+                    // A API pode retornar um array ou um objeto {membros, patentes}
+                    const members = Array.isArray(data) ? data : data.membros;
+                    const patentesMap = Array.isArray(data) ? {} : data.patentes || {};
+
+                    if (!members || !Array.isArray(members)) {
+                        throw new Error("A API não retornou uma lista de membros válida.");
+                    }
+
+                    // 2. Encontra o membro específico na lista
+                    const member = members.find(m => m.ID === memberId);
+
+                    if (member) {
+                        // 3. Renderiza o perfil se o membro for encontrado
+                        renderProfile(member, patentesMap);
+                    } else {
+                        container.innerHTML = `<p class="error-text">Membro "${memberId}" não encontrado.</p>`;
+                    }
+
+                } catch (error) {
+                    console.error("Erro ao buscar dados do perfil:", error);
+                    container.innerHTML = `<p class="error-text">Não foi possível carregar o perfil. ${error.message}</p>`;
+                }
+            }
+            
+            function renderProfile(member, patentesMap) {
+                // Limpa a mensagem de "carregando"
+                container.innerHTML = '';
+                
+                // Link para voltar
+                const backLink = document.createElement('a');
+                backLink.href = 'CódigoCompleto.html'; // Mude se o nome do seu arquivo principal for diferente
+                backLink.className = 'back-link';
+                backLink.innerHTML = '&larr; Voltar para a lista do Pelotão';
+                container.appendChild(backLink);
+
+                // --- Header do Perfil ---
+                const profileHeader = document.createElement('header');
+                profileHeader.className = 'profile-header';
+                
+                const consoleIcons = { 'PS5': 'fa-playstation', 'PS4': 'fa-playstation', 'XBOX': 'fa-xbox', 'PC': 'fa-windows' };
+                const iconClass = (member.Plataforma && consoleIcons[member.Plataforma.toUpperCase()]) || 'fa-gamepad';
+                
+                const rankImgUrl = patentesMap[member.Ranking] || '';
+
+                profileHeader.innerHTML = `
+                    <h1 class="profile-name">${member.Nome || 'N/A'}</h1>
+                    <div class="profile-id">
+                        ${member.ID || 'N/A'} <i class="fab ${iconClass} console-icon"></i>
+                    </div>
+                    <div class="profile-rank">
+                        ${rankImgUrl ? `<img src="${rankImgUrl}" alt="${member.Ranking}" class="rank-icon">` : ''}
+                        <span class="rank-name">${member.Ranking || 'Sem Patente'}</span>
+                    </div>
+                `;
+                container.appendChild(profileHeader);
+
+                // --- Seção de Estatísticas ---
+                const statsSection = document.createElement('section');
+                statsSection.className = 'stats-section';
+                statsSection.innerHTML = `
+                    <h2 class="section-title">Estatísticas de Combate</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card"><span class="stat-label">K/D</span><span class="stat-value">${member['K/D'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">Kills</span><span class="stat-value">${member['Kills'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">Assists</span><span class="stat-value">${member['Assists'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">Revives</span><span class="stat-value">${member['Revives'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">Partidas</span><span class="stat-value">${member['Partidas'] || '0'}</span></div>
+                        <div class="stat-card"><span class="stat-label">XP</span><span class="stat-value">${member['XP'] || '0'}</span></div>
+                    </div>
+                `;
+                container.appendChild(statsSection);
+
+                // --- Seção de Medalhas em Destaque ---
+                const medalsSection = document.createElement('section');
+                medalsSection.className = 'medals-section';
+                
+                let medalsHTML = '<h2 class="section-title">Quadro de Medalhas</h2>';
+                if (member.MedalhasData && member.MedalhasData.length > 0) {
+                    medalsHTML += '<div class="medals-grid">';
+                    member.MedalhasData.forEach(medal => {
+                        medalsHTML += `
+                            <div class="medal-card">
+                                <img src="${medal.url}" alt="${medal.nome}" class="medal-card-img">
+                                <div class="medal-card-info">
+                                    <h3>${medal.nome}</h3>
+                                    <p>${medal.descricao}</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    medalsHTML += '</div>';
+                } else {
+                    medalsHTML += '<p class="no-medals">Este membro ainda não possui medalhas.</p>';
+                }
+                medalsSection.innerHTML = medalsHTML;
+                container.appendChild(medalsSection);
+            }
+
+            loadProfile();
+        });
+    </script>
+
+</body>
+</html>
