@@ -1,0 +1,374 @@
+{
+  "url": "https://tracker.gg/bf6/profile/3137212968/overview",
+  "timestamp": 1760486400.106258,
+  "data": {
+    "rank": {
+      "img": "https://imgsvc.trackercdn.com/url/max-width(168),quality(70)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fbf6%2Fimages%2Franks%2F030.png/image.png",
+      "alt": "Level 30",
+      "level": "30"
+    },
+    "classes": [
+      {
+        "name": "Support",
+        "img_src": "https://trackercdn.com/cdn/tracker.gg/bf6/images/classes/support-mg.svg",
+        "img_alt": "Support",
+        "stats": {
+          "Time Played": "7h 52m",
+          "KDA": "3.89"
+        },
+        "list_values": [
+          "538",
+          "242",
+          "404"
+        ]
+      },
+      {
+        "name": "Engineer",
+        "img_src": "https://trackercdn.com/cdn/tracker.gg/bf6/images/classes/engineer-mg.svg",
+        "img_alt": "Engineer",
+        "stats": {
+          "Time Played": "2h 58m",
+          "KDA": "2.94"
+        },
+        "list_values": [
+          "218",
+          "121",
+          "138"
+        ]
+      },
+      {
+        "name": "Recon",
+        "img_src": "https://trackercdn.com/cdn/tracker.gg/bf6/images/classes/recon-mg.svg",
+        "img_alt": "Recon",
+        "stats": {
+          "Time Played": "2h 43m",
+          "KDA": "3.63"
+        },
+        "list_values": [
+          "110",
+          "65",
+          "126"
+        ]
+      },
+      {
+        "name": "Assault",
+        "img_src": "https://trackercdn.com/cdn/tracker.gg/bf6/images/classes/assault-mg.svg",
+        "img_alt": "Assault",
+        "stats": {
+          "Time Played": "59m 50s",
+          "KDA": "2.17"
+        },
+        "list_values": [
+          "57",
+          "46",
+          "43"
+        ]
+      }
+    ],
+    "weapons": [
+      {
+        "name": "M433",
+        "img_src": "https://imgsvc.trackercdn.com/url/max-width(168),quality(70)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fbf6%2Fimages%2Fweapons%2Fwhite%2Fwp_ar_m433.png/image.png",
+        "img_alt": "M433",
+        "stats": {
+          "Kills": "311",
+          "Accuracy": "14.1%"
+        },
+        "list_values": []
+      },
+      {
+        "name": "SGX",
+        "img_src": "https://imgsvc.trackercdn.com/url/max-width(168),quality(70)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fbf6%2Fimages%2Fweapons%2Fwhite%2Fwp_smg_sgx.png/image.png",
+        "img_alt": "SGX",
+        "stats": {
+          "Kills": "160",
+          "Accuracy": "16.0%"
+        },
+        "list_values": []
+      },
+      {
+        "name": "M2010 ESR",
+        "img_src": "https://imgsvc.trackercdn.com/url/max-width(168),quality(70)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fbf6%2Fimages%2Fweapons%2Fwhite%2Fwp_snp_m2010.png/image.png",
+        "img_alt": "M2010 ESR",
+        "stats": {
+          "Kills": "83",
+          "Accuracy": "25.2%"
+        },
+        "list_values": []
+      }
+    ],
+    "lifetime_overview": {
+      "Playtime": "19h",
+      "Matches": "48",
+      "Score/Min": "286.41",
+      "K/D": "1.95",
+      "Win %": "43.8%",
+      "Kills/Min": "0.78",
+      "Wins": "21",
+      "Losses": "27",
+      "HS%": "18.4%",
+      "Dmg/Min": "171.76",
+      "MVP %": "0.0%",
+      "Best Squad %": "0.0%",
+      "Obj Time %": "14.9%",
+      "Kills": "923",
+      "Deaths": "474",
+      "Assists": "711",
+      "MVPs": "0",
+      "Revives": "199"
+    },
+    "recent": [
+      {
+        "stats": {
+          "Kills/Min": "0.75",
+          "K/D": "1.46",
+          "Kills": "3",
+          "Deaths": "24",
+          "Assists": "25",
+          "Score/Min": "246.71",
+          "Game Score": "11,505"
+        },
+        "weapons": [
+          {
+            "name": "SGX"
+          },
+          {
+            "name": "P18"
+          },
+          {
+            "name": "M2010 ESR"
+          }
+        ]
+      },
+      {
+        "stats": {
+          "Kills/Min": "0.75",
+          "K/D": "1.33",
+          "Kills": "12",
+          "Deaths": "12",
+          "Assists": "21",
+          "Score/Min": "406.24",
+          "Game Score": "8,680"
+        },
+        "weapons": [
+          {
+            "name": "SGX"
+          }
+        ]
+      },
+      {
+        "stats": {
+          "Kills/Min": "0.59",
+          "K/D": "2.00",
+          "Kills": "2",
+          "Deaths": "8",
+          "Assists": "10",
+          "Score/Min": "198.23",
+          "Game Score": "5,415"
+        },
+        "weapons": [
+          {
+            "name": "SGX"
+          },
+          {
+            "name": "P18"
+          },
+          {
+            "name": "M433"
+          }
+        ]
+      },
+      {
+        "stats": {
+          "Kills/Min": "0.23",
+          "K/D": "0.62",
+          "Kills": "5",
+          "Deaths": "8",
+          "Assists": "7",
+          "Score/Min": "297.29",
+          "Game Score": "6,585"
+        },
+        "weapons": [
+          {
+            "name": "P18"
+          },
+          {
+            "name": "M433"
+          }
+        ]
+      },
+      {
+        "stats": {
+          "Kills/Min": "0.61",
+          "K/D": "1.02",
+          "Kills": "21",
+          "Deaths": "43",
+          "Assists": "26",
+          "Score/Min": "187.17",
+          "Game Score": "13,595"
+        },
+        "weapons": [
+          {
+            "name": "SGX"
+          },
+          {
+            "name": "P18"
+          },
+          {
+            "name": "M87A1"
+          },
+          {
+            "name": "M39 EMR"
+          },
+          {
+            "name": "M277"
+          },
+          {
+            "name": "L110"
+          },
+          {
+            "name": "M2010 ESR"
+          },
+          {
+            "name": "M433"
+          }
+        ]
+      },
+      {
+        "stats": {
+          "Kills/Min": "0.44",
+          "K/D": "1.42",
+          "Kills": "11",
+          "Deaths": "12",
+          "Assists": "28",
+          "Score/Min": "309.61",
+          "Game Score": "11,915"
+        },
+        "weapons": [
+          {
+            "name": "P18"
+          },
+          {
+            "name": "M2010 ESR"
+          },
+          {
+            "name": "M433"
+          }
+        ]
+      },
+      {
+        "stats": {
+          "Kills/Min": "0.09",
+          "K/D": "0.67",
+          "Kills": "2",
+          "Deaths": "3",
+          "Assists": "2",
+          "Score/Min": "45.35",
+          "Game Score": "1,000"
+        },
+        "weapons": [
+          {
+            "name": "M433"
+          }
+        ]
+      },
+      {
+        "stats": {
+          "Kills/Min": "0.98",
+          "K/D": "2.35",
+          "Kills": "42",
+          "Deaths": "49",
+          "Assists": "110",
+          "Score/Min": "286.52",
+          "Game Score": "33,575"
+        },
+        "weapons": [
+          {
+            "name": "P18"
+          },
+          {
+            "name": "M45A1"
+          },
+          {
+            "name": "M4A1"
+          },
+          {
+            "name": "M2010 ESR"
+          },
+          {
+            "name": "M433"
+          }
+        ]
+      },
+      {
+        "stats": {
+          "Kills/Min": "0.71",
+          "K/D": "1.78",
+          "Kills": "138",
+          "Deaths": "183",
+          "Assists": "248",
+          "Score/Min": "292.88",
+          "Game Score": "133,255"
+        },
+        "weapons": [
+          {
+            "name": "SGX"
+          },
+          {
+            "name": "P18"
+          },
+          {
+            "name": "M39 EMR"
+          },
+          {
+            "name": "DRS-IAR"
+          },
+          {
+            "name": "M2010 ESR"
+          },
+          {
+            "name": "M433"
+          }
+        ]
+      },
+      {
+        "stats": {
+          "Kills/Min": "0.96",
+          "K/D": "2.64",
+          "Kills": "90",
+          "Deaths": "132",
+          "Assists": "234",
+          "Score/Min": "314.31",
+          "Game Score": "114,205"
+        },
+        "weapons": [
+          {
+            "name": "SGX"
+          },
+          {
+            "name": "P18"
+          },
+          {
+            "name": "M87A1"
+          },
+          {
+            "name": "M39 EMR"
+          },
+          {
+            "name": "M4A1"
+          },
+          {
+            "name": "L110"
+          },
+          {
+            "name": "M2010 ESR"
+          },
+          {
+            "name": "M433"
+          }
+        ]
+      }
+    ]
+  },
+  "profile_id": "3137212968"
+}

@@ -13,3 +13,19 @@ __pycache__/
 # Arquivos de sistema operacional
 .DS_Store
 Thumbs.db
+
+# Ignorar credenciais do Google Cloud
+discord-soldier-bot/src/bf6online-1d0103d91880.json
+
+# Ignorar arquivos de configuração com segredos
+discord-soldier-bot/src/config.py
+patentes-bot/config.json
+
+# Ignorar dependências do Node.js (MUITO IMPORTANTE)
+node_modules/
+
+# Ignorar ambientes virtuais do Python
+venv/
+
+.env
+patentes-bot/.env

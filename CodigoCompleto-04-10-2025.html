@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosso Pelotão - [F4F] Fight 4 Freedom</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- ESTILOS GERAIS E TIPOGRAFIA --- */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --primary-color: #007bff;
+            --text-color: #e0e0e0;
+            --text-muted-color: #888;
+            --border-color: #2a2a2a;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+        }
+        .container { max-width: 1100px; margin: 20px auto; padding: 0 15px; }
+        .loading-text, .error-text, .no-results-text { text-align: center; font-size: 1.2rem; color: var(--text-muted-color); padding: 3rem 0; }
+        .error-text { color: #ff6b6b; }
+
+        /* --- ESTILOS PARA BUSCA E FILTROS --- */
+        .controls-container {
+            background-color: var(--surface-color);
+            padding: 1rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+        .search-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-color);
+            border-radius: 6px;
+            padding: 0 0.5rem;
+            border: 1px solid var(--border-color);
+        }
+        .search-wrapper i {
+            color: var(--text-muted-color);
+            padding: 0 0.5rem;
+        }
+        #search-box {
+            width: 100%;
+            padding: 0.75rem 0.5rem;
+            background-color: transparent;
+            border: none;
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+        }
+        .platform-filters {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .platform-btn {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-color);
+            color: var(--text-muted-color);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .platform-btn:hover {
+            color: var(--text-color);
+            border-color: var(--primary-color);
+        }
+        .platform-btn.active {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: 700;
+            border-color: var(--primary-color);
+        }
+
+        /* --- ESTILOS DA PÁGINA PRINCIPAL (LISTA DO PELOTÃO) --- */
+        .rank-section { margin-bottom: 3rem; }
+        .rank-title {
+            font-size: 2rem;
+            color: #00aeff;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #333;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .rank-icon { width: 65px; height: 65px; object-fit: contain; }
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(650px, 1fr));
+            gap: 1.5rem;
+        }
+        .member-card {
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .member-details { flex: 1; min-width: 200px; }
+        .member-details h3 { margin: 0 0 0.25rem 0; font-size: 1.5rem; }
+        .member-details p { margin: 0; font-size: 1rem; color: var(--text-muted-color); display: flex; align-items: center; gap: 8px; }
+        .console-icon { font-size: 1.1rem; color: #ccc; }
+        .member-stats { flex: 3; min-width: 400px; }
+        .member-stats .stats-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.75rem; }
+        .stat-card { background-color: #2a2a2a; border-radius: 8px; padding: 1rem; text-align: center; }
+        .stat-label { display: block; font-size: 0.8rem; color: var(--text-muted-color); margin-bottom: 0.25rem; text-transform: uppercase; }
+        .stat-value { display: block; font-size: 1.4rem; font-weight: 700; color: var(--text-color); }
+        .stat-card.highlight { background-color: #3a3a2a; border: 2px solid #ffd700; }
+        .stat-card.highlight .stat-value { color: #ffd700; font-weight: bold; }
+        
+        .member-medals { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; margin-top: 8px; width: 100%; }
+        .medal-wrapper { position: relative; display: inline-block; }
+        .medal-icon { width: 28px; height: 28px; }
+        .medal-tooltip { position: absolute; bottom: 110%; left: 50%; transform: translateX(-50%); background-color: #181818; color: #fff; padding: 15px; border-radius: 8px; border: 1px solid #444; box-shadow: 0 4px 15px rgba(0,0,0,0.5); width: 250px; text-align: center; opacity: 0; visibility: hidden; transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; z-index: 10; }
+        .medal-wrapper:hover .medal-tooltip { opacity: 1; visibility: visible; }
+        .tooltip-img { width: 80px; height: 80px; margin-bottom: 10px; }
+        .tooltip-title { margin: 0 0 5px 0; font-size: 1.1rem; font-weight: bold; color: #ffd700; }
+        .tooltip-desc { margin: 0; font-size: 0.9rem; color: #ccc; }
+        .see-all-medals-btn { display: inline-flex; align-items: center; background-color: #333; color: var(--text-muted-color); padding: 4px 10px; border-radius: 12px; font-size: 0.75rem; text-decoration: none; font-weight: 700; margin-left: 6px; transition: background-color 0.2s ease, color 0.2s ease; }
+        .see-all-medals-btn:hover { background-color: var(--primary-color); color: #fff; }
+        .profile-view-container { max-width: 900px; }
+        .back-link { display: inline-block; margin-bottom: 2rem; color: var(--primary-color); text-decoration: none; font-weight: bold; }
+        .back-link:hover { text-decoration: underline; }
+        .profile-header { background-color: var(--surface-color); border-radius: 12px; padding: 2rem; text-align: center; border: 1px solid #2a2a2a; margin-bottom: 2rem; }
+        .profile-name { font-size: 2.1rem; font-weight: 900; margin: 0 0 10px; }
+        .profile-id { font-size: 1.2rem; color: var(--text-muted-color); display: flex; justify-content: center; align-items: center; gap: 10px; }
+        .profile-rank { display: flex; align-items: center; justify-content: center; gap: 15px; margin-top: 1.5rem; }
+        .profile-rank .rank-icon { width: 80px; height: 80px; }
+        .rank-name { font-size: 1.5rem; font-weight: 700; }
+        .progress-section { background-color: var(--surface-color); border: 1px solid #2a2a2a; border-radius: 12px; padding: 1.5rem 2rem; margin-bottom: 2rem; }
+        .progress-bar-wrapper { display: flex; align-items: center; gap: 1.5rem; }
+        .progress-rank-icon { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; }
+        .progress-rank-icon.next { opacity: 0.5; }
+        .progress-bar-area { flex-grow: 1; }
+        .progress-bar-bg { background-color: #101010; border-radius: 20px; height: 20px; padding: 4px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); }
+        .progress-bar-fill { background: linear-gradient(90deg, var(--primary-color) 0%, #00aeff 100%); height: 100%; border-radius: 16px; width: 0%; transition: width 0.5s ease-in-out; }
+        .progress-labels { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted-color); margin-top: 0.5rem; padding: 0 5px; }
+        .rank-names { display: flex; justify-content: space-between; font-size: 1rem; font-weight: bold; margin-top: 0.75rem; padding: 0 5px; }
+        .max-rank-message { text-align: center; font-size: 1.2rem; font-weight: bold; color: #ffd700; padding: 1rem; }
+        .insignia-icon-anual { color: #ffd700; margin-right: 8px; font-size: 0.9em; }
+        .insignia-icon-bimestral { color: #4389f4; margin-right: 8px; font-size: 0.9em; } 
+        .progress-mini-wrapper { width: 100%; margin-top: 0.75rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 10px; cursor: help; }
+        .progress-mini-rank-icon { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; }
+        .progress-mini-rank-icon.next { opacity: 0.6; }
+        .progress-mini-bar-area { flex-grow: 1; }
+        .progress-mini-bar-bg { background-color: #101010; border-radius: 5px; height: 8px; padding: 2px; box-shadow: inset 0 1px 2px rgba(0,0,0,0.5); }
+        .progress-mini-bar-fill { background: linear-gradient(90deg, var(--primary-color) 0%, #00aeff 100%); height: 100%; border-radius: 3px; width: 0%; transition: width 0.5s ease-in-out; }
+        .section-title { font-size: 2rem; font-weight: 900; margin-bottom: 1.5rem; border-left: 5px solid var(--primary-color); padding-left: 15px; }
+        .profile-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; }
+        .medals-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .medal-card { background-color: var(--surface-color); border: 1px solid #2a2a2a; border-radius: 8px; padding: 1.5rem; display: flex; align-items: center; gap: 1rem; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .medal-card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        .medal-card-img { width: 80px; height: 80px; object-fit: contain; flex-shrink: 0; }
+        .medal-card-info h3 { margin: 0 0 5px; font-size: 1.2rem; font-weight: 700; color: #ffd700; }
+        .medal-card-info p { margin: 0; font-size: 0.9rem; color: #ccc; }
+        .no-medals { color: var(--text-muted-color); text-align: center; font-style: italic; padding: 2rem; background-color: var(--surface-color); border-radius: 8px; }
+        @keyframes fire-animation { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .insignia-anual, .insignia-bimestral { background-size: 200% 200%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900 !important; animation: fire-animation 4s ease-in-out infinite; display: inline-block; }
+        .insignia-anual { background-image: linear-gradient(90deg, #ffd700, #f8b400, #ff8c00, #e8a100, #ffd700); }
+        .insignia-bimestral { background-image: linear-gradient(90deg, #a6c0fe, #4389f4, #00bfff, #4389f4, #a6c0fe); }
+        @media (max-width: 992px) { .members-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .member-card { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1rem; } .member-details, .member-stats { width: 100%; min-width: unset; } .member-stats .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; } .stat-value { font-size: 1.2rem; } }
+        @media (max-width: 480px) { .member-stats .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+    </style>
+</head>
+<body>
+    
+    <main class="container" id="platoon-view">
+        <div class="controls-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-box" placeholder="Buscar por nome...">
+            </div>
+            <div class="platform-filters">
+                <button class="platform-btn active" data-platform="all">Todos</button>
+                <button class="platform-btn" data-platform="PC">PC</button>
+                <button class="platform-btn" data-platform="PS5">PS5</button>
+                <button class="platform-btn" data-platform="XBOX">XBOX</button>
+            </div>
+        </div>
+        <div id="platoon-container">
+            <p class="loading-text">Carregando...</p>
+        </div>
+    </main>
+
+    <main class="container profile-view-container" id="profile-view" style="display: none;">
+    </main>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const API_URL = 'https://script.google.com/macros/s/AKfycbzLXYwQzjMvHTg1CsxvNP0xhrSnSJj7-c7nSY-iVi9ffzKZyeStpEqixHNuvNKwWYXT/exec';
+        
+        const patentesSemProgresso = ['Coronel', 'General de Brigada', 'General de Divisão', 'General de Exército', 'Marechal'];
+        const CACHE_DURATION = 5 * 60 * 1000;
+        const CACHE_KEY = 'platoon_data';
+        
+        const platoonView = document.getElementById('platoon-view');
+        const profileView = document.getElementById('profile-view');
+        const platoonContainer = document.getElementById('platoon-container');
+        
+        const searchBox = document.getElementById('search-box');
+        const platformButtons = document.querySelectorAll('.platform-btn');
+        let allMembersData = [];
+        let patentesMapData = {};
+
+        const params = new URLSearchParams(window.location.search);
+        const memberId = params.get('id');
+
+        function getCachedData(key) { try { const cached = JSON.parse(localStorage.getItem(key)); if (cached && (Date.now() - cached.timestamp) < CACHE_DURATION) { return cached.data; } } catch (e) { console.warn('Erro ao ler cache:', e); } return null; }
+        function setCachedData(key, data) { try { localStorage.setItem(key, JSON.stringify({ data: data, timestamp: Date.now() })); } catch (e) { console.warn('Erro ao salvar cache:', e); } }
+        async function fetchWithTimeout(url, options = {}) { const timeout = options.timeout || 15000; const maxRetries = options.maxRetries || 2; for (let attempt = 1; attempt <= maxRetries; attempt++) { try { const controller = new AbortController(); const timeoutId = setTimeout(() => controller.abort(), timeout); const response = await fetch(url, { ...options, signal: controller.signal }); clearTimeout(timeoutId); if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`); return response; } catch (error) { if (attempt === maxRetries) throw new Error(`Falha após ${maxRetries} tentativas: ${error.message}`); console.warn(`Tentativa ${attempt} falhou, tentando novamente...`); await new Promise(resolve => setTimeout(resolve, 1000 * attempt)); } } }
+
+        async function router() {
+            updateLoadingMessage('Carregando dados do pelotão...');
+            try {
+                let data = getCachedData(CACHE_KEY);
+                let fromCache = true;
+                if (!data) {
+                    fromCache = false;
+                    updateLoadingMessage('Conectando com servidor...');
+                    const response = await fetchWithTimeout(API_URL, { cache: 'no-store', timeout: 15000, maxRetries: 3 });
+                    data = await response.json();
+                    setCachedData(CACHE_KEY, data);
+                }
+                allMembersData = data.membros || [];
+                patentesMapData = data.patentes || {};
+
+                if (!allMembersData.length) throw new Error("A API não retornou uma lista de membros válida.");
+
+                if (!fromCache) {
+                    preloadImages(allMembersData, patentesMapData);
+                }
+
+                if (memberId) {
+                    const member = allMembersData.find(m => m.ID === memberId);
+                    platoonView.style.display = 'none';
+                    profileView.style.display = 'block';
+                    if (member) {
+                        renderProfile(member);
+                    } else {
+                        profileView.innerHTML = `<p class="error-text">Membro "${memberId}" não encontrado.</p>`;
+                    }
+                } else {
+                    platoonView.style.display = 'block';
+                    profileView.style.display = 'none';
+                    renderPlatoon(allMembersData, patentesMapData); 
+                }
+                if (fromCache) console.log('✅ Dados carregados do cache local');
+            } catch (error) {
+                console.error("Erro ao carregar dados:", error);
+                const errorMsg = `❌ Erro: ${error.message}`;
+                platoonContainer.innerHTML = `<p class="error-text">${errorMsg}</p>`;
+                profileView.innerHTML = `<p class="error-text">${errorMsg}</p>`;
+            }
+        }
+
+        function updateLoadingMessage(message) {
+            const loadingElement = document.querySelector('.loading-text');
+            if (loadingElement) loadingElement.textContent = message;
+        }
+        
+        function preloadImages(members, patentesMap) {
+            const imagesToPreload = new Set();
+            Object.values(patentesMap).forEach(url => { if (url) imagesToPreload.add(url); });
+            members.forEach(member => {
+                if (member.MedalhasData) {
+                    member.MedalhasData.forEach(medal => { 
+                        if (medal.url) imagesToPreload.add(medal.url); 
+                    });
+                }
+            });
+            console.log(`Pré-carregando ${imagesToPreload.size} imagens únicas...`);
+            imagesToPreload.forEach(url => { const img = new Image(); img.src = url; });
+        }
+
+        function renderPlatoon(membersToRender, patentesMap) {
+            platoonContainer.innerHTML = '';
+            
+            if (membersToRender.length === 0) {
+                platoonContainer.innerHTML = '<p class="no-results-text">Nenhum membro encontrado com os filtros aplicados.</p>';
+                return;
+            }
+            const topStats = findTopStats(membersToRender);
+            const rankOrder = ['Marechal', 'General de Exército', 'General de Divisão', 'General de Brigada', 'Coronel', 'Tenente-Coronel', 'Major', 'Capitão', '1º Tenente', '2º Tenente', 'Subtenente', '1º Sargento', '2º Sargento', '3º Sargento', 'Cabo', 'Soldado', 'Sem Patente'];
+            const membersByRank = groupBy(membersToRender, 'Ranking');
+
+            rankOrder.forEach(rankName => {
+                if (membersByRank[rankName]) {
+                    const rankSection = document.createElement('div');
+                    rankSection.className = 'rank-section';
+                    const imgUrl = patentesMap[rankName] || '';
+                    rankSection.innerHTML = `<h2 class="rank-title">${imgUrl ? `<img src="${imgUrl}" alt="${rankName}" class="rank-icon" loading="lazy">` : ''} ${rankName}</h2>`;
+                    const membersGrid = document.createElement('div');
+                    membersGrid.className = 'members-grid';
+                    const sortedMembers = membersByRank[rankName].sort((a, b) => (a.Nome || "").localeCompare(b.Nome || ""));
+                    sortedMembers.forEach(member => membersGrid.appendChild(createMemberCard(member, topStats)));
+                    rankSection.appendChild(membersGrid);
+                    platoonContainer.appendChild(rankSection);
+                }
+            });
+        }
+        
+        function applyFilters() {
+            const searchTerm = searchBox.value.toLowerCase();
+            const activePlatform = document.querySelector('.platform-btn.active').dataset.platform;
+            const filteredMembers = allMembersData.filter(member => {
+                const nameMatch = member.Nome.toLowerCase().includes(searchTerm);
+                const platformMatch = activePlatform === 'all' || member.Plataforma.toUpperCase() === activePlatform.toUpperCase();
+                return nameMatch && platformMatch;
+            });
+            renderPlatoon(filteredMembers, patentesMapData);
+        }
+
+        searchBox.addEventListener('input', applyFilters);
+        platformButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                platformButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                applyFilters();
+            });
+        });
+
+        function createMemberCard(member, topStats) {
+            const card = document.createElement('div');
+            card.className = 'member-card';
+
+            const cleanAndParse = (value) => parseInt(String(value || '0').replace(/[^0-9]/g, ''), 10);
+            
+            let progressHTML = '';
+            if (member.progressao && member.progressao.proximaPatente && !patentesSemProgresso.includes(member.Ranking)) {
+                const prog = member.progressao;
+                const pontosPatenteAtual = prog.patenteAtual.pontosNecessarios || 0;
+                const pontosDesdePatenteAtual = prog.pontuacaoAtual - pontosPatenteAtual;
+                const pontosNecessariosParaUpar = prog.proximaPatente.pontosNecessarios - pontosPatenteAtual;
+                let porcentagem = 0;
+                if (pontosNecessariosParaUpar > 0) {
+                    porcentagem = Math.max(0, Math.min(100, (pontosDesdePatenteAtual / pontosNecessariosParaUpar) * 100));
+                }
+                const tooltipText = `Progresso: ${prog.pontuacaoAtual.toLocaleString('pt-BR')} / ${prog.proximaPatente.pontosNecessarios.toLocaleString('pt-BR')} pts`;
+                progressHTML = `<div class="progress-mini-wrapper" title="${tooltipText}"><img src="${prog.patenteAtual.url}" alt="${prog.patenteAtual.nome}" class="progress-mini-rank-icon current"><div class="progress-mini-bar-area"><div class="progress-mini-bar-bg"><div class="progress-mini-bar-fill" style="width: ${porcentagem.toFixed(2)}%;"></div></div></div><img src="${prog.proximaPatente.url}" alt="${prog.proximaPatente.nome}" class="progress-mini-rank-icon next"></div>`;
+            }
+
+            let medalsHTML = '';
+            if (member.MedalhasData && member.MedalhasData.length > 0) {
+                // <<< MUDANÇA AQUI: FORÇANDO A ORDENAÇÃO NO CLIENT-SIDE >>>
+                // 1. Pega a lista original de medalhas (que vem na ordem de cadastro: antiga -> nova)
+                const allMedals = member.MedalhasData; 
+                // 2. Cria uma cópia e inverte, para que a mais nova fique em primeiro.
+                const reversedMedals = allMedals.slice().reverse();
+
+                const totalMedals = reversedMedals.length;
+                const maxMedalsToShow = 8;
+                
+                // 3. Pega as 9 primeiras da lista já invertida (as 9 mais novas).
+                const medalsToShow = reversedMedals.slice(0, maxMedalsToShow);
+                
+                const displayedMedalsHTML = medalsToShow.map(medal => `<div class="medal-wrapper"><img src="${medal.url}" alt="${medal.nome}" class="medal-icon" loading="lazy"><div class="medal-tooltip"><img src="${medal.url}" alt="${medal.nome}" class="tooltip-img" loading="lazy"><h4 class="tooltip-title">${medal.nome}</h4><p class="tooltip-desc">${medal.descricao}</p></div></div>`).join('');
+                
+                let seeAllButtonHTML = '';
+                if (totalMedals > maxMedalsToShow) {
+                    seeAllButtonHTML = `<a href="?id=${encodeURIComponent(member['ID'] || '')}" class="see-all-medals-btn">Ver todas (${totalMedals})</a>`;
+                }
+                medalsHTML = `<div class="member-medals">${displayedMedalsHTML}${seeAllButtonHTML}</div>`;
+            }
+
+            const consoleIcons = { 'PS5': 'fa-playstation', 'PS4': 'fa-playstation', 'XBOX': 'fa-xbox', 'PC': 'fa-windows' };
+            const iconClass = (member.Plataforma && consoleIcons[member.Plataforma.toUpperCase()]) || 'fa-gamepad';
+            
+            const isTop = {
+                'K/D': parseFloat(String(member['K/D'] || 0).replace(',', '.')) === topStats['K/D'],
+                'Kills': cleanAndParse(member['Kills']) === topStats['Kills'],
+                'Assists': cleanAndParse(member['Assists']) === topStats['Assists'],
+                'Revives': cleanAndParse(member['Revives']) === topStats['Revives'],
+                'Partidas': cleanAndParse(member['Partidas']) === topStats['Partidas'],
+                'XP': cleanAndParse(member['XP']) === topStats['XP']
+            };
+            
+            let nameClass = '';
+            let insigniaTitle = '';
+            let insigniaIconHTML = '';
+            if (member.Insignia === 'Doador Anual') {
+                nameClass = 'insignia-anual';
+                insigniaTitle = 'Apoiador Anual';
+                insigniaIconHTML = '<i class="fa-solid fa-star insignia-icon-anual"></i>';
+            } else if (member.Insignia === 'Doador Bimestral') {
+                nameClass = 'insignia-bimestral';
+                insigniaTitle = 'Apoiador Bimestral';
+                insigniaIconHTML = '<i class="fa-solid fa-shield-halved insignia-icon-bimestral"></i>';
+            }
+            
+            card.innerHTML = `
+                <div class="member-details">
+                    <h3><a href="?id=${encodeURIComponent(member['ID'] || '')}" class="${nameClass}" title="${insigniaTitle}" style="color: var(--text-color); text-decoration: none;">${insigniaIconHTML}${member['Nome'] || 'N/A'}</a></h3>
+                    <p><a href="?id=${encodeURIComponent(member['ID'] || '')}" style="color: var(--text-muted-color); text-decoration: none;">${member['ID'] || 'N/A'}</a> <i class="fab ${iconClass} console-icon"></i></p>
+                    ${medalsHTML}
+                </div>
+                <div class="member-stats">
+                    ${progressHTML}
+                    <div class="stats-grid">
+                        <div class="stat-card ${isTop['K/D'] ? 'highlight' : ''}"><span class="stat-label">K/D</span><span class="stat-value">${member['K/D'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTop['Kills'] ? 'highlight' : ''}"><span class="stat-label">Kills</span><span class="stat-value">${member['Kills'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTop['Assists'] ? 'highlight' : ''}"><span class="stat-label">Assists</span><span class="stat-value">${member['Assists'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTop['Revives'] ? 'highlight' : ''}"><span class="stat-label">Revives</span><span class="stat-value">${member['Revives'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTop['Partidas'] ? 'highlight' : ''}"><span class="stat-label">Partidas</span><span class="stat-value">${member['Partidas'] || 'N/A'}</span></div>
+                        <div class="stat-card ${isTop['XP'] ? 'highlight' : ''}"><span class="stat-label">XP</span><span class="stat-value">${member['XP'] || 'N/A'}</span></div>
+                    </div>
+                </div>`;
+            return card;
+        }
+
+        function findTopStats(members) {
+            const top = { 'K/D': 0, 'Kills': 0, 'Assists': 0, 'Revives': 0, 'Partidas': 0, 'XP': 0 };
+            const cleanAndParse = (value) => parseInt(String(value || '0').replace(/[^0-9]/g, ''), 10);
+            
+            Object.keys(top).forEach(key => {
+                members.forEach(member => {
+                    try {
+                        const value = key === 'K/D' 
+                            ? parseFloat(String(member[key] || '0').replace(',', '.')) 
+                            : cleanAndParse(member[key]);
+                        
+                        if (value > top[key]) {
+                            top[key] = value;
+                        }
+                    } catch(e) {
+                        console.error(`Erro ao processar a estatística '${key}' para o membro ${member['Nome']}:`, e);
+                    }
+                });
+            });
+            return top;
+        }
+
+        function renderProfile(member) { 
+            profileView.innerHTML = ''; 
+            const patentesMap = (getCachedData(CACHE_KEY) || {}).patentes || {}; 
+            const consoleIcons = { 'PS5': 'fa-playstation', 'PS4': 'fa-playstation', 'XBOX': 'fa-xbox', 'PC': 'fa-windows' }; 
+            const iconClass = (member.Plataforma && consoleIcons[member.Plataforma.toUpperCase()]) || 'fa-gamepad'; 
+            const rankImgUrl = patentesMap[member.Ranking] || ''; 
+            let nameClass = ''; 
+            let insigniaTitle = ''; 
+            let insigniaIconHTML = ''; 
+            if (member.Insignia === 'Doador Anual') { nameClass = 'insignia-anual'; insigniaTitle = 'Apoiador Anual'; insigniaIconHTML = '<i class="fa-solid fa-star insignia-icon-anual"></i>'; } else if (member.Insignia === 'Doador Bimestral') { nameClass = 'insignia-bimestral'; insigniaTitle = 'Apoiador Bimestral'; insigniaIconHTML = '<i class="fa-solid fa-shield-halved insignia-icon-bimestral"></i>'; } 
+            const backLinkHTML = `<a href="${window.location.pathname}" class="back-link">&larr; Voltar para a lista do Pelotão</a>`; 
+            const profileHeaderHTML = ` <header class="profile-header"> <h1 class="profile-name ${nameClass}" title="${insigniaTitle}">${insigniaIconHTML}${member.Nome || 'N/A'}</h1> <div class="profile-id">${member.ID || 'N/A'} <i class="fab ${iconClass} console-icon"></i></div> <div class="profile-rank"> ${rankImgUrl ? `<img src="${rankImgUrl}" alt="${member.Ranking}" class="rank-icon" loading="lazy">` : ''} <span class="rank-name">${member.Ranking || 'Sem Patente'}</span> </div> </header>`; 
+            let progressSectionHTML = ''; 
+            if (member.progressao && !patentesSemProgresso.includes(member.Ranking)) { const prog = member.progressao; let progressContentHTML = ''; if (prog.proximaPatente) { const pontosPatenteAtual = prog.patenteAtual.pontosNecessarios || 0; const pontosDesdePatenteAtual = prog.pontuacaoAtual - pontosPatenteAtual; const pontosNecessariosParaUpar = prog.proximaPatente.pontosNecessarios - pontosPatenteAtual; let porcentagem = 0; if (pontosNecessariosParaUpar > 0) { porcentagem = Math.max(0, Math.min(100, (pontosDesdePatenteAtual / pontosNecessariosParaUpar) * 100)); } progressContentHTML = `<div class="progress-bar-wrapper"><img src="${prog.patenteAtual.url}" alt="${prog.patenteAtual.nome}" class="progress-rank-icon current"><div class="progress-bar-area"><div class="progress-bar-bg"><div class="progress-bar-fill" style="width: ${porcentagem.toFixed(2)}%;"></div></div><div class="progress-labels"><span>${prog.pontuacaoAtual.toLocaleString('pt-BR')} pts</span><span>${prog.proximaPatente.pontosNecessarios.toLocaleString('pt-BR')} pts</span></div></div><img src="${prog.proximaPatente.url}" alt="${prog.proximaPatente.nome}" class="progress-rank-icon next"></div><div class="rank-names"><span>${prog.patenteAtual.nome}</span><span>${prog.proximaPatente.nome}</span></div>`; } else { progressContentHTML = `<div class="max-rank-message">🏆 Patente Máxima Alcançada 🏆</div>`; } progressSectionHTML = `<section class="progress-section">${progressContentHTML}</section>`; } 
+            const statsSectionHTML = ` <section class="stats-section"> <h2 class="section-title">Estatísticas de Combate</h2> <div class="profile-stats-grid"> <div class="stat-card"><span class="stat-label">K/D</span><span class="stat-value">${member['K/D'] || '0'}</span></div> <div class="stat-card"><span class="stat-label">Kills</span><span class="stat-value">${member['Kills'] || '0'}</span></div> <div class="stat-card"><span class="stat-label">Assists</span><span class="stat-value">${member['Assists'] || '0'}</span></div> <div class="stat-card"><span class="stat-label">Revives</span><span class="stat-value">${member['Revives'] || '0'}</span></div> <div class="stat-card"><span class="stat-label">Partidas</span><span class="stat-value">${member['Partidas'] || '0'}</span></div> <div class="stat-card"><span class="stat-label">XP</span><span class="stat-value">${member['XP'] || '0'}</span></div> </div> </section>`; 
+            let medalsHTML = '<h2 class="section-title">Quadro de Medalhas</h2>'; 
+            if (member.MedalhasData && member.MedalhasData.length > 0) { 
+                medalsHTML += '<div class="medals-grid">'; 
+                // <<< MUDANÇA AQUI: FORÇANDO A ORDENAÇÃO NA PÁGINA DE PERFIL >>>
+                // Usamos .slice().reverse() para iterar da mais nova para a mais antiga.
+                member.MedalhasData.slice().reverse().forEach(medal => { 
+                    medalsHTML += ` <div class="medal-card"> <img src="${medal.url}" alt="${medal.nome}" class="medal-card-img" loading="lazy"> <div class="medal-card-info"> <h3>${medal.nome}</h3> <p>${medal.descricao}</p> </div> </div>`; 
+                }); 
+                medalsHTML += '</div>'; 
+            } else { 
+                medalsHTML += '<p class="no-medals">Este membro ainda não possui medalhas.</p>'; 
+            } 
+            const medalsSectionHTML = `<section class="medals-section">${medalsHTML}</section>`; 
+            profileView.innerHTML = backLinkHTML + profileHeaderHTML + progressSectionHTML + statsSectionHTML + medalsSectionHTML; 
+        }
+
+        function groupBy(array, key) { if (!Array.isArray(array)) return {}; return array.reduce((result, currentValue) => { const groupKey = currentValue[key] || 'Sem Patente'; (result[groupKey] = result[groupKey] || []).push(currentValue); return result; }, {}); }
+
+        router();
+    });
+    </script>
+    <center>Visitantes desde 13/08/2025:
+        <div align="center"><a title="contador de dias"
+                href="https://www.calendario.cnt.br/ferramentas/contador-de-dias-calculadora-prazo-entre-datas"><img
+                    src="https://contador-gratis.com/contadores-de-visitas/290925064926284.gif" alt="Contador de visitas"></a>
+            <div><a href="https://www.contador-gratis.com/" title="contador de visitas"></a></div>
+        </div>
+        </center>
+</body>
+</html>

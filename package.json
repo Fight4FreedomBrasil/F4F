@@ -1,0 +1,25 @@
+{
+  "name": "bf6.online",
+  "version": "1.0.0",
+  "description": "Este projeto é a base para o site **BF6.online**, uma plataforma para visualizar os melhores loadouts de armas e acompanhar as estatísticas dos membros de um pelotão de Battlefield.",
+  "main": "buscar_pelotao.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fight4FreedomBrasil/F4F.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Fight4FreedomBrasil/F4F/issues"
+  },
+  "homepage": "https://github.com/Fight4FreedomBrasil/F4F#readme",
+  "dependencies": {
+    "discord.js": "^14.22.1",
+    "node-fetch": "^3.3.2"
+  }
+}

@@ -39,7 +39,7 @@
         /* --- CONTROLES DE FILTRO E BUSCA --- */
         .controls {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column; /* Organiza os grupos de filtro verticalmente */
             gap: 1rem;
             margin-bottom: 2rem;
             padding: 1rem;
@@ -48,11 +48,11 @@
             border: 1px solid var(--border-color);
         }
         .search-wrapper {
-            flex-grow: 1;
-            min-width: 250px;
+            width: 100%;
         }
         #search-box {
             width: 100%;
+            box-sizing: border-box;
             padding: 0.75rem;
             background-color: var(--bg-color);
             border: 1px solid var(--border-color);
@@ -60,11 +60,23 @@
             color: var(--text-color);
             font-size: 1rem;
         }
-        .filters {
+        .filter-group {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
             align-items: center;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .filter-group:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .filter-group-title {
+            font-weight: 700;
+            color: var(--text-muted-color);
+            margin-right: 1rem;
+            font-size: 0.9rem;
         }
         .filter-btn {
             padding: 0.5rem 1rem;
@@ -87,9 +99,7 @@
         }
 
         /* --- SEÇÕES DE TIER --- */
-        .tier-section {
-            margin-bottom: 3rem;
-        }
+        .tier-section { margin-bottom: 3rem; }
         .tier-title {
             font-size: 2rem;
             font-weight: 900;
@@ -99,8 +109,8 @@
             color: var(--primary-color);
         }
         .tier-S .tier-title { color: var(--highlight-color); }
-        .tier-A .tier-title { color: #c0c0c0; } /* Prata */
-        .tier-B .tier-title { color: #cd7f32; } /* Bronze */
+        .tier-A .tier-title { color: #c0c0c0; }
+        .tier-B .tier-title { color: #cd7f32; }
         
         .loading-text, .error-text, .no-results-text {
             text-align: center;
@@ -116,6 +126,7 @@
             border-radius: 8px;
             margin-bottom: 1rem;
             overflow: hidden;
+            position: relative;
         }
         .weapon-header {
             display: flex;
@@ -125,35 +136,13 @@
             cursor: pointer;
             transition: background-color 0.2s ease;
         }
-        .weapon-header:hover {
-            background-color: #282828;
-        }
-        .weapon-image {
-            width: 180px;
-            height: 50px;
-            object-fit: contain;
-        }
-        .weapon-info {
-            flex-grow: 1;
-        }
-        .weapon-info h3 {
-            margin: 0 0 5px 0;
-            font-size: 1.5rem;
-            color: var(--text-color);
-        }
-        .weapon-info p {
-            margin: 0;
-            color: var(--text-muted-color);
-            font-size: 0.9rem;
-        }
-        .expand-icon {
-            font-size: 1.5rem;
-            color: var(--text-muted-color);
-            transition: transform 0.3s ease;
-        }
-        .weapon-card.expanded .expand-icon {
-            transform: rotate(45deg);
-        }
+        .weapon-header:hover { background-color: #282828; }
+        .weapon-image { width: 180px; height: 50px; object-fit: contain; }
+        .weapon-info { flex-grow: 1; }
+        .weapon-info h3 { margin: 0 0 5px 0; font-size: 1.5rem; color: var(--text-color); }
+        .weapon-info p { margin: 0; color: var(--text-muted-color); font-size: 0.9rem; }
+        .expand-icon { font-size: 1.5rem; color: var(--text-muted-color); transition: transform 0.3s ease; }
+        .weapon-card.expanded .expand-icon { transform: rotate(45deg); }
 
         /* --- DETALHES DOS ACESSÓRIOS --- */
         .weapon-attachments {
@@ -163,29 +152,24 @@
             background-color: #181818;
             padding: 0 1.5rem;
         }
-        .weapon-card.expanded .weapon-attachments {
-            max-height: 500px; /* Altura suficiente para mostrar os acessórios */
-            padding: 1.5rem;
+        .weapon-card.expanded .weapon-attachments { max-height: 500px; padding: 1.5rem; }
+        .attachments-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; }
+        .attachment-item { background-color: var(--bg-color); padding: 0.75rem; border-radius: 6px; }
+        .attachment-item .slot { display: block; font-size: 0.8rem; color: var(--text-muted-color); text-transform: uppercase; }
+        .attachment-item .name { font-size: 1.1rem; font-weight: 700; }
+
+        /* --- RESPONSIVIDADE --- */
+        @media (max-width: 768px) {
+            .weapon-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; position: relative; }
+            .weapon-image { width: 150px; height: 40px; align-self: center; margin-bottom: 0.5rem; }
+            .weapon-info h3 { font-size: 1.25rem; }
+            .expand-icon { position: absolute; top: 1rem; right: 1.5rem; }
+            .tier-title { font-size: 1.5rem; }
         }
-        .attachments-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        .attachment-item {
-            background-color: var(--bg-color);
-            padding: 0.75rem;
-            border-radius: 6px;
-        }
-        .attachment-item .slot {
-            display: block;
-            font-size: 0.8rem;
-            color: var(--text-muted-color);
-            text-transform: uppercase;
-        }
-        .attachment-item .name {
-            font-size: 1.1rem;
-            font-weight: 700;
+        @media (max-width: 480px) {
+            .attachments-grid { grid-template-columns: 1fr; }
+            .weapon-header { padding: 1rem; }
+            .expand-icon { right: 1rem; }
         }
     </style>
 </head>
@@ -198,19 +182,30 @@
             <div class="search-wrapper">
                 <input type="search" id="search-box" placeholder="🔎 Procurar por nome da arma...">
             </div>
-            <div class="filters">
+            <div class="filter-group" id="category-filters">
+                <span class="filter-group-title">Categoria:</span>
                 <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="Long Range">Longo Alcance</button>
-                <button class="filter-btn" data-filter="Close Range">Curto Alcance</button>
-                <button class="filter-btn" data-filter="Sniper Support">Suporte de Sniper</button>
-                <button class="filter-btn" data-filter="Sniper">Atirador de Elite</button>
-                <button class="filter-btn" data-filter="Secondary">Secundário</button>
-                <button class="filter-btn" data-filter="Semi Auto">Semi Automático</button>
+                <button class="filter-btn" data-filter="Assault Rifle">Assault Rifle</button>
+                <button class="filter-btn" data-filter="SMG">SMG</button>
+                <button class="filter-btn" data-filter="LMG">LMG</button>
+                <button class="filter-btn" data-filter="Sniper Rifle">Sniper</button>
+                <button class="filter-btn" data-filter="DMR">DMR</button>
+                <button class="filter-btn" data-filter="Shotgun">Shotgun</button>
+                <button class="filter-btn" data-filter="Carbine">Carbine</button>
+                <button class="filter-btn" data-filter="Pistol">Pistol</button>
+                <button class="filter-btn" data-filter="Rifle">Rifle</button>
             </div>
+            <div class="filter-group" id="playstyle-filters">
+                <span class="filter-group-title">Estilo:</span>
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="Longo Alcance">Longo Alcance</button>
+                <button class="filter-btn" data-filter="Curta Distância">Curta Distância</button>
+                <button class="filter-btn" data-filter="Balanceada">Balanceada</button>
             </div>
+        </div>
 
         <div id="loadouts-container">
-            <p class="loading-text">Carregando dados da API...</p>
+            <p class="loading-text">Carregando dados [F4F]...</p>
         </div>
     </div>
 
@@ -220,34 +215,16 @@
         
         const container = document.getElementById('loadouts-container');
         const searchBox = document.getElementById('search-box');
-        const filterButtons = document.querySelectorAll('.filter-btn');
+        const categoryFilterButtons = document.querySelectorAll('#category-filters .filter-btn');
+        const playstyleFilterButtons = document.querySelectorAll('#playstyle-filters .filter-btn');
 
         let allTiersData = []; 
-        let activeFilter = 'all';
+        let activeCategoryFilter = 'all';
+        let activePlaystyleFilter = 'all';
 
-        // ===== DICIONÁRIO DE TRADUÇÕES ATUALIZADO =====
         const traducoes = {
-            "Muzzle": "Bocal",
-            "Barrel": "Cano",
-            "Underbarrel": "Acoplamento",
-            "Magazine": "Carregador",
-            "Ammunition": "Munição",
-            "Scope": "Luneta",
-            "Ergonomics": "Ergonomia",
-            "Optic": "Óptica",
-            "Top": "Trilho Superior",
-            "Right": "Trilho Direito",
-            "Playstyle": "Estilo de Jogo",
-            "Balanced": "Equilibrado",
-            "Close Quarters": "Curta Distância",
-            "Long Range": "Longo Alcance",
-            "Close Range": "Curto Alcance",
-            "Sniper Support": "Suporte de Sniper",
-            "Sniper": "Atirador de Elite",
-            "Secondary": "Secundário",
-            "Semi Auto": "Semi Automático"
+            "Muzzle": "Bocal", "Barrel": "Cano", "Underbarrel": "Acoplamento", "Magazine": "Carregador", "Ammunition": "Munição", "Scope": "Luneta", "Ergonomics": "Ergonomia", "Optic": "Óptica", "Top": "Trilho Superior", "Right": "Trilho Direito", "Playstyle": "Estilo de Jogo", "Balanced": "Balanceada", "Close Quarters": "Curta Distância", "Long Range": "Longo Alcance", "Close Range": "Curto Alcance"
         };
-        // ===============================================
 
         function traduzir(palavra) {
             return traducoes[palavra] || palavra;
@@ -258,9 +235,7 @@
                 const response = await fetch(API_URL);
                 if (!response.ok) throw new Error(`Erro na API: ${response.statusText}`);
                 const data = await response.json();
-                
                 if (data.success === false) throw new Error(data.error);
-
                 allTiersData = data;
                 renderLoadouts();
             } catch (error) {
@@ -277,8 +252,11 @@
                 .map(tier => {
                     const filteredWeapons = tier.weapons.filter(weapon => {
                         const matchesSearch = weapon.Arma.toLowerCase().includes(searchTerm);
-                        const matchesFilter = activeFilter === 'all' || (weapon.Playstyle && weapon.Playstyle.toLowerCase() === activeFilter.toLowerCase());
-                        return matchesSearch && matchesFilter;
+                        const matchesCategory = activeCategoryFilter === 'all' || (weapon.Categoria && weapon.Categoria.toLowerCase() === activeCategoryFilter.toLowerCase());
+                        // Traduz o playstyle da API antes de comparar com o filtro
+                        const translatedPlaystyle = traduzir(weapon.Playstyle);
+                        const matchesPlaystyle = activePlaystyleFilter === 'all' || (translatedPlaystyle && translatedPlaystyle.toLowerCase() === activePlaystyleFilter.toLowerCase());
+                        return matchesSearch && matchesCategory && matchesPlaystyle;
                     });
                     
                     return { ...tier, weapons: filteredWeapons };
@@ -293,20 +271,11 @@
                     
                     let weaponsHTML = '';
                     tier.weapons.forEach(weapon => {
-                        const attachments = [
-                            'Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Ammunition', 
-                            'Scope', 'Ergonomics', 'Optic', 'Top', 'Right'
-                        ];
-
+                        const attachments = ['Muzzle', 'Barrel', 'Underbarrel', 'Magazine', 'Ammunition', 'Scope', 'Ergonomics', 'Optic', 'Top', 'Right'];
                         let attachmentsHTML = '';
                         attachments.forEach(att => {
                             if (weapon[att]) {
-                                attachmentsHTML += `
-                                    <div class="attachment-item">
-                                        <span class="slot">${traduzir(att)}</span>
-                                        <span class="name">${weapon[att]}</span>
-                                    </div>
-                                `;
+                                attachmentsHTML += `<div class="attachment-item"><span class="slot">${traduzir(att)}</span><span class="name">${weapon[att]}</span></div>`;
                             }
                         });
 
@@ -321,9 +290,7 @@
                                     <i class="fas fa-plus expand-icon"></i>
                                 </div>
                                 <div class="weapon-attachments">
-                                    <div class="attachments-grid">
-                                        ${attachmentsHTML}
-                                    </div>
+                                    <div class="attachments-grid">${attachmentsHTML}</div>
                                 </div>
                             </div>
                         `;
@@ -354,11 +321,22 @@
             });
         }
 
-        filterButtons.forEach(button => {
+        // Listeners para filtros de categoria
+        categoryFilterButtons.forEach(button => {
             button.addEventListener('click', () => {
-                filterButtons.forEach(btn => btn.classList.remove('active'));
+                categoryFilterButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
-                activeFilter = button.dataset.filter; // O data-filter continua em inglês para bater com os dados da API
+                activeCategoryFilter = button.dataset.filter;
+                renderLoadouts();
+            });
+        });
+        
+        // Listeners para filtros de estilo de jogo
+        playstyleFilterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                playstyleFilterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                activePlaystyleFilter = button.dataset.filter;
                 renderLoadouts();
             });
         });
@@ -368,14 +346,12 @@
         fetchData();
     });
     </script>
-    <center><!-- Inicio codigo Contador -->
-        Visitantes desde 13/08/2025:
+    <center>Visitantes desde 13/08/2025:
         <div align="center"><a title="contador de dias"
                 href="https://www.calendario.cnt.br/ferramentas/contador-de-dias-calculadora-prazo-entre-datas"><img
-                    src="https://contador-gratis.com/contadores-de-visitas/290925064926284.gif"></a>
+                    src="https://contador-gratis.com/contadores-de-visitas/290925064926284.gif" alt="Contador de visitas"></a>
             <div><a href="https://www.contador-gratis.com/" title="contador de visitas"></a></div>
         </div>
-        <!-- Fim do codigo Contador -->
-    </center>
+        </center>
 </body>
 </html>

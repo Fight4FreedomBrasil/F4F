@@ -1,0 +1,1448 @@
+
+(function(zonevars) {
+	
+	var zonemasters = zonevars.zonemasters;
+	var top_loc=null,top_href="",top_hash="";
+	function getQueryHash() {
+		top_hash = (top_hash=top_href.match(/[\?\&]cpmstarhash=([^\&\#]*)/))==null?"":"#"+top_hash[1];		
+	}
+	try { top_loc=window.top.location; top_href=top_loc.href; top_hash=top_loc.hash; } catch(err) {
+		var top_win = window;
+		try { while (top_win.parent && top_win.parent.document !== top_win.document && top_win.parent.document.location.href) { top_win = top_win.parent; } } catch(e) {}		
+		try { top_loc = top_win.location; top_href = top_loc.href; } catch(e) {}
+		getQueryHash();
+	}
+	if(!top_hash) getQueryHash();
+	try { 
+		if (typeof(Storage) && !top_hash) {
+			top_hash = localStorage.getItem('cpmstarhash');
+		}
+	} catch(e) {
+		console.log("There was an error trying to detemine the debug state: ", e);
+	}
+
+    var x=(10+((x*7)%26)).toString(36)+(x=window.location.href.split('').reduce(function(a,b){return(a<<5)-a+b.charCodeAt(0)>>>1},0));
+	var y=window.location.href.split('').reduce(function(a,b){return(a<<5)-a+b.charCodeAt(0)>>>1},0);y=(10+((y*7)%26)).toString(36)+y.toString(36);
+	var z=window.location.href.split('').reduce(function(a,b){return(a<<5)-a+b.charCodeAt(0)>>>0},0);z=(10+((z*7)%26)).toString(36)+z.toString(36);
+	var q=window.location.href.split('#')[0].split('').reduce(function(a,b){return(a<<5)-a+b.charCodeAt(0)>>>1},0);q=(10+((q*7)%26)).toString(36)+q.toString(36);
+	var cpmstarx="cpmstarx";
+	if(window[x]) window[y] = window[x];
+	if(window[y]) window[z] = window[y];
+	if(window[z]) window[q] = window[z];
+	if(window[q]) window[cpmstarx] = window[q];
+    
+    var dev = top_hash == "#cpmstarDev";
+	var staging = (top_hash == "#cpmstarStaging" || top_hash == "#urlzing");
+	if(typeof window[cpmstarx]!=="object") window[x] = window[y] = window[z] = window[q] = window[cpmstarx] = {};
+	
+	if(typeof(window[cpmstarx].zonevars)==="object") return;
+	window[cpmstarx].zonevars = zonevars;
+
+	var ver = "1395";
+	window[cpmstarx].zonevars.ver = ver;
+
+
+	if(top_hash == "#urlzing") {
+		var qs = new URLSearchParams(window.location.search);
+		if(qs.has('cpmstarDev')) {
+			dev = true;
+		}
+	}
+
+	for(var i=0; i<zonemasters.length; i++) { //Insert all the zonemasters
+		var zonemasterobj = (typeof zonemasters[i]==="string")?{path:'/cached/zonemasters/'+zonemasters[i]}:zonemasters[i];
+
+		var s = document.createElement('script'); 
+		s.type = 'text/javascript'; 
+		s.async = true;
+		
+		var proto = (window.location.protocol == "http:")?"http:":"https:";
+		if(zonemasterobj.host == null) {            
+			if(dev) zonemasterobj.host = "dev.server.cpmstar.com";
+			else if(staging) zonemasterobj.host = "staging.server.cpmstar.com";
+			else if(proto == "https:") zonemasterobj.host = "ssl.cdne.cpmstar.com";
+			else zonemasterobj.host = "cdn.cpmstar.com";
+		}else{
+			if(staging) {
+				if(zonevars.jbcheck) zonevars.jbcheck.host = "staging.urlzing.com";				
+				zonemasterobj.host = "staging.urlzing.com"; 				
+			}
+		}
+		
+		s.src = proto + "//" + zonemasterobj.host + zonemasterobj.path + "?ver="+ver;
+		var s2=document.getElementsByTagName('script')[0];
+		s2.parentNode.insertBefore(s, s2);
+	}
+})(
+{
+  "zonemasters": [
+    "mobilemodules.js"
+  ],
+  "conditions": {
+    "check": 1
+  },
+  "requests": {
+    "skin": {
+      "kind": "json",
+      "json": "1",
+      "poolid": 85677
+    },
+    "banner728x90": {
+      "kind": "banner",
+      "poolid": 86459
+    },
+    "banner300x600": {
+      "kind": "banner",
+      "poolid": 85607
+    },
+    "banner300x250": {
+      "kind": "banner",
+      "poolid": 86546
+    },
+    "pageviews": {
+      "poolid": 85614
+    },
+    "outstream": {
+      "kind": "json",
+      "vast": true,
+      "poolid": 85754
+    },
+    "livestream": null,
+    "fortnitelivestream": null,
+    "networklivestream": null,
+    "expandable_anchor": {
+      "kind": "banner",
+      "poolid": 90682
+    },
+    "mobile_inline_scroll": {
+      "kind": "banner",
+      "poolid": 90683
+    },
+    "nativeAd": {
+      "poolid": 86235,
+      "multi": 1,
+      "json": "nc_editorial"
+    }
+  },
+  "modules": [
+    {
+      "info": {
+        "name": "expandable_anchor"
+      },
+      "kind": "banner",
+      "request": "expandable_anchor",
+      "conditions": [
+        {
+          "target": {
+            "kind": "into",
+            "find": "body"
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "mobile_inline_scroll"
+      },
+      "kind": "banner",
+      "request": "mobile_inline_scroll",
+      "conditions": [
+        {
+          "deviceType": "mobile",
+          "target": {
+            "kind": "before",
+            "find": ".site-footer"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "banner",
+      "conditions": {
+        "wait": true
+      },
+      "info": {
+        "name": "POOL 85605"
+      },
+      "request": {
+        "kind": "banner",
+        "poolid": 85605
+      },
+      "options": {
+        "width": 728,
+        "height": 90
+      }
+    },
+    {
+      "conditions": {
+        "wait": true
+      },
+      "kind": "banner",
+      "info": {
+        "name": "POOL 85607"
+      },
+      "request": {
+        "kind": "banner",
+        "poolid": 85607
+      },
+      "options": {
+        "width": 300,
+        "height": 600
+      }
+    },
+    {
+      "conditions": {
+        "wait": true
+      },
+      "kind": "banner",
+      "info": {
+        "name": "POOL 85608"
+      },
+      "request": {
+        "kind": "banner",
+        "poolid": 85608
+      },
+      "options": {
+        "width": 300,
+        "height": 250
+      }
+    },
+    {
+      "kind": "banner",
+      "info": {
+        "name": "POOL 86546"
+      },
+      "request": {
+        "kind": "banner",
+        "poolid": 86546
+      },
+      "conditions": {
+        "test": "window.innerWidth >= 700",
+        "deviceType": "desktop",
+        "target": {
+          "slot": true,
+          "kind": "replace"
+        }
+      },
+      "options": {
+        "width": 300,
+        "height": 250,
+        "requireViewable": true
+      }
+    },
+    {
+      "info": {
+        "name": "nativeAd"
+      },
+      "request": "nativeAd",
+      "kind": "editorial",
+      "style": {
+        "textAlign": "center",
+        "width": "100%"
+      },
+      "options": {
+        "thumbWidth": 65,
+        "thumbHeight": 65,
+        "descriptionLength": 70
+      },
+      "template": "<div>{{~it.creatives :val:i}} <a style='text-decoration: none;' href='{{=val.clickUrl}}' target='_blank'><h4> <img height='24px' width='24px' style='margin-right: 5px; vertical-align: middle;' alt='' src='{{=val.thumbUrl}}'><span > {{=val.title}} - <em style='text-decoration:underline;''>{{=val.description}}</em></span> </h4> </a> {{~}}</div>",
+      "conditions": {
+        "wait": true,
+        "deviceType": "mobile",
+        "target": {
+          "kind": "after",
+          "find": ".action"
+        }
+      }
+    },
+    {
+      "info": {
+        "name": "livestream"
+      },
+      "kind": "banner",
+      "request": {
+        "poolid": 85794,
+        "kind": "banner"
+      },
+      "events": {
+        "fail": {
+          "kind": "go",
+          "once": true,
+          "module": "outstream"
+        }
+      },
+      "conditions": [
+        {
+          "wait": true,
+          "host": [
+            "r6.tracker.network",
+            "rocketleague.tracker.network"
+          ],
+          "deviceType": "desktop",
+          "target": {
+            "find": "body",
+            "kind": "into"
+          },
+          "request": {
+            "poolid": 86102,
+            "kind": "banner"
+          }
+        },
+        {
+          "wait": true,
+          "host": [
+            "fortnitetracker.com"
+          ],
+          "deviceType": "desktop",
+          "target": {
+            "find": "body",
+            "kind": "into"
+          },
+          "request": {
+            "poolid": 85822,
+            "kind": "banner"
+          }
+        },
+        {
+          "wait": true,
+          "host": [
+            "cod.tracker.gg",
+            "apex.tracker.gg"
+          ],
+          "deviceType": "desktop",
+          "target": {
+            "find": "body",
+            "kind": "into"
+          },
+          "request": {
+            "poolid": 85794,
+            "kind": "banner"
+          }
+        },
+        {
+          "wait": true,
+          "deviceType": "desktop",
+          "path": [
+            "~/",
+            "~/apps",
+            "~/developers",
+            "~/shop",
+            "~/premium",
+            "~/overlays/*",
+            "*"
+          ],
+          "target": {
+            "find": "body",
+            "kind": "into"
+          },
+          "request": {
+            "poolid": 85794,
+            "kind": "banner"
+          }
+        },
+        {
+          "wait": true,
+          "host": [
+            "r6.tracker.network",
+            "rocketleague.tracker.network"
+          ],
+          "deviceType": "mobile",
+          "target": {
+            "find": "body",
+            "kind": "into"
+          },
+          "request": {
+            "poolid": 86102,
+            "kind": "banner"
+          },
+          "css": {
+            "#cpmstarvideosliderclose": {
+              "right": "1px",
+              "top": "3px",
+              "z-index": 0
+            }
+          },
+          "style": {
+            "transform": "scale(0.48)",
+            "transform-origin": "bottom right",
+            "bottom": "60px",
+            "right": "1px",
+            "left": "auto",
+            "zIndex": "101"
+          }
+        },
+        {
+          "wait": true,
+          "host": [
+            "fortnitetracker.com"
+          ],
+          "deviceType": "mobile",
+          "target": {
+            "find": "body",
+            "kind": "into"
+          },
+          "request": {
+            "poolid": 85822,
+            "kind": "banner"
+          },
+          "css": {
+            "#cpmstarvideosliderclose": {
+              "right": "1px",
+              "top": "3px",
+              "z-index": 0
+            }
+          },
+          "style": {
+            "transform": "scale(0.48)",
+            "transform-origin": "bottom right",
+            "bottom": "60px",
+            "right": "1px",
+            "left": "auto",
+            "zIndex": "101"
+          }
+        },
+        {
+          "wait": true,
+          "deviceType": "mobile",
+          "host": [
+            "tracker.gg"
+          ],
+          "path": [
+            "~/",
+            "~/apps",
+            "~/developers",
+            "~/shop",
+            "~/premium",
+            "~/overlays/*",
+            "*"
+          ],
+          "target": {
+            "find": "body",
+            "kind": "into"
+          },
+          "request": {
+            "poolid": 85794,
+            "kind": "banner"
+          },
+          "css": {
+            "#cpmstarvideosliderclose": {
+              "right": "1px",
+              "top": "3px",
+              "z-index": 0
+            }
+          },
+          "style": {
+            "transform": "scale(0.48)",
+            "transform-origin": "bottom right",
+            "bottom": "60px",
+            "right": "1px",
+            "left": "auto",
+            "zIndex": "101"
+          }
+        }
+      ],
+      "divid": "livestream",
+      "css": {
+        ".cpmstarvideosliderloader": {
+          "position": "absolute",
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0,
+          "margin": "auto",
+          "height": "80",
+          "width": "80px",
+          "border": "8px solid #000000",
+          "border-radius": "50%",
+          "border-top": "8px solid #d3d3d3",
+          "-webkit-animation": "spin 2s linear infinite",
+          "animation": "spin 2s linear infinite"
+        },
+        "@-webkit-keyframes spin": {
+          "0%": {
+            "-webkit-transform": "rotate(0deg)"
+          },
+          "100%": {
+            "-webkit-transform": "rotate(360deg)"
+          }
+        },
+        "@keyframes spin": {
+          "0%": {
+            "transform": "rotate(0deg)"
+          },
+          "100%": {
+            "transform": "rotate(360deg)"
+          }
+        },
+        "#cpmstarvideosliderclose": {
+          "display": "block",
+          "background-image": "url(https://server.cpmstar.com/cached/zonemasters/close.svg)",
+          "background-repeat": "no-repeat",
+          "opacity": "65%",
+          "width": "8%",
+          "height": "8%",
+          "position": "absolute",
+          "right": "1px",
+          "top": "5px",
+          "color": "white",
+          "background-size": "contain",
+          "z-index": 2147483647,
+          "cursor": "pointer"
+        }
+      },
+      "template": "<div id='cpmstarvideosliderclose' onclick='document.querySelector(\"#livestream\").style.display = \"none\"'></div>",
+      "style": {
+        "width": "300px",
+        "height": "250px",
+        "background": "black",
+        "position": "fixed",
+        "bottom": "0px",
+        "right": "5px",
+        "zIndex": "2147483647"
+      }
+    },
+    {
+      "info": {
+        "name": "outstream"
+      },
+      "once": true,
+      "kind": "video",
+      "conditions": [
+        {
+          "jbStatus": 0,
+          "wait": true,
+          "once": true,
+          "target": {
+            "kind": "into",
+            "find": "body"
+          },
+          "deviceType": "mobile",
+          "divid": "outstreamslider",
+          "css": {
+            "#cpmstarvideosliderclose": {
+              "display": "block",
+              "background-image": "url(https://server.cpmstar.com/cached/zonemasters/close.svg)",
+              "background-repeat": "no-repeat",
+              "opacity": "65%",
+              "width": "12%",
+              "height": "12%",
+              "position": "absolute",
+              "right": "-12px",
+              "top": "-15px",
+              "color": "white",
+              "background-size": "contain",
+              "z-index": "0",
+              "cursor": "pointer"
+            }
+          },
+          "template": "<div id='cpmstarvideosliderclose' onclick='document.querySelector(\"#outstreamslider\").style.display = \"none\"'></div>",
+          "style": {
+            "transform-origin": "bottom right",
+            "width": "213px",
+            "height": "120px",
+            "background": "black",
+            "position": "fixed",
+            "bottom": "60px",
+            "right": "1px",
+            "left": "auto",
+            "zIndex": "101"
+          }
+        },
+        {
+          "events": {
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "wait": true,
+          "once": true,
+          "target": {
+            "kind": "into",
+            "find": "body"
+          },
+          "deviceType": "desktop",
+          "host": [
+            "tracker.gg"
+          ],
+          "path": [
+            "~/",
+            "~/apps",
+            "~/developers",
+            "~/shop",
+            "~/premium",
+            "~/overlays/*",
+            "*"
+          ]
+        },
+        {
+          "wait": true,
+          "target": {
+            "kind": "into",
+            "find": "body"
+          },
+          "deviceType": "desktop",
+          "jbStatus": 0,
+          "host": [
+            "cod.tracker.gg",
+            "apex.tracker.gg",
+            "halotracker.com",
+            "fortnitetracker.com",
+            "battlefieldtracker.com",
+            "destinytracker.com",
+            "r6.tracker.network",
+            "rocketleague.tracker.network"
+          ]
+        }
+      ],
+      "events": {
+        "fail": "window.setTimeout(function() { var skin = document.querySelector('.uniqueCPMStarSiteskinClass'); if(skin==null && window.cpmstarnoskin && typeof(window.cpmstarnoskin) === 'function') { window.cpmstarnoskin(); }; },200);",
+        "init": "",
+        "hideafter": "window.setTimeout(function() { var skin = document.querySelector('.uniqueCPMStarSiteskinClass'); if(skin==null && window.cpmstarnoskin && typeof(window.cpmstarnoskin) === 'function') { window.cpmstarnoskin(); }; },200);",
+        "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+      },
+      "request": "outstream",
+      "divid": "cpmsvideoslider",
+      "class": [
+        "cpmsvideoslider",
+        "cpmsslidersize"
+      ],
+      "options": {
+        "requireViewable": false,
+        "hideAfter": 30000,
+        "muted": true,
+        "replay": false
+      },
+      "template": "<div id='cpmsvideowrapper' class='cpmsrendertarget cpmsvideowrapper cpmsslidersize'><div class='cpmsoutstreamclose' onclick='document.getElementById(\"cpmsvideoslider\").classList.add(\"cpmsvideoslideroff\")'></div></div>",
+      "style": {
+        "width": "400px",
+        "height": "225px"
+      },
+      "css": {
+        "@keyframes slideFromRight": {
+          "0%": {
+            "right": "-600px"
+          },
+          "100%": {
+            "right": "0px"
+          }
+        },
+        "@keyframes slideOffRight": {
+          "0%": {
+            "right": "0px"
+          },
+          "100%": {
+            "right": "-600px"
+          }
+        },
+        "#cpmsvideowrapper": {
+          "width": "400px",
+          "height": "225px"
+        },
+        ".cpmsvideoslider:hover": {
+          "filter": "brightness(120%)"
+        },
+        ".cpmsvideoslider": {
+          "right": "-600px",
+          "width": "500px",
+          "height": "282px",
+          "z-index": "99999",
+          "position": "fixed",
+          "bottom": "0px",
+          "border-radius": "5px 5px 5px 5px",
+          "box-sizing": "content-box",
+          "padding": "0px",
+          "overflow": "visible",
+          "background-color": "grey",
+          "animation": "1s ease-in 0s 1 slideFromRight",
+          "animation-fill-mode": "forwards"
+        },
+        ".cpmsoutstreamclose:hover": {
+          "opacity": "65%"
+        },
+        ".cpmsvideoslideroff": {
+          "animation": "1s ease-in 0s 1",
+          "animation-name": "slideOffRight !important",
+          "animation-fill-mode": "forwards"
+        },
+        ".cpmsvideowrapper": {
+          "background": "black",
+          "width": "500px",
+          "height": "282px",
+          "margin": "0px auto",
+          "padding": "0px"
+        },
+        ".cpmsvideorepeat": {
+          "background-image": "url(https://server.cpmstar.com/cached/zonemasters/replay.svg)",
+          "background-repeat": "no-repeat",
+          "width": "8%",
+          "height": "8%",
+          "position": "absolute",
+          "left": "15px",
+          "top": "15px",
+          "color": "white",
+          "background-size": "contain",
+          "z-index": "9999",
+          "cursor": "pointer"
+        },
+        ".cpmsoutstreamclose": {
+          "display": "block",
+          "background-image": "url(https://server.cpmstar.com/cached/zonemasters/close.svg)",
+          "background-repeat": "no-repeat",
+          "opacity": "40%",
+          "width": "8%",
+          "height": "8%",
+          "position": "absolute",
+          "right": "-10px",
+          "top": "3px",
+          "color": "white",
+          "background-size": "contain",
+          "z-index": 1,
+          "cursor": "pointer"
+        },
+        ".cpmsvideosoundon": {
+          "background-image": "url(https://server.cpmstar.com/cached/zonemasters/speaker.svg)",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "width": "8%",
+          "height": "8%",
+          "position": "absolute",
+          "right": "15px",
+          "bottom": "15px",
+          "color": "white",
+          "background-size": "contain",
+          "z-index": "9999",
+          "cursor": "pointer"
+        },
+        ".cpmsvideosoundoff": {
+          "background-image": "url(https://server.cpmstar.com/cached/zonemasters/mute.svg)",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "width": "8%",
+          "height": "8%",
+          "position": "absolute",
+          "right": "15px",
+          "bottom": "15px",
+          "color": "white",
+          "background-size": "contain",
+          "z-index": "9999",
+          "cursor": "pointer"
+        },
+        ".cpmsvideoplay": {
+          "background-image": "url(https://server.cpmstar.com/cached/zonemasters/play.svg)",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "width": "8%",
+          "height": "8%",
+          "position": "absolute",
+          "left": "15px",
+          "bottom": "15px",
+          "color": "white",
+          "background-size": "contain",
+          "z-index": "9999",
+          "cursor": "pointer"
+        },
+        ".cpmsvideopause": {
+          "background-image": "url(https://server.cpmstar.com/cached/zonemasters/pause.svg)",
+          "background-repeat": "no-repeat",
+          "background-position": "center",
+          "width": "8%",
+          "height": "8%",
+          "position": "absolute",
+          "left": "15px",
+          "bottom": "15px",
+          "color": "white",
+          "background-size": "contain",
+          "z-index": "9999",
+          "cursor": "pointer"
+        }
+      }
+    },
+    {
+      "info": {
+        "name": "skin"
+      },
+      "kind": "skin",
+      "request": "skin",
+      "conditions": [
+        {
+          "test": "window.innerWidth > 1750",
+          "deviceType": "desktop",
+          "host": [
+            "staging.destinytracker.com"
+          ],
+          "target": {
+            "kind": "before",
+            "find": ".trn-content"
+          },
+          "events": {
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });",
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500); "
+          },
+          "options": {
+            "zIndexHD": 0,
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-content",
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "desktop",
+          "host": [
+            "destinytracker.com"
+          ],
+          "target": {
+            "kind": "before",
+            "find": ".trn-content"
+          },
+          "events": {
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });",
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500); "
+          },
+          "options": {
+            "zIndexHD": 0,
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-content",
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "mobile",
+          "test": false,
+          "hash": [
+            "#cpmstarDev"
+          ],
+          "host": [
+            "staging.destinytracker.com",
+            "destinytracker.com"
+          ],
+          "path": "/*/guides/*",
+          "target": {
+            "kind": "first",
+            "find": ".trn-wrapper"
+          },
+          "events": {
+            "init": "console.log('mobile skin');  cpmstarAPI({kind:'go',module:'livestream'}); var content = document.querySelector('.content'); if (content) { content.style.backgroundColor = '#1f1f1f'; } "
+          },
+          "options": {
+            "mobileSkinSelector": {
+              "find": "trn-guide-section-header",
+              "kind": "before"
+            },
+            "mobileskin": true,
+            "zIndexHD": 0,
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-container",
+            "marginTop": "200px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "mobile",
+          "test": false,
+          "hash": [
+            "#cpmstarDev"
+          ],
+          "host": [
+            "staging.destinytracker.com",
+            "destinytracker.com"
+          ],
+          "path": "/*/profile/*",
+          "target": {
+            "kind": "first",
+            "find": ".trn-wrapper"
+          },
+          "events": {
+            "initHD": "console.log('mobile skin for profile page'); cpmstarAPI({kind:'go',module:'livestream'}); var content = document.querySelector('.content'); if (content) { content.style.backgroundColor = '#1f1f1f'; }"
+          },
+          "options": {
+            "mobileSkinSelector": {
+              "find": ".playlists-expand",
+              "kind": "after"
+            },
+            "mobileskin": true,
+            "zIndexHD": 0,
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-container",
+            "marginTop": "200px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "mobile",
+          "test": false,
+          "hash": [
+            "#cpmstarDev"
+          ],
+          "host": [
+            "staging.destinytracker.com",
+            "destinytracker.com"
+          ],
+          "target": {
+            "kind": "first",
+            "find": ".trn-wrapper"
+          },
+          "events": {
+            "initHD": "console.log('mobile skin'); cpmstarAPI({kind:'go',module:'livestream'}); var trnContent = document.querySelector('.trn-content'); if (trnContent) { trnContent.style.backgroundColor = '#1f1f1f'; } var content = document.querySelector('.content'); if (content) { content.style.backgroundColor = '#1f1f1f'; } const targetNode = document.getElementById('uniqueCPMStarMobileSiteskinDiv'); /* Options for the observer (which mutations to observe) */ const config = { attributes: true, childList: true, subtree: true }; /* Callback function to execute when mutations are observed */ const callback = function (mutationsList, observer) { console.log('reload event fired!'); if (window.location.pathname.startsWith('/destiny-2/profile/')) { document.getElementsByClassName('card')[3].appendChild(document.getElementById('uniqueCPMStarMobileSiteskinDiv')); } }; /* Create an observer instance linked to the callback function */ console.log('timeout event set'); const observer = new MutationObserver(callback); /* Start observing the target node for configured mutations */ observer.observe(targetNode, config); /* Later, you can stop observing observer.disconnect(); */ "
+          },
+          "options": {
+            "mobileSkinSelector": {
+              "find": ".ad-container",
+              "kind": "before"
+            },
+            "mobileskin": true,
+            "zIndexHD": 0,
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-container",
+            "marginTop": "200px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "desktop",
+          "host": [
+            "halotracker.com"
+          ],
+          "test": "document.querySelector('.trn-container') && (window.innerWidth > 1750)",
+          "kind": "skin",
+          "target": {
+            "kind": "first",
+            "find": ".trn-container"
+          },
+          "events": {
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500);",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt',  data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-content",
+            "zIndexHD": 0,
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "desktop",
+          "host": [
+            "fortnitetracker.com"
+          ],
+          "test": "( (document.getElementsByClassName('trn-site__container').length>0 && document.getElementsByClassName('trn-site__container')[0].clientWidth>=1140) && window.innerWidth > 1850)",
+          "target": {
+            "kind": "first",
+            "find": "body"
+          },
+          "events": {
+            "init": "document.querySelector('#nitro-ad-right').style.display='none';",
+            "initHD": "document.querySelector('#nitro-ad-right').style.display='none'; cpmstarAPI({kind:'go',module:'livestream'}); var siteBackground = document.querySelector('.trn-site__background'); if (siteBackground) { /*siteBackground.style.display = 'none';*/ siteBackground.style.width = '1140px'; siteBackground.style.left = '50%'; siteBackground.style.marginLeft = '-571px'; siteBackground.style.zIndex = 2; };; document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500); ",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null),  sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "sticky": true,
+            "headerSelector": "#trn-site-nav",
+            "top": "90px",
+            "zIndexHD": 1,
+            "centerWidth": "1210px",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "mobile",
+          "test": false,
+          "hash": [
+            "#cpmstarDev"
+          ],
+          "host": "fortnitetracker.com",
+          "target": {
+            "kind": "first",
+            "find": "body"
+          },
+          "events": {
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); var container = document.querySelector('.trn-site__container'); if (container) { container.style.backgroundColor = '#1f1f1f'; var background = document.querySelector('.trn-site__background'); background.style.zIndex = -1; container.insertBefore(background, container.firstChild); /*container.style.height = parseInt(container.clientHeight + 100) + 'px';*/ } var appbar = document.querySelector('.trn-site-appbar'); var footer = document.querySelector('.trn-site-footer'); if (appbar) { appbar.style.position = 'relative'; } if (footer) { footer.style.position = 'relative'; } var bottomAd = document.querySelector('.trn-bottomad'); if (bottomAd) { bottomAd.style.margin = 0; } ",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "mobileSkinSelector": {
+              "find": ".fortnite-db-storefront",
+              "kind": "after"
+            },
+            "mobileskin": true,
+            "zIndexHD": 0,
+            "sticky": true,
+            "headerSelector": ".trn-gamebar",
+            "top": "36px",
+            "cssSelector": ".trn-site__container",
+            "centerWidth": "1210px",
+            "marginTop": "150px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "mobile",
+          "test": false,
+          "hash": [
+            "#cpmstarDev"
+          ],
+          "host": "r6.tracker.network",
+          "target": {
+            "kind": "first",
+            "find": "body"
+          },
+          "events": {
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); var container = document.querySelector('.trn-site__container'); if (container) { container.style.backgroundColor = '#1f1f1f'; var background = document.querySelector('.trn-site__background'); background.style.zIndex = -1; container.insertBefore(background, container.firstChild); } var appbar = document.querySelector('.trn-site-appbar'); var footer = document.querySelector('.trn-site-footer'); if (appbar) { appbar.style.position = 'relative'; } if (footer) { footer.style.position = 'relative'; } ",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "mobileSkinSelector": {
+              "find": ".trn-scont__aside",
+              "kind": "after"
+            },
+            "mobileskin": true,
+            "zIndexHD": 0,
+            "sticky": true,
+            "headerSelector": ".trn-gamebar",
+            "top": "36px",
+            "cssSelector": ".trn-site__container",
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "150px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "mobile",
+          "test": false,
+          "hash": [
+            "#cpmstarDev"
+          ],
+          "host": "rocketleague.tracker.network",
+          "target": {
+            "kind": "first",
+            "find": "body"
+          },
+          "events": {
+            "init": "console.log('mobile skin'); cpmstarAPI({kind:'go',module:'livestream'});"
+          },
+          "options": {
+            "mobileSkinSelector": {
+              "find": "section",
+              "kind": "after"
+            },
+            "mobileskin": true,
+            "zIndexHD": 0,
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-container",
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "90px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "desktop",
+          "host": "rocketleague.tracker.network",
+          "test": "window.innerWidth > 1750",
+          "target": {
+            "kind": "first",
+            "find": ".trn-container"
+          },
+          "events": {
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500);",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-container",
+            "zIndexHD": 0,
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "desktop",
+          "test": "window.innerWidth > 1750",
+          "host": "cod.tracker.gg",
+          "target": {
+            "kind": "first",
+            "find": ".trn-container"
+          },
+          "events": {
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500);",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-container",
+            "zIndexHD": 0,
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "desktop",
+          "test": "window.innerWidth > 1750",
+          "host": "apex.tracker.gg",
+          "target": {
+            "kind": "first",
+            "find": ".trn-container"
+          },
+          "events": {
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500);",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "sticky": true,
+            "headerSelector": ".trn-site-nav",
+            "top": "90px",
+            "cssSelector": ".trn-container",
+            "zIndexHD": 0,
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "desktop",
+          "host": [
+            "battlefieldtracker.com",
+            "r6.tracker.network"
+          ],
+          "test": "document.querySelector('.trn-container') && (window.innerWidth > 1750)",
+          "target": {
+            "kind": "first",
+            "find": ".trn-container"
+          },
+          "events": {
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500);",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-container",
+            "zIndexHD": 0,
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "desktop",
+          "host": "tracker.gg",
+          "path": [
+            "~/",
+            "~/apps",
+            "~/developers",
+            "~/shop",
+            "~/premium",
+            "~/overlays/*",
+            "/valorant",
+            "/valorant*"
+          ],
+          "test": "document.querySelector('.trn-container') && (window.innerWidth > 1750)",
+          "target": {
+            "kind": "first",
+            "find": ".trn-container"
+          },
+          "events": {
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500);",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-container",
+            "zIndexHD": 0,
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        },
+        {
+          "deviceType": "desktop",
+          "host": "tracker.gg",
+          "path": [
+            "~/",
+            "~/apps",
+            "~/developers",
+            "~/shop",
+            "~/premium",
+            "~/overlays/*",
+            "*"
+          ],
+          "test": "document.querySelector('.trn-site__container') && (window.innerWidth > 1750)",
+          "target": {
+            "kind": "first",
+            "find": ".trn-site__container"
+          },
+          "events": {
+            "initHD": "cpmstarAPI({kind:'go',module:'livestream'}); document.querySelector('.uniqueCPMStarSiteskinClass').firstChild.style.top='24px'; if(window.cpmstarskin && typeof(window.cpmstarskin) === 'function') { cpmstarskin(); }; var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } setTimeout(function() {var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); } if(window.pbjs && window.pbjs.onEvent) { window.pbjs.onEvent('auctionEnd', function() { var sidead = document.querySelector('.side-ad');  if(sidead) { sidead.parentNode.removeChild(sidead); }} ) } }, 1500);",
+            "fail": {
+              "kind": "go",
+              "once": true,
+              "module": "livestream"
+            },
+            "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+          },
+          "options": {
+            "sticky": true,
+            "headerSelector": ".trn-navigation",
+            "top": "90px",
+            "cssSelector": ".trn-site__container",
+            "zIndexHD": 0,
+            "centerWidth": "1210px",
+            "responsive": "window",
+            "marginTop": "0px",
+            "pop": false,
+            "popHidden": true,
+            "alwaysclip": true,
+            "videoLeft": "32.65%",
+            "railVideoRight": 50,
+            "railVideoBottom": 55,
+            "loopFor": 3,
+            "videoHeight": "222px"
+          }
+        }
+      ],
+      "class": "uniqueCPMStarSiteskinClass",
+      "options": {
+        "cssSelector": "body",
+        "marginTop": "255px",
+        "responsive": "window"
+      },
+      "events": {
+        "fail": {
+          "kind": "go",
+          "once": true,
+          "module": "livestream"
+        },
+        "roadblock": "cpmstarAPI({kind:'gpt', data: { roadblock: (this!=null?this.roadblock:null), sizemap: { '728x90': 'POOL 85605', '300x600': 'POOL 85607', '300x250': 'POOL 85608' }}}); window.pbjs = window.pbjs || {que:[]}; pbjs.que.push(function() { pbjs.que=[]; for(p in pbjs) { if(typeof (pbjs[p])==='function') { pbjs[p] = function() {};} } });"
+      }
+    }
+  ],
+  "info": {
+    "id": 752,
+    "tags": [
+      57
+    ],
+    "zonepools": {
+      "85605": {
+        "module": "POOL 85605"
+      },
+      "85607": {
+        "module": "POOL 85607"
+      },
+      "85608": {
+        "module": "POOL 85608"
+      },
+      "85677": {
+        "module": "skin"
+      },
+      "85754": {
+        "module": "outstream"
+      },
+      "86546": {
+        "module": "POOL 86546"
+      },
+      "90682": {
+        "module": "expandable_anchor"
+      },
+      "90683": {
+        "module": "mobile_inline_scroll"
+      }
+    }
+  }
+}
+);

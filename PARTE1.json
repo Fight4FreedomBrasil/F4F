@@ -1,0 +1,161 @@
+{
+  "url": "https://tracker.gg/bf6/profile/1009715116178/overview",
+  "timestamp": 1760486450.045604,
+  "data": {
+    "rank": {
+      "img": "https://imgsvc.trackercdn.com/url/max-width(168),quality(70)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fbf6%2Fimages%2Franks%2F018.png/image.png",
+      "alt": "Level 18",
+      "level": "18"
+    },
+    "classes": [
+      {
+        "name": "Assault",
+        "img_src": "https://trackercdn.com/cdn/tracker.gg/bf6/images/classes/assault-mg.svg",
+        "img_alt": "Assault",
+        "stats": {
+          "Time Played": "8h 47m",
+          "KDA": "1.45"
+        },
+        "list_values": [
+          "371",
+          "449",
+          "281"
+        ]
+      },
+      {
+        "name": "Recon",
+        "img_src": "https://trackercdn.com/cdn/tracker.gg/bf6/images/classes/recon-mg.svg",
+        "img_alt": "Recon",
+        "stats": {
+          "Time Played": "29m 23s",
+          "KDA": "1.54"
+        },
+        "list_values": [
+          "18",
+          "24",
+          "19"
+        ]
+      },
+      {
+        "name": "Engineer",
+        "img_src": "https://trackercdn.com/cdn/tracker.gg/bf6/images/classes/engineer-mg.svg",
+        "img_alt": "Engineer",
+        "stats": {
+          "Time Played": "03m 34s",
+          "KDA": "1.00"
+        },
+        "list_values": [
+          "1",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "name": "Support",
+        "img_src": "https://trackercdn.com/cdn/tracker.gg/bf6/images/classes/support-mg.svg",
+        "img_alt": "Support",
+        "stats": {
+          "Time Played": "0s",
+          "KDA": "0.00"
+        },
+        "list_values": [
+          "0",
+          "0",
+          "0"
+        ]
+      }
+    ],
+    "weapons": [
+      {
+        "name": "M433",
+        "img_src": "https://imgsvc.trackercdn.com/url/max-width(168),quality(70)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fbf6%2Fimages%2Fweapons%2Fwhite%2Fwp_ar_m433.png/image.png",
+        "img_alt": "M433",
+        "stats": {
+          "Kills": "307",
+          "Accuracy": "10.3%"
+        },
+        "list_values": []
+      },
+      {
+        "name": "M87A1",
+        "img_src": "https://imgsvc.trackercdn.com/url/max-width(168),quality(70)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fbf6%2Fimages%2Fweapons%2Fwhite%2Fwp_sg_m87a1.png/image.png",
+        "img_alt": "M87A1",
+        "stats": {
+          "Kills": "35",
+          "Accuracy": "51.9%"
+        },
+        "list_values": []
+      },
+      {
+        "name": "M2010 ESR",
+        "img_src": "https://imgsvc.trackercdn.com/url/max-width(168),quality(70)/https%3A%2F%2Ftrackercdn.com%2Fcdn%2Ftracker.gg%2Fbf6%2Fimages%2Fweapons%2Fwhite%2Fwp_snp_m2010.png/image.png",
+        "img_alt": "M2010 ESR",
+        "stats": {
+          "Kills": "22",
+          "Accuracy": "18.5%"
+        },
+        "list_values": []
+      }
+    ],
+    "lifetime_overview": {
+      "Playtime": "15h",
+      "Matches": "36",
+      "Score/Min": "152.55",
+      "K/D": "0.82",
+      "Win %": "41.7%",
+      "Kills/Min": "0.41",
+      "Wins": "15",
+      "Losses": "21",
+      "HS%": "20.3%",
+      "Dmg/Min": "57.98",
+      "MVP %": "0.0%",
+      "Best Squad %": "0.0%",
+      "Obj Time %": "13.8%",
+      "Kills": "390",
+      "Deaths": "474",
+      "Assists": "300",
+      "MVPs": "0",
+      "Revives": "53"
+    },
+    "recent": [
+      {
+        "stats": {
+          "Kills/Min": "0.41",
+          "K/D": "0.82",
+          "Kills": "307",
+          "Deaths": "474",
+          "Assists": "300",
+          "Score/Min": "152.55",
+          "Game Score": "145,885"
+        },
+        "weapons": [
+          {
+            "name": "PW5A3"
+          },
+          {
+            "name": "SGX"
+          },
+          {
+            "name": "M44"
+          },
+          {
+            "name": "P18"
+          },
+          {
+            "name": "M87A1"
+          },
+          {
+            "name": "M4A1"
+          },
+          {
+            "name": "M2010 ESR"
+          },
+          {
+            "name": "M433"
+          }
+        ]
+      }
+    ]
+  },
+  "profile_id": "1009715116178"
+}
