@@ -1,0 +1,13 @@
+.env
+venv
+.venv
+cookies_trackergg.json
+request_log.json 
+*json 
+*.json
+results
+*pycache
+__pycache__
+*log 
+*logs
+url.txt

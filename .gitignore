@@ -6,6 +6,7 @@ credentials.json
 token*.json
 bf6online-1d0103d91880.json
 
+
 # Dependências e arquivos de ambiente do Python
 myenv/
 __pycache__/
