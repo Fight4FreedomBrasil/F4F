@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from google.oauth2 import service_account  # Alterado
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+import time
 
 # ==============================================================
 # CONFIGURAÇÕES
@@ -17,13 +18,19 @@ SERVICE_ACCOUNT_FILE = 'bf6online-1d0103d91880.json'
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
 SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
 TARGET_SHEET = 'Platoon'
-RANGE_PLAYERS = f'{TARGET_SHEET}!A2:C150'
+RANGE_PLAYERS = f'{TARGET_SHEET}!A2:C350'
 
 DB_URL = os.getenv("DATABASE_URL")
 
 # Colunas destino
 HEADERS_ORDER = ['k_d', 'kills', 'assists', 'revives', 'matches', 'played_hours', 'level']
 TARGET_COLUMNS = ['K', 'L', 'M', 'N', 'O', 'P', 'Q']
+
+def normalize(name):
+    if not isinstance(name, str):
+        return ''
+    return name.strip().lower().replace(' ', '')
+
 
 # ==============================================================
 # AUTENTICAÇÃO GOOGLE SHEETS (MODIFICADA)
@@ -105,7 +112,7 @@ def clean_value(val):
     return val
 
 # ==============================================================
-# ATUALIZAÇÃO DA PLANILHA (LÓGICA NORMAL)
+# ATUALIZAÇÃO DA PLANILHA 
 # ==============================================================
 def update_google_sheet(service, player_list, df):
     updated_player_db_names = set()
@@ -118,7 +125,11 @@ def update_google_sheet(service, player_list, df):
         player_id_sheet = player['id']
         row_num = player['row_num']
 
-        match = df[(df['player_name'] == player_name_sheet) | (df['player_name'] == player_id_sheet)]
+        match = df[
+            (df['player_name'].apply(normalize) == normalize(player_name_sheet)) |
+            (df['player_name'].apply(normalize) == normalize(player_id_sheet))
+        ]
+
 
         if match.empty:
             not_found_in_db.append(f"{player_name_sheet} / {player_id_sheet}")
@@ -134,6 +145,7 @@ def update_google_sheet(service, player_list, df):
         body = {'values': [row_values]}
         try:
             service.spreadsheets().values().update(spreadsheetId=SPREADSHEET_ID, range=range_to_update, valueInputOption='USER_ENTERED', body=body).execute()
+            time.sleep(1.1) 
             print(f"✅ Atualizado: {player['name']} / {player['id']} (linha {row_num}) → {row_values}")
             updated_player_db_names.add(stats['player_name'])
         except HttpError as e:
@@ -164,6 +176,9 @@ def update_google_sheet(service, player_list, df):
         print(f"  -> {len(update_errors)} jogadores geraram erro durante a atualização:")
         for p in update_errors:
             print(f"     - {p}")
+
+    
+
 
 # ==============================================================
 # EXECUÇÃO PRINCIPAL

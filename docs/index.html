@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Jogadores [F4F]</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #ffffff;
+            border-bottom: 2px solid #ff9900;
+            padding-bottom: 0.5rem;
+        }
+        form div {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #bbbbbb;
+        }
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            box-sizing: border-box; /* Garante que o padding não estoure a largura */
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #333;
+            color: #e0e0e0;
+            font-size: 1rem;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #ff9900;
+            color: #121212;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #e68a00;
+        }
+        button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        #statusMessage {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        .success { color: #4caf50; }
+        .error { color: #f44336; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>[F4F] - Fight 4 Freedom</h2>
+        <form id="playerForm">
+            <div>
+                <label for="id_ea">ID_EA:</label>
+                <input type="text" id="id_ea" name="id_ea" required>
+            </div>
+            <div>
+                <label for="nick">Nick:</label>
+                <input type="text" id="nick" name="nick" required>
+            </div>
+            <div>
+                <label for="plataforma">Plataforma:</label>
+                <select id="plataforma" name="plataforma" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="PC">PC</option>
+                    <option value="PS">PS</option>
+                    <option value="XBOX">XBOX</option>
+                </select>
+            </div>
+            <div>
+                <label for="beta">Participou do Beta?</label>
+                <select id="beta" name="beta" required>
+                    <option value="" disabled selected>Selecione...</option>
+                    <option value="Sim">Sim</option>
+                    <option value="Não">Não</option>
+                </select>
+            </div>
+            <button type="submit" id="submitButton">Cadastrar</button>
+        </form>
+        <div id="statusMessage"></div>
+    </div>
+
+    <script>
+        // ▼▼▼ COLE A URL DA SUA WEB APP AQUI ▼▼▼
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyvKv6PhOYm_rqCB7-zi_1BkByxGI_lW6ex-veJYzh_UYMSWMkjF7RbRjeUSbTyhj4o/exec";
+        // ▲▲▲ COLE A URL DA SUA WEB APP AQUI ▲▲▲
+
+        const form = document.getElementById('playerForm');
+        const submitButton = document.getElementById('submitButton');
+        const statusMessage = document.getElementById('statusMessage');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault(); // Impede o recarregamento da página
+
+            // Desabilita o botão e mostra mensagem de "enviando"
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+            statusMessage.textContent = '';
+            statusMessage.className = '';
+
+            // Coleta os dados do formulário
+            const formData = {
+                action: 'registerPlayer', // Identificador para o doPost
+                id_ea: document.getElementById('id_ea').value,
+                nick: document.getElementById('nick').value,
+                plataforma: document.getElementById('plataforma').value,
+                beta: document.getElementById('beta').value
+            };
+
+            // Envia os dados para o Google Apps Script
+            fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'cors',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+                redirect: 'follow' // Necessário para o Apps Script
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Sucesso!
+                    statusMessage.textContent = data.message;
+                    statusMessage.className = 'success';
+                    form.reset(); // Limpa o formulário
+                } else {
+                    // Erro retornado pelo script
+                    throw new Error(data.error || 'Erro desconhecido no servidor.');
+                }
+            })
+            .catch(error => {
+                // Erro na requisição (ex: rede, CORS, etc.)
+                statusMessage.textContent = `Erro: ${error.message}`;
+                statusMessage.className = 'error';
+            })
+            .finally(() => {
+                // Reabilita o botão
+                submitButton.disabled = false;
+                submitButton.textContent = 'Cadastrar';
+            });
+        });
+    </script>
+
+</body>
+</html>
