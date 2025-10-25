@@ -113,12 +113,10 @@
     </div>
 
     <script>
-        
-        // ▼▼▼ COLE A URL DA SUA WEB APP AQUI ▼▼▼
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzacsOcumNCLrMxHjcb7WJ2UobM5AQzksaRX9p1H9n40iOhG3iOSRrW-BZ4MBikaaJk/exec";
-        // ▲▲▲ COLE A URL DA SUA WEB APP AQUI ▲▲▲
+        // ✅ URL da API pública (a que você enviou e que FUNCIONA)
+        const SCRIPT_URL = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgxgHvl5xPG4e094ZhzPShJ8iWdzXrRtK2s6yvcP828VXVJQCCEP2Thp1bIg71qlEKtIl_2sfONzEw8KVkTKUoXdfkeiY7A91EXW5rM0WioA9ij2crs8LtH6ImIcI0zFXbtoVFNn0MApA5zOGEojVScGcBtPF9R3MWGwjQJuyyF8_eVjAYCFZDSuIaEmQE1q50pp66FMyI8_PX0XR6qFzY9KIcXR-n9ZUQVKoWXkQ6VwSJliKYtwur40kL8e_HSyuE0DwlCDnDBZvJHI4VUhGMkP0RhnQ&lib=MCTQz3j0PntVX-5pZeBhKNGCZ_t_9oIdE";
+        const PROXY_URL = "https://corsproxy.io/?";
 
-        const proxy = "https://corsproxy.io/?";
         const form = document.getElementById('playerForm');
         const submitButton = document.getElementById('submitButton');
         const statusMessage = document.getElementById('statusMessage');
@@ -126,21 +124,18 @@
         form.addEventListener('submit', async e => {
             e.preventDefault();
 
-            // Desabilita o botão enquanto envia
             submitButton.disabled = true;
             submitButton.textContent = 'Enviando...';
             statusMessage.textContent = '';
             statusMessage.className = '';
 
-            // Coleta os dados do formulário
             const idEA = document.getElementById('id_ea').value.trim();
             const nick = document.getElementById('nick').value.trim();
             const plataforma = document.getElementById('plataforma').value;
             const beta = document.getElementById('beta').value;
 
-            // Envia os dados via proxy (evita erro CORS)
             try {
-            const response = await fetch(proxy + SCRIPT_URL, {
+            const response = await fetch(PROXY_URL + SCRIPT_URL, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -152,8 +147,16 @@
                 })
             });
 
-            const data = await response.json();
-            console.log("✅ Resposta:", data);
+            // Para debug: veja o que o servidor respondeu
+            const rawText = await response.text();
+            console.log("🧾 Resposta bruta:", rawText);
+
+            let data;
+            try {
+                data = JSON.parse(rawText);
+            } catch {
+                throw new Error("Resposta inválida (não é JSON). Conteúdo recebido: " + rawText);
+            }
 
             if (data.success) {
                 statusMessage.textContent = data.message || "Jogador cadastrado com sucesso!";
@@ -166,7 +169,7 @@
 
             } catch (error) {
             console.error("❌ Erro:", error);
-            statusMessage.textContent = "Erro de conexão. Tente novamente.";
+            statusMessage.textContent = error.message || "Erro de conexão. Tente novamente.";
             statusMessage.className = "error";
             } finally {
             submitButton.disabled = false;
@@ -174,6 +177,7 @@
             }
         });
         </script>
+
 
 
 
