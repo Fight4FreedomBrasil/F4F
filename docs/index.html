@@ -117,63 +117,63 @@
         const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzacsOcumNCLrMxHjcb7WJ2UobM5AQzksaRX9p1H9n40iOhG3iOSRrW-BZ4MBikaaJk/exec";
         // ▲▲▲ COLE A URL DA SUA WEB APP AQUI ▲▲▲
 
+        const proxy = "https://corsproxy.io/?";
         const form = document.getElementById('playerForm');
         const submitButton = document.getElementById('submitButton');
         const statusMessage = document.getElementById('statusMessage');
 
-        form.addEventListener('submit', e => {
-            e.preventDefault(); // Impede o recarregamento da página
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
 
-            // Desabilita o botão e mostra mensagem de "enviando"
+            // Desabilita o botão enquanto envia
             submitButton.disabled = true;
             submitButton.textContent = 'Enviando...';
             statusMessage.textContent = '';
             statusMessage.className = '';
 
             // Coleta os dados do formulário
-            const formData = {
-                action: 'registerPlayer', // Identificador para o doPost
-                id_ea: document.getElementById('id_ea').value,
-                nick: document.getElementById('nick').value,
-                plataforma: document.getElementById('plataforma').value,
-                beta: document.getElementById('beta').value
-            };
+            const idEA = document.getElementById('id_ea').value.trim();
+            const nick = document.getElementById('nick').value.trim();
+            const plataforma = document.getElementById('plataforma').value;
+            const beta = document.getElementById('beta').value;
 
-            // Envia os dados para o Google Apps Script
-            fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'cors',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-                redirect: 'follow' // Necessário para o Apps Script
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Sucesso!
-                    statusMessage.textContent = data.message;
-                    statusMessage.className = 'success';
-                    form.reset(); // Limpa o formulário
-                } else {
-                    // Erro retornado pelo script
-                    throw new Error(data.error || 'Erro desconhecido no servidor.');
-                }
-            })
-            .catch(error => {
-                // Erro na requisição (ex: rede, CORS, etc.)
-                statusMessage.textContent = `Erro: ${error.message}`;
-                statusMessage.className = 'error';
-            })
-            .finally(() => {
-                // Reabilita o botão
-                submitButton.disabled = false;
-                submitButton.textContent = 'Cadastrar';
+            // Envia os dados via proxy (evita erro CORS)
+            try {
+            const response = await fetch(proxy + SCRIPT_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                action: "registerPlayer",
+                id_ea: idEA,
+                nick: nick,
+                plataforma: plataforma,
+                beta: beta
+                })
             });
+
+            const data = await response.json();
+            console.log("✅ Resposta:", data);
+
+            if (data.success) {
+                statusMessage.textContent = data.message || "Jogador cadastrado com sucesso!";
+                statusMessage.className = "success";
+                form.reset();
+            } else {
+                statusMessage.textContent = data.error || "Erro ao cadastrar jogador.";
+                statusMessage.className = "error";
+            }
+
+            } catch (error) {
+            console.error("❌ Erro:", error);
+            statusMessage.textContent = "Erro de conexão. Tente novamente.";
+            statusMessage.className = "error";
+            } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Cadastrar';
+            }
         });
-    </script>
+        </script>
+
 
 </body>
 </html>
