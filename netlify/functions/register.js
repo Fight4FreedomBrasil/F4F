@@ -1,5 +1,3 @@
-const fetch = require('node-fetch');
-
 exports.handler = async (event) => {
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -14,7 +12,10 @@ exports.handler = async (event) => {
   try {
     const data = JSON.parse(event.body);
     
-    const response = await fetch('https://script.google.com/macros/s/AKfycby6qmRd8uq-t95tMqE6Ed2f-HFq1tb2LMzo3A8lIO-CNHnLa1urc5RlyB_-GktZXSVN/exec', {
+    // SUBSTITUA PELA SUA URL CORRETA DO APPS SCRIPT
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw37Lba9FwAjcGEqY17D3H4LcvmItBDUZtdwDhjzwhhqIAP63P1ELwKkIzFi-zStLtA/exec';
+    
+    const response = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)

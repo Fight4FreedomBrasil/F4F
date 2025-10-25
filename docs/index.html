@@ -39,6 +39,7 @@
             color: #bbbbbb;
         }
         input[type="text"],
+        input[type="email"],
         select {
             width: 100%;
             padding: 0.75rem;
@@ -64,121 +65,64 @@
         button:hover {
             background-color: #e68a00;
         }
-        button:disabled {
-            background-color: #555;
-            cursor: not-allowed;
-        }
-        #statusMessage {
+        .info {
             margin-top: 1rem;
-            text-align: center;
+            padding: 1rem;
+            background-color: #2a2a2a;
+            border-radius: 4px;
             font-size: 0.9rem;
+            color: #bbbbbb;
         }
-        .success { color: #4caf50; }
-        .error { color: #f44336; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h2>[F4F] - Fight 4 Freedom</h2>
-        <form id="playerForm">
+        
+        <!-- SUBSTITUA SEU_EMAIL@gmail.com pelo seu email real -->
+        <form action="https://formsubmit.co/cytchrisley@gmail.com" method="POST">
+            <!-- Campos ocultos de configuração -->
+            <input type="hidden" name="_subject" value="Novo Cadastro F4F">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            
             <div>
                 <label for="id_ea">ID_EA:</label>
-                <input type="text" id="id_ea" name="id_ea" required>
+                <input type="text" id="id_ea" name="ID_EA" required>
             </div>
+            
             <div>
                 <label for="nick">Nick:</label>
-                <input type="text" id="nick" name="nick" required>
+                <input type="text" id="nick" name="Nick" required>
             </div>
+            
             <div>
                 <label for="plataforma">Plataforma:</label>
-                <select id="plataforma" name="plataforma" required>
+                <select id="plataforma" name="Plataforma" required>
                     <option value="" disabled selected>Selecione...</option>
                     <option value="PC">PC</option>
                     <option value="PS">PS</option>
                     <option value="XBOX">XBOX</option>
                 </select>
             </div>
+            
             <div>
                 <label for="beta">Participou do Beta?</label>
-                <select id="beta" name="beta" required>
+                <select id="beta" name="Beta" required>
                     <option value="" disabled selected>Selecione...</option>
                     <option value="Sim">Sim</option>
                     <option value="Não">Não</option>
                 </select>
             </div>
-            <button type="submit" id="submitButton">Cadastrar</button>
+            
+            <button type="submit">Cadastrar</button>
         </form>
-        <div id="statusMessage"></div>
+        
+        <div class="info">
+            ℹ️ Após enviar, você receberá uma confirmação por email. Os dados serão processados em até 24 horas.
+        </div>
     </div>
-
-    <script>
-        // ✅ URL de produção do Apps Script (atualizada)
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw37Lba9FwAjcGEqY17D3H4LcvmItBDUZtdwDhjzwhhqIAP63P1ELwKkIzFi-zStLtA/exec";
-
-        const form = document.getElementById('playerForm');
-        const submitButton = document.getElementById('submitButton');
-        const statusMessage = document.getElementById('statusMessage');
-
-        form.addEventListener('submit', async e => {
-            e.preventDefault();
-
-            // 1️⃣ PRIMEIRO: Pegar os valores do formulário
-            const idEA = document.getElementById('id_ea').value.trim();
-            const nick = document.getElementById('nick').value.trim();
-            const plataforma = document.getElementById('plataforma').value;
-            const beta = document.getElementById('beta').value;
-
-            // 2️⃣ SEGUNDO: Atualizar UI
-            submitButton.disabled = true;
-            submitButton.textContent = 'Enviando...';
-            statusMessage.textContent = '';
-            statusMessage.className = '';
-
-            try {
-                // 3️⃣ TERCEIRO: Fazer a requisição
-                const response = await fetch(SCRIPT_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        action: "registerPlayer",
-                        id_ea: idEA,
-                        nick: nick,
-                        plataforma: plataforma,
-                        beta: beta
-                    })
-                });
-
-                // 4️⃣ Processar resposta
-                const rawText = await response.text();
-                console.log("🧾 Resposta bruta:", rawText);
-
-                let data;
-                try {
-                    data = JSON.parse(rawText);
-                } catch {
-                    throw new Error("Resposta inválida (não é JSON). Conteúdo recebido: " + rawText);
-                }
-
-                if (data.success) {
-                    statusMessage.textContent = data.message || "Jogador cadastrado com sucesso!";
-                    statusMessage.className = "success";
-                    form.reset();
-                } else {
-                    statusMessage.textContent = data.error || "Erro ao cadastrar jogador.";
-                    statusMessage.className = "error";
-                }
-
-            } catch (error) {
-                console.error("❌ Erro:", error);
-                statusMessage.textContent = error.message || "Erro de conexão. Tente novamente.";
-                statusMessage.className = "error";
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = 'Cadastrar';
-            }
-        });
-    </script>
 
 </body>
 </html>
