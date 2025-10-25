@@ -42,7 +42,7 @@
         select {
             width: 100%;
             padding: 0.75rem;
-            box-sizing: border-box; /* Garante que o padding não estoure a largura */
+            box-sizing: border-box;
             border: 1px solid #444;
             border-radius: 4px;
             background-color: #333;
@@ -113,9 +113,8 @@
     </div>
 
     <script>
-        // ✅ URL da API pública (a que você enviou e que FUNCIONA)
-        const SCRIPT_URL = "https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgxgHvl5xPG4e094ZhzPShJ8iWdzXrRtK2s6yvcP828VXVJQCCEP2Thp1bIg71qlEKtIl_2sfONzEw8KVkTKUoXdfkeiY7A91EXW5rM0WioA9ij2crs8LtH6ImIcI0zFXbtoVFNn0MApA5zOGEojVScGcBtPF9R3MWGwjQJuyyF8_eVjAYCFZDSuIaEmQE1q50pp66FMyI8_PX0XR6qFzY9KIcXR-n9ZUQVKoWXkQ6VwSJliKYtwur40kL8e_HSyuE0DwlCDnDBZvJHI4VUhGMkP0RhnQ&lib=MCTQz3j0PntVX-5pZeBhKNGCZ_t_9oIdE";
-        const PROXY_URL = "https://corsproxy.io/?";
+        // ✅ URL de produção do Apps Script (atualizada)
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby6qmRd8uq-t95tMqE6Ed2f-HFq1tb2LMzo3A8lIO-CNHnLa1urc5RlyB_-GktZXSVN/exec";
 
         const form = document.getElementById('playerForm');
         const submitButton = document.getElementById('submitButton');
@@ -124,62 +123,62 @@
         form.addEventListener('submit', async e => {
             e.preventDefault();
 
-            submitButton.disabled = true;
-            submitButton.textContent = 'Enviando...';
-            statusMessage.textContent = '';
-            statusMessage.className = '';
-
+            // 1️⃣ PRIMEIRO: Pegar os valores do formulário
             const idEA = document.getElementById('id_ea').value.trim();
             const nick = document.getElementById('nick').value.trim();
             const plataforma = document.getElementById('plataforma').value;
             const beta = document.getElementById('beta').value;
 
+            // 2️⃣ SEGUNDO: Atualizar UI
+            submitButton.disabled = true;
+            submitButton.textContent = 'Enviando...';
+            statusMessage.textContent = '';
+            statusMessage.className = '';
+
             try {
-            const response = await fetch(PROXY_URL + SCRIPT_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                action: "registerPlayer",
-                id_ea: idEA,
-                nick: nick,
-                plataforma: plataforma,
-                beta: beta
-                })
-            });
+                // 3️⃣ TERCEIRO: Fazer a requisição
+                const response = await fetch(SCRIPT_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        action: "registerPlayer",
+                        id_ea: idEA,
+                        nick: nick,
+                        plataforma: plataforma,
+                        beta: beta
+                    })
+                });
 
-            // Para debug: veja o que o servidor respondeu
-            const rawText = await response.text();
-            console.log("🧾 Resposta bruta:", rawText);
+                // 4️⃣ Processar resposta
+                const rawText = await response.text();
+                console.log("🧾 Resposta bruta:", rawText);
 
-            let data;
-            try {
-                data = JSON.parse(rawText);
-            } catch {
-                throw new Error("Resposta inválida (não é JSON). Conteúdo recebido: " + rawText);
-            }
+                let data;
+                try {
+                    data = JSON.parse(rawText);
+                } catch {
+                    throw new Error("Resposta inválida (não é JSON). Conteúdo recebido: " + rawText);
+                }
 
-            if (data.success) {
-                statusMessage.textContent = data.message || "Jogador cadastrado com sucesso!";
-                statusMessage.className = "success";
-                form.reset();
-            } else {
-                statusMessage.textContent = data.error || "Erro ao cadastrar jogador.";
-                statusMessage.className = "error";
-            }
+                if (data.success) {
+                    statusMessage.textContent = data.message || "Jogador cadastrado com sucesso!";
+                    statusMessage.className = "success";
+                    form.reset();
+                } else {
+                    statusMessage.textContent = data.error || "Erro ao cadastrar jogador.";
+                    statusMessage.className = "error";
+                }
 
             } catch (error) {
-            console.error("❌ Erro:", error);
-            statusMessage.textContent = error.message || "Erro de conexão. Tente novamente.";
-            statusMessage.className = "error";
+                console.error("❌ Erro:", error);
+                statusMessage.textContent = error.message || "Erro de conexão. Tente novamente.";
+                statusMessage.className = "error";
             } finally {
-            submitButton.disabled = false;
-            submitButton.textContent = 'Cadastrar';
+                submitButton.disabled = false;
+                submitButton.textContent = 'Cadastrar';
             }
         });
-        </script>
-
-
-
+    </script>
 
 </body>
 </html>
